@@ -1,0 +1,129 @@
+add_newline = true
+palette = "everforest_dark"
+
+format = """
+[╭─](green)\
+$os\
+$directory\
+$nix_shell\
+$python\
+$nodejs\
+$rust\
+$golang\
+$git_branch\
+$git_status\
+$line_break\
+$character"""
+
+[palettes.everforest_dark]
+rosewater = "#f2d5cf"  # 类似 Everforest 的米粉色 (Misc)
+flamingo = "#ee64ac"   # 稍微鲜艳一点的粉
+pink = "#d699b6"       # Everforest Purple
+mauve = "#d699b6"      # Everforest Purple
+red = "#e67e80"        # Everforest Red
+maroon = "#e67e80"     # Everforest Red (Everforest红色较统一)
+peach = "#e69875"      # Everforest Orange
+yellow = "#dbbc7f"     # Everforest Yellow
+green = "#a7c080"      # Everforest Green
+teal = "#83c092"       # Everforest Aqua
+sky = "#83c092"        # Everforest Aqua
+sapphire = "#7fbbb3"   # Everforest Blue
+blue = "#7fbbb3"       # Everforest Blue
+lavender = "#d699b6"   # Everforest Purple (Everforest没有明确的Lavender，用紫代替)
+text = "#d3c6aa"       # Everforest Foreground
+subtext1 = "#9da9a0"   # Grey 2
+subtext0 = "#859289"   # Grey 1
+overlay2 = "#7a8478"   # Grey 0
+overlay1 = "#7a8478"   # Grey 0 (重复映射以防空缺)
+overlay0 = "#859289"   # Grey 1 (调换顺序以适应层次)
+crust = "#1e2326"      # Background Dim (最深)
+mantle = "#272e33"     # Background 0 (Hard)
+base = "#2d353b"       # Background 1 (Medium - 主背景)
+surface0 = "#374145"   # Background 2
+surface1 = "#414b50"   # Background 3
+surface2 = "#4b565c"   # Background 4
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+[os]
+disabled = false
+style = "bold sapphire"
+format = "[$symbol]($style)"
+
+[os.symbols]
+NixOS = " "
+Windows = " "
+Ubuntu = " "
+Macos = " "
+Linux = " "
+Arch = " "
+
+[directory]
+style = "bold blue"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = false
+
+[python]
+style = "bold lavender"
+symbol = " "
+format = '[ via ](overlay0)[${symbol}${version}]($style)'
+version_format = "v${raw}"
+
+[nix_shell]
+symbol = " "
+style = "bold sapphire"
+format = '[ via ](overlay0)[$symbol$state]($style)'
+impure_msg = "(impure)"
+pure_msg = "(pure)"
+
+[nodejs]
+style = "bold green"
+format = '[ via ](overlay0)[${symbol}${version}]($style)'
+symbol = " "
+
+[rust]
+style = "bold red"
+format = '[ via ](overlay0)[${symbol}${version}]($style)'
+symbol = " "
+
+[git_branch]
+symbol = " "
+style = "mauve"
+format = '[ on ](overlay0)[$symbol$branch]($style)'
+
+[git_status]
+style = "bold red"
+format = '([$all_status$ahead_behind]($style))'
+
+[character]
+success_symbol = "[╰─](bold green)"
+error_symbol = "[╰─](bold red)"
+vimcmd_symbol = "[╰─ ❮](green)"

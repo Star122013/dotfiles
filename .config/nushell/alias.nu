@@ -1,0 +1,12 @@
+def gl [rows: int = 25] {
+    git log "--pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD" -n $rows
+    | lines
+    | split column "»¦«" commit subject name email date
+    | upsert date {|d| $d.date | into datetime}
+    | sort-by date
+    | reverse
+}
+
+def ll [] {
+    eza --icons -a --group-directories-first -1 --no-user --long
+}

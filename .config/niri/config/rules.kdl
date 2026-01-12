@@ -98,7 +98,7 @@ window-rule {
     match app-id="com.mitchellh.ghostty$"
     match app-id="neovide$"
     open-on-workspace "code"
-    opacity 0.95
+    // opacity 0.95
 }
 window-rule {
     match app-id="firefox$"

@@ -32,7 +32,7 @@ binds {
     Ctrl+Print          { screenshot-window write-to-disk=true; }
 
     // noctalia
-    Mod+V               { spawn "noctalia-shell" "ipc" "call" "launcher" "clipboard"; }
-    Mod+L               { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+    Mod+V               { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "clipboard"; }
+    Mod+L               { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
 }
 

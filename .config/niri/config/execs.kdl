@@ -1,8 +1,8 @@
 spawn-at-startup "vicinae" "server"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "fcitx5"
-spawn-at-startup "noctalia-shell"
-spawn-at-startup "systemctl" "--user" "start" "polkit-kde-authentication-agent-1"
+spawn-at-startup "qs" "-c" "noctalia-shell"
 
-spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
-spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
+// clipboard support
+spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"

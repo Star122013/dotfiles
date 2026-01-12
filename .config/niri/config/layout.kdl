@@ -28,21 +28,6 @@ layout {
     default-column-width {
         proportion 1.0
     }
-    focus-ring {
-        width 1
-        active-color "#cba6f7"
-        inactive-color "#45475A"
-    }
-    border {
-        off
-    }
-    shadow {
-        on
-        softness 20
-        spread 7
-        offset x=-1 y=-5
-        color "#0009"
-    }
     struts {
       // left 2
       // right 

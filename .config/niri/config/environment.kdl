@@ -1,3 +1,17 @@
+environment {
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    GTK_THEME "WhiteSur-Dark"
+    MOZ_ENABLE_WAYLAND "1"
+    EDITOR "nvim"
+    XCURSOR_SIZE "24"
+    XMODIFIERS "@im=fcitx"
+    //GTK_IM_MODULE "fcitx"
+    QT_IM_MODULES "wayland;fcitx"
+    INPUT_METHOD "fcitx"
+    SDL_IM_MODULE "fcitx"
+}
+
 // Miscellaneous Settings
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"

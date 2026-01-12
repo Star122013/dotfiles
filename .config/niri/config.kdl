@@ -8,4 +8,4 @@ include "config/layout.kdl"
 include "config/keybinds.kdl"
 // WARN: seems broken
 include "config/switcher.kdl"
-include "colors/matugen.kdl"
+include "colors/tokyo-night-moon.kdl"

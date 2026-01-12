@@ -70,9 +70,3 @@ map ctrl+shift+z toggle_layout stack
 # # END_KITTY_THEME
 
 
-
-
-# BEGIN_KITTY_THEME
-# Tokyo Night Moon
-include current-theme.conf
-# END_KITTY_THEME

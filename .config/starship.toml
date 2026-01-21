@@ -85,6 +85,7 @@ Ubuntu = " "
 Macos = " "
 Linux = " "
 Arch = " "
+Gentoo = " 󰣨 "
 
 [directory]
 style = "bold blue"

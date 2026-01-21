@@ -23,6 +23,4 @@ abbr -a l eza --icons -a --group-directories-first -1
 abbr -a ll eza --icons  -a --group-directories-first -1 --no-user --long
 abbr -a tree eza --icons --tree --group-directories-first
 
-tv init fish | source
 starship init fish | source
-mise activate fish | source

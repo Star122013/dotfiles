@@ -6,5 +6,5 @@ spawn-at-startup "qs" "-c" "noctalia-shell"
 // clipboard support
 spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
 spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
-spawn-at-startup "sh" "-c" "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "sh" "-c" "/usr/libexec/polkit-gnome-authentication-agent-1"
 spawn-at-startup "sh" "-c" "ssh-agent"

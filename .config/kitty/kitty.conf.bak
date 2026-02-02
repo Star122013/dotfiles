@@ -1,4 +1,3 @@
-include ~/.config/kitty/colors.conf
 # include ./themes/everforest_dark_hard.conf
 # include ~/.cache/hellwal/kitty-colors.conf
 
@@ -23,7 +22,7 @@ tab_powerline_style         slanted
 tab_title_template          {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
 
 # background
-background_opacity 0.95
+background_opacity 1.0
 
 # cursor
 cursor_shape underline
@@ -39,7 +38,6 @@ map alt+shift+h no_op
 map alt+shift+l no_op
 map cmd+shift+w no_op
 map cmd+shift+d no_op
-map ctrl+shift+r no_op
 map cmd+enter no_op
 map cmd+r no_op
 map cmd+alt+1 goto_tab 1
@@ -64,9 +62,7 @@ map ctrl+shift+l neighboring_window right
 map ctrl+shift+z toggle_layout stack
 
 
-# # BEGIN_KITTY_THEME
-# # Matugen
-# include current-theme.conf
-# # END_KITTY_THEME
-
-
+# BEGIN_KITTY_THEME
+# Eldritch
+include current-theme.conf
+# END_KITTY_THEME

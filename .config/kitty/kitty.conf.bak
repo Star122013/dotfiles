@@ -32,6 +32,9 @@ cursor_trail 3
 # layout
 enabled_layouts tall:bias=50;full_size=1;mirrored=false
 
+allow_remote_control yes
+listen_on unix:@mykitty
+
 # unmap
 map cmd+f no_op
 map alt+shift+h no_op
@@ -63,6 +66,6 @@ map ctrl+shift+z toggle_layout stack
 
 
 # BEGIN_KITTY_THEME
-# Eldritch
+# Tokyo Night Moon
 include current-theme.conf
 # END_KITTY_THEME

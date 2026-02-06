@@ -25,7 +25,7 @@
     },
     "break",
     {
-      "key": "     OS           ",
+      "key": "    󰻏 OS           ",
       "keyColor": "green",
       "type": "os"
     },
@@ -50,12 +50,12 @@
       "type": "packages"
     },
     {
-      "key": "     WM           ",
+      "key": "     WM           ",
       "keyColor": "blue",
       "type": "wm"
     },
     {
-      "key": "     Shell        ",
+      "key": "     Shell        ",
       "keyColor": "green",
       "type": "shell"
     },
@@ -85,7 +85,7 @@
       "type": "memory"
     },
     {
-      "key": "     Wifi         ",
+      "key": "    󰖩 Wifi         ",
       "keyColor": "green",
       "type": "wifi"
     },

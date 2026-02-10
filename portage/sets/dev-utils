@@ -1,0 +1,12 @@
+app-containers/docker
+app-containers/docker-compose
+app-emulation/virt-manager
+sys-apps/ripgrep
+sys-apps/fd
+dev-vcs/git
+app-misc/tmux
+acct-group/libvirt
+dev-util/tree-sitter-cli
+dev-util/pixi
+llvm-core/clang 
+llvm-core/lld

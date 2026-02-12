@@ -6,9 +6,5 @@ include "config/rules.kdl"
 include "config/execs.kdl"
 include "config/layout.kdl"
 include "config/keybinds.kdl"
-// WARN: seems broken
 include "config/switcher.kdl"
 include "colors/tokyo-night-moon.kdl"
-
-include "./noctalia.kdl"
-

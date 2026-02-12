@@ -10,3 +10,5 @@ dev-util/tree-sitter-cli
 dev-util/pixi
 llvm-core/clang 
 llvm-core/lld
+dev-python/uv
+dev-util/vscode-langservers-extracted

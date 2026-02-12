@@ -15,6 +15,14 @@ function localrust
     echo "👋 已退出 Rust 环境"
 end
 
+if test -d ~/.local/bin
+    fish_add_path ~/.local/bin
+end
+
+if test -d ~/.pixi/bin
+    fish_add_path ~/.pixi/bin
+end
+
 fish_config theme choose "tokyo-night-moon"
 
 set -gx FZF_DEFAULT_OPTS " \

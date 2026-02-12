@@ -1,6 +1,22 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": ["opencode-gemini-auth@latest"],
-
-  "theme": "tokyonight"
+  "theme": "tokyonight",
+  "mcp": {
+    "fetch": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-fetch"],
+      "enabled": true
+    },
+    "git": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-server-git",
+        "--repository",
+        "/home/cyrene/Documents/dotfiles"
+      ],
+      "enabled": true
+    }
+  }
 }

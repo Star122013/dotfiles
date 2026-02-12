@@ -1,3 +1,10 @@
 app-shells/starship
 app-shells/fish
 x11-terms/kitty
+
+=gui-wm/niri-9999::cyrene-overlay
+gui-apps/vicinae
+x11-themes/bibata-cursor
+app-misc/nwg-look
+gui-apps/quickshell
+gui-apps/noctalia-shell

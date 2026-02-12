@@ -18,3 +18,5 @@ sys-process/lsof
 sys-apps/bat
 sys-apps/flatpak
 dev-util/ccache
+app-misc/fastfetch
+sys-process/btop

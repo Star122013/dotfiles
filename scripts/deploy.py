@@ -65,7 +65,7 @@ class DotfileMap:
                 )  # pyright: ignore[reportUnusedCallResult]
             else:
                 target.symlink_to(source)
-            print(f"symlink: {target.name}")
+            print(f"Created symlink: {source} -> {target}")
         except Exception as e:
             print(f"failed: {e}")
 

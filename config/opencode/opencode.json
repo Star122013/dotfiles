@@ -8,14 +8,9 @@
       "command": ["uvx", "mcp-server-fetch"],
       "enabled": true
     },
-    "git": {
+    "dotfile-git": {
       "type": "local",
-      "command": [
-        "uvx",
-        "mcp-server-git",
-        "--repository",
-        "/home/cyrene/Documents/dotfiles"
-      ],
+      "command": ["uvx", "mcp-server-git"],
       "enabled": true
     }
   }

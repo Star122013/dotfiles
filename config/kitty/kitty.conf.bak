@@ -66,7 +66,7 @@ map ctrl+shift+z toggle_layout stack
 
 
 # BEGIN_KITTY_THEME
-# Tokyo Night Moon
+# Rosé Pine Moon
 include current-theme.conf
 # END_KITTY_THEME
 

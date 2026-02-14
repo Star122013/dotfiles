@@ -1,0 +1,10 @@
+[Unit]
+Description=Run auto-theme every 30 minutes
+
+[Timer]
+# 每小时的 0 分和 30 分触发 (e.g., 10:00, 10:30, 11:00...)
+OnCalendar=*:0/30
+Persistent=true
+
+[Install]
+WantedBy=timers.target

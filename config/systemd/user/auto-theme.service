@@ -1,0 +1,8 @@
+[Unit]
+Description=Auto switch theme based on time
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Documents/dotfiles
+# 使用 pixi 运行，确保环境一致
+ExecStart=/usr/bin/pixi run python run.py

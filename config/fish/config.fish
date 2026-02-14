@@ -23,7 +23,8 @@ if test -d ~/.pixi/bin
     fish_add_path ~/.pixi/bin
 end
 
-fish_config theme choose "tokyo-night-moon"
+
+# fish_config theme choose "tokyo-night-moon"
 
 set -gx FZF_DEFAULT_OPTS " \
   $FZF_DEFAULT_OPTS \

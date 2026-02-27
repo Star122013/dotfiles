@@ -1,0 +1,3 @@
+sys-kernel/installkernel dracut grub
+sys-kernel/gentoo-kernel-bin CONFIG_CUSE
+>=dev-util/perf-6.14 libpfm

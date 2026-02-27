@@ -3,6 +3,7 @@ from pathlib import Path
 import subprocess
 
 REPO_ROOT = Path(__file__).parent.parent.resolve()
+DOT_FILE = REPO_ROOT / "dotfiles"
 HOME = Path.home()
 
 
@@ -13,7 +14,7 @@ class DotfileMap:
     sudo: bool = False
 
     def sync(self):
-        src_dir = REPO_ROOT / self.source_name
+        src_dir = DOT_FILE / self.source_name
         # print(f"{src_dir}")
         if not src_dir.exists():
             print(f"{src_dir} not found")

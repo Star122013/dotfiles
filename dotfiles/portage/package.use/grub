@@ -1,0 +1,52 @@
+sys-boot/grub mount
+# required by kde-plasma/plasma-meta-6.5.5-r1::gentoo
+# required by plasma-meta (argument)
+>=kde-plasma/kwin-6.5.5-r2 lock
+# required by kde-plasma/plasma-meta-6.5.5-r1::gentoo[X]
+# required by plasma-meta (argument)
+>=kde-plasma/kwin-x11-6.5.5 lock
+# required by virtual/minizip-1.3.1::gentoo[-static-libs]
+# required by media-libs/assimp-6.0.2::gentoo
+# required by dev-qt/qtquick3d-6.10.1::gentoo
+# required by kde-plasma/kdeplasma-addons-6.5.5-r1::gentoo
+# required by kde-plasma/plasma-meta-6.5.5-r1::gentoo
+# required by plasma-meta (argument)
+>=sys-libs/zlib-1.3.1-r1 minizip
+# required by app-portage/pfl-3.5.3::gentoo[network-cron]
+# required by @common-utils (argument)
+>=sys-apps/util-linux-2.41.3 caps
+# required by dev-libs/libayatana-appindicator-0.5.94::gentoo
+# required by net-proxy/flclash-bin-0.8.92::gentoo-zh
+# required by @network (argument)
+>=dev-libs/libdbusmenu-16.04.0-r4 gtk3
+# required by app-emulation/virt-manager-5.1.0-r1::gentoo[gui]
+# required by @dev-utils (argument)
+>=net-misc/spice-gtk-0.42-r4 usbredir
+# required by app-emulation/libvirt-11.10.0::gentoo[virt-network]
+# required by app-emulation/libvirt-glib-5.0.0-r1::gentoo
+# required by app-emulation/virt-manager-5.1.0-r1::gentoo
+# required by @dev-utils (argument)
+>=net-dns/dnsmasq-2.91 script
+# required by app-crypt/swtpm-0.10.0-r2::gentoo
+# required by app-emulation/libvirt-11.10.0::gentoo[qemu]
+# required by app-emulation/libvirt-glib-5.0.0-r1::gentoo
+# required by app-emulation/virt-manager-5.1.0-r1::gentoo
+# required by @dev-utils (argument)
+>=net-libs/gnutls-3.8.11 tools pkcs11
+# required by app-containers/lxd-5.21.1-r1::gentoo
+# required by @dev-utils (argument)
+>=dev-util/xdelta-3.0.11-r1 lzma
+# required by app-containers/lxd-5.21.1-r1::gentoo
+# required by @dev-utils (argument)
+>=sys-fs/squashfs-tools-4.7.4 lzma
+# required by app-containers/lxc-6.0.5::gentoo[tools,caps]
+# required by app-containers/lxd-5.21.1-r1::gentoo
+# required by @dev-utils (argument)
+>=sys-libs/libcap-2.77 static-libs
+# required by dev-libs/elfutils-0.194::gentoo[debuginfod]
+# required by dev-debug/gdb-17.1::gentoo[debuginfod]
+# required by kde-plasma/drkonqi-6.5.5::gentoo
+# required by kde-plasma/plasma-meta-6.5.5-r1::gentoo[systemd,crash-handler]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/json-c-0.18 abi_x86_32

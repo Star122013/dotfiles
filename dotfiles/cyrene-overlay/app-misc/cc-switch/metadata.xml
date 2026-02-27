@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>cyrene@example.com</email>
+		<name>Cyrene</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">farion1231/cc-switch</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -1,0 +1,4 @@
+>=sys-kernel/gentoo-kernel-bin-6.18.1
+=sys-kernel/cachyos-sources-6.19.0
+sys-kernel/genkernel
+sys-kernel/installkernel

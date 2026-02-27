@@ -1,0 +1,131 @@
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Init (Zinit)%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
+
+# -----------------------------------------------------------------------------
+# Zinit Plugins (Turbo Mode)
+# -----------------------------------------------------------------------------
+
+# 1. Load OMZ Libs (Git, History, Keys) - Wait mode
+zinit wait lucid for \
+    OMZL::git.zsh \
+    OMZL::history.zsh \
+    OMZL::key-bindings.zsh \
+    OMZP::direnv 
+
+# 2. Load Completions & Fzf-tab
+# Order is critical:
+#   1. zsh-completions (adds to fpath)
+#   2. compinit (via atinit hook)
+#   3. fzf-tab (must be after compinit)
+#   4. autosuggestions & syntax-highlighting (must be after fzf-tab)
+
+zinit wait lucid for \
+    zsh-users/zsh-completions \
+    atinit"zicompinit; zicdreplay" \
+        Aloxaf/fzf-tab \
+    zsh-users/zsh-autosuggestions \
+    zdharma-continuum/fast-syntax-highlighting
+
+# -----------------------------------------------------------------------------
+# Configuration
+# -----------------------------------------------------------------------------
+
+# History
+HISTSIZE=50000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# -----------------------------------------------------------------------------
+# FZF Integration
+# -----------------------------------------------------------------------------
+
+# Load standard fzf keybindings and completion
+zinit snippet https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+zinit snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
+
+# Set FZF defaults
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+
+# Use fd for fzf if available (respects .gitignore)
+if (( $+commands[fd] )); then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+# Custom Git Log Widget
+# Shows git graph, allows searching, and puts the selected commit hash on the command line
+function fzf-git-log-widget() {
+  local selected
+  # --graph formatting to ensure we can capture the hash
+  if selected=$(git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" --all | \
+      fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7,\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}' \
+      --header "Press CTRL-S to toggle sort" \
+      --preview-window=right:50% \
+      --query="$LBUFFER"); then
+    # Extract the hash (first 7+ hex chars)
+    local hash=$(echo "$selected" | grep -o "[a-f0-9]\{7,\}" | head -1)
+    LBUFFER+=$hash
+  fi
+  zle reset-prompt
+}
+zle -N fzf-git-log-widget
+
+# Keybindings (Ctrl+Alt+Key)
+# Note: Ctrl+Alt usually sends Escape + Ctrl+Key sequence (^[^K)
+
+# Ctrl+Alt+f -> Find Files
+bindkey '^[^f' fzf-file-widget
+bindkey '^[^F' fzf-file-widget
+
+# Ctrl+Alt+r -> History
+bindkey '^[^r' fzf-history-widget
+bindkey '^[^R' fzf-history-widget
+
+# Ctrl+Alt+g -> Git Log
+bindkey '^[^g' fzf-git-log-widget
+bindkey '^[^G' fzf-git-log-widget
+
+# Fzf-tab Configuration (Recommended style)
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd (if eza is available, otherwise ls)
+if (( $+commands[eza] )); then
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+else
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=always -1 $realpath'
+fi
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+# -----------------------------------------------------------------------------
+# Aliases
+# -----------------------------------------------------------------------------
+
+# Use eza as a modern replacement for ls and tree
+if (( $+commands[eza] )); then
+    alias ls='eza --icons'
+    alias ll='eza -l --icons --git --group-directories-first'
+    alias la='eza -la --icons --git --group-directories-first'
+    alias tree='eza --tree --icons'
+fi
+
+# Starship Prompt
+eval "$(starship init zsh)"

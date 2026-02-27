@@ -1,0 +1,45 @@
+# `sheldon` configuration file
+# ----------------------------
+# 文档: https://github.com/rossmacarthur/sheldon
+
+shell = "zsh"
+
+# 模板定义
+[templates]
+# 使用 zsh-defer 延迟加载插件以加快启动速度
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
+[plugins]
+
+# --- 核心工具 ---
+
+# 延迟加载功能支持
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+# --- 功能增强 ---
+
+# 额外的自动补全库
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+apply = ["defer"]
+
+# 使用 fzf 进行 Tab 补全选择
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+# 自动建议 (根据历史记录灰色提示)
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+
+# 历史记录子串搜索 (Up/Down 键搜索)
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+apply = ["defer"]
+
+# --- 界面美化 ---
+
+# 语法高亮 (建议放在最后加载)
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"

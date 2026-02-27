@@ -1,0 +1,6 @@
+x11-themes/bibata-cursor color-white
+# required by media-video/obs-studio-32.0.4::gentoo
+# required by media-video/obs-studio (argument)
+>=media-video/ffmpeg-7.1.3 opus
+media-video/obs-studio v4l
+kde-plasma/plasma-meta -xwayland

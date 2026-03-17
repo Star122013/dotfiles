@@ -1,0 +1,24 @@
+[config]
+
+[templates]
+
+# User-defined templates
+# Add your custom templates below
+# Example:
+# [templates.myapp]
+# input_path = "~/.config/noctalia/templates/myapp.css"
+# output_path = "~/.config/myapp/theme.css"
+# post_hook = "myapp --reload-theme"
+
+# Remove this section and add your own templates
+#[templates.placeholder]
+#input_path = "/etc/xdg/quickshell/noctalia-shell/Assets/Templates/noctalia.json"
+#output_path = "/home/cyrene/.cache/noctalia/placeholder.json"
+[templates.nvim]
+input_path = "/var/home/cyrene/.config/nvim/lua/generated/matugen.template.lua"
+output_path = "/var/home/cyrene/.config/nvim/lua/generated/matugen.lua"
+
+[templates.bat_dark]
+input_path = "/var/home/cyrene/.config/noctalia/templates/matugen-bat-dark.template.tmTheme"
+output_path = "/var/home/cyrene/.config/bat/themes/matugen-dark.tmTheme"
+post_hook = "mkdir -p /var/home/cyrene/.config/bat/themes && bat cache --build"

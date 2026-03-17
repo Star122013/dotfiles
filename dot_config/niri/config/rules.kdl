@@ -7,21 +7,28 @@ workspace "chat"
 // Global Aesthetics (Apply to ALL windows)
 // -----------------------------------------------------------------------------
 window-rule {
-    geometry-corner-radius 10
+    geometry-corner-radius 15
     clip-to-geometry true
-    opacity 0.9
-    background-effect {
-        blur true
-    }
+}
+
+blur {
+    // off
+    passes 3
+    offset 3
+    noise 0.02
+    saturation 1.5
 }
 
 // -----------------------------------------------------------------------------
 // Layer Rules
 // -----------------------------------------------------------------------------
+// Set the overview wallpaper on the backdrop.
 layer-rule {
-    match namespace="^noctalia-overview*"
-    place-within-backdrop true
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
 }
+
+
 
 // -----------------------------------------------------------------------------
 // Floating Rules
@@ -139,8 +146,12 @@ window-rule {
     match app-id="com.mitchellh.ghostty$"
     match app-id="neovide$"
     
+    opacity 0.9
     draw-border-with-background false
-    open-on-workspace "code"
+    open-on-workspace "code"    
+    background-effect {
+        blur true
+    }
 }
 
 window-rule {

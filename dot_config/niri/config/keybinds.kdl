@@ -11,7 +11,7 @@ binds {
     Mod+Q               { close-window; }
     Mod+Return          { spawn "kitty"; }
     Mod+E               { spawn "nautilus"; }
-    Mod+Space           { spawn "vicinae"; }
+    // Mod+Space           { spawn "vicinae"; }
     Mod+F               { fullscreen-window; }
     Mod+T               { toggle-window-floating; }
     Mod+Left            { focus-column-left; }
@@ -32,6 +32,7 @@ binds {
     Ctrl+Print          { screenshot-window write-to-disk=true; }
 
     // noctalia
-    Mod+V               { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
-    Mod+L               { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+    Mod+Space           { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+    Mod+V               { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
+    Mod+L               { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
 }

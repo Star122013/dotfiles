@@ -22,3 +22,7 @@ output_path = "/var/home/cyrene/.config/nvim/lua/generated/matugen.lua"
 input_path = "/var/home/cyrene/.config/noctalia/templates/matugen-bat-dark.template.tmTheme"
 output_path = "/var/home/cyrene/.config/bat/themes/matugen-dark.tmTheme"
 post_hook = "mkdir -p /var/home/cyrene/.config/bat/themes && bat cache --build"
+
+[templates.rmpc]
+input_path = "/var/home/cyrene/.config/noctalia/templates/rmpc.template"
+output_path = '/var/home/cyrene/.config/rmpc/themes/matugen.ron'

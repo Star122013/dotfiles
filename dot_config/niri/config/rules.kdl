@@ -9,14 +9,19 @@ workspace "chat"
 window-rule {
     geometry-corner-radius 15
     clip-to-geometry true
+    opacity 0.95
+    background-effect {
+        blur true
+        xray false
+    }
 }
 
 blur {
     // off
-    passes 3
+    passes 2
     offset 3
-    noise 0.02
-    saturation 1.5
+    noise 0.03
+    saturation 1.0
 }
 
 // -----------------------------------------------------------------------------
@@ -27,6 +32,14 @@ layer-rule {
   match namespace="^noctalia-overview*"
   place-within-backdrop true
 }
+
+layer-rule {
+  match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
+  background-effect {
+    xray false
+  }
+}
+
 
 
 
@@ -143,6 +156,7 @@ window-rule {
 // Workspace: Code
 window-rule {
     match app-id="kitty$"
+    match app-id="foot$"
     match app-id="com.mitchellh.ghostty$"
     match app-id="neovide$"
     
@@ -151,6 +165,7 @@ window-rule {
     open-on-workspace "code"    
     background-effect {
         blur true
+        xray false
     }
 }
 

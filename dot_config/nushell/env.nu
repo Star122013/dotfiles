@@ -1,4 +1,20 @@
-$env.config.buffer_editor = "nvim"
+$env.config.buffer_editor = "hx"
 $env.config.show_banner = false
 
-$env.PATH = ($env.PATH | append "/usr/local/bin" | append "/usr/bin" | append "/bin" | append "/home/linuxbrew/.linuxbrew/bin/")
+load-env {
+  PATH: (
+    $env.PATH
+    | append "/usr/local/bin"
+    | append "/usr/bin"
+    | append "/bin"
+    | append "/home/linuxbrew/.linuxbrew/bin/"
+  )
+  EDITOR: "hx"
+  HOME: "/var/home/cyrene"
+  XDG_CACHE_HOME: "/var/home/cyrene/.cache"
+}
+
+let mise_path = $nu.default-config-dir | path join mise.nu
+if (which mise | is-not-empty) {
+  ^mise activate nu | save $mise_path --force
+}

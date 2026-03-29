@@ -30,6 +30,14 @@ def bh [...args: string] {
   run-external $command ...$subcommand "--help" o+e>| bat -pl help
 }
 
+def musicfox [] {
+  ^flatpak run io.github.go_musicfox.go-musicfox
+}
+
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 zoxide init nushell --cmd cd | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+
+if (which mise | is-not-empty) {
+  use ($nu.default-config-dir | path join mise.nu)
+}

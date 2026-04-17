@@ -9,7 +9,7 @@
 binds {
     Mod+Shift+Slash     { show-hotkey-overlay; }
     Mod+Q               { close-window; }
-    Mod+Return          { spawn "kitty"; }
+    Mod+Return          { spawn "foot"; }
     Mod+E               { spawn "nautilus"; }
     // Mod+Space           { spawn "vicinae"; }
     Mod+F               { fullscreen-window; }
@@ -35,4 +35,16 @@ binds {
     Mod+Space           { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
     Mod+V               { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
     Mod+L               { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+
+    // Tab management
+    Mod+W               { toggle-column-tabbed-display; }
+    Mod+Shift+W         { spawn "foot"; }
+    Mod+Shift+Return    { consume-window-into-column; }
+    Mod+Alt+Return      { expel-window-from-column; }
+
+    // Window navigation (vim-style)
+    Mod+J               { focus-window-down; }
+    Mod+K               { focus-window-up; }
+    Mod+Shift+J         { move-window-down; }
+    Mod+Shift+K         { move-window-up; }
 }

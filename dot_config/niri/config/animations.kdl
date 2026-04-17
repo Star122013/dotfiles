@@ -49,7 +49,7 @@ window-open {
 
     
     window-close {
-    duration-ms 1400
+    duration-ms 0
     curve "ease-out-expo"
     custom-shader r"
     // ease-in-out cubic curve helper
@@ -117,7 +117,7 @@ window-open {
         spring damping-ratio=0.65 stiffness=923 epsilon=0.001
     }
     screenshot-ui-open {
-        duration-ms 200
+        duration-ms 0
         curve "ease-out-quad"
     }
     overview-open-close {

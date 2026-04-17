@@ -7,9 +7,8 @@ workspace "chat"
 // Global Aesthetics (Apply to ALL windows)
 // -----------------------------------------------------------------------------
 window-rule {
-    geometry-corner-radius 15
+    geometry-corner-radius 13
     clip-to-geometry true
-    opacity 0.95
     background-effect {
         blur true
         xray false
@@ -160,7 +159,6 @@ window-rule {
     match app-id="com.mitchellh.ghostty$"
     match app-id="neovide$"
     
-    opacity 0.9
     draw-border-with-background false
     open-on-workspace "code"    
     background-effect {

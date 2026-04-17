@@ -15,8 +15,8 @@
 #input_path = "/etc/xdg/quickshell/noctalia-shell/Assets/Templates/noctalia.json"
 #output_path = "/home/cyrene/.cache/noctalia/placeholder.json"
 [templates.nvim]
-input_path = "/var/home/cyrene/.config/nvim/lua/generated/matugen.template.lua"
-output_path = "/var/home/cyrene/.config/nvim/lua/generated/matugen.lua"
+input_path = "/var/home/cyrene/.config/noctalia/templates/nvim.lua"
+output_path = "/var/home/cyrene/.config/nvim/lua/generated-matugen.lua"
 
 [templates.bat_dark]
 input_path = "/var/home/cyrene/.config/noctalia/templates/matugen-bat-dark.template.tmTheme"

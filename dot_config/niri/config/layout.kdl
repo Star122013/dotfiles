@@ -11,6 +11,7 @@ layout {
     always-center-single-column
     gaps 5
     center-focused-column "never"
+    default-column-display "tabbed"
     preset-column-widths {
         proportion 0.25
         proportion 0.5
@@ -32,5 +33,14 @@ layout {
       // left 2
       // right 
         // left 625
+      top 10
+      bottom 10
+    }
+    tab-indicator {
+        width 8
+        gap 8
+        length total-proportion=0.5
+        position "left"
+        place-within-column
     }
 }

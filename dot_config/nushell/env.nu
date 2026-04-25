@@ -9,9 +9,10 @@ load-env {
     | append "/bin"
     | append "/home/linuxbrew/.linuxbrew/bin/"
     | append "/var/home/cyrene/.zvm/bin"
+    | append "/var/home/cyrene/.pixi/bin"
     | str join ":"
   )
-  EDITOR: "nvim"
+  EDITOR: "hx"
   HOME: "/var/home/cyrene"
   XDG_CACHE_HOME: "/var/home/cyrene/.cache"
 }

@@ -9,7 +9,7 @@
 binds {
     Mod+Shift+Slash     { show-hotkey-overlay; }
     Mod+Q               { close-window; }
-    Mod+Return          { spawn "foot"; }
+    Mod+Return          { spawn "kitty"; }
     Mod+E               { spawn "nautilus"; }
     // Mod+Space           { spawn "vicinae"; }
     Mod+F               { fullscreen-window; }
@@ -38,7 +38,7 @@ binds {
 
     // Tab management
     Mod+W               { toggle-column-tabbed-display; }
-    Mod+Shift+W         { spawn "foot"; }
+    Mod+Shift+W         { spawn "kitty"; }
     Mod+Shift+Return    { consume-window-into-column; }
     Mod+Alt+Return      { expel-window-from-column; }
 

@@ -1,0 +1,4 @@
+[tools]
+biome = "latest"
+node = "latest"
+"npm:vscode-langservers-extracted" = "latest"

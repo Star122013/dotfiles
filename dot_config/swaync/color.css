@@ -1,0 +1,20 @@
+@import "colors/rose-pine-dawn.css";
+
+/*
+ * Theme bridge:
+ * - style.css 只使用下面这些语义化颜色名
+ * - 后续换主题时，优先只改这里
+ * - 如果新主题变量名不同，调整右侧映射即可
+ */
+
+@define-color text-primary @text;
+@define-color text-secondary @muted;
+
+@define-color window-bg @base;
+@define-color card-bg @overlay;
+@define-color elevated-bg @surface;
+
+@define-color hover-bg @highlightLow;
+@define-color selected-bg @highlightMed;
+
+@define-color urgent @love;

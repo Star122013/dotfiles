@@ -7,12 +7,12 @@ workspace "chat"
 // Global Aesthetics (Apply to ALL windows)
 // -----------------------------------------------------------------------------
 window-rule {
-    geometry-corner-radius 13
+    geometry-corner-radius 10
     clip-to-geometry true
-    background-effect {
-        blur true
-        xray false
-    }
+    // background-effect {
+    //     blur true
+    //     xray false
+    // }
 }
 
 blur {
@@ -161,10 +161,10 @@ window-rule {
     
     draw-border-with-background false
     open-on-workspace "code"    
-    background-effect {
-        blur true
-        xray false
-    }
+    // background-effect {
+    //     blur true
+    //     xray true
+    // }
 }
 
 window-rule {

@@ -4,3 +4,17 @@ auto-format = true
 formatter = { command = "nixfmt" }
 language-servers = [ "nixd" ]
 
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "%{buffer_name}"] }
+language-servers = [ "vscode-json-language-server" ]
+
+[[language]]
+name = "json"
+language-servers = [ { name = "vscode-json-language-server", except-features = [ "format" ] }, "biome" ]
+
+[[language]]
+name = "dockerfile"
+auto-format = true
+

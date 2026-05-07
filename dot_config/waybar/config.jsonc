@@ -1,0 +1,34 @@
+{
+	"include": [
+		"~/.config/waybar/modules.jsonc"
+	],
+	"layer": "top",
+	"position": "top",
+	// "height": 40,
+	"fixed-center": true,
+	"reload_style_on_change": true,
+	"modules-left": [
+		"niri/workspaces",
+		"cava",
+		"niri/window"
+	],
+	"modules-center": [
+		"mpris"
+		// "custom/applauncher"
+		//"custom/separator#2",
+		//"cffi/niri-taskbar", //需要安装waybar-niri-taskbar-git
+	],
+	"modules-right": [
+		"tray",
+		"group/ddcutil",
+		"group/audio",
+		"bluetooth",
+		"network",
+		"idle_inhibitor",
+		"custom/swaync",
+		"battery",
+		// "power-profiles-daemon",
+		"clock",
+		"group/powermenu"
+	]
+}

@@ -1,0 +1,103 @@
+/* Rose Pine Dawn light theme overrides */
+
+/* ── Popovers & Menus ── */
+popover {
+    background-color: #fffaf3;
+    color: #575279;
+    border: 1px solid #cecacd;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+popover label,
+popover button,
+popover row {
+    color: #575279;
+}
+
+popover button {
+    background-color: transparent;
+    border-radius: 4px;
+}
+
+popover button:hover,
+popover row:hover {
+    background-color: #f4ede8;
+}
+
+popover button:active,
+popover row:selected {
+    background-color: #dfdad9;
+}
+
+popover separator {
+    background-color: #dfdad9;
+    min-height: 1px;
+    margin: 4px 8px;
+}
+
+modelbutton {
+    color: #575279;
+    border-radius: 4px;
+}
+
+modelbutton:hover {
+    background-color: #f4ede8;
+}
+
+/* ── Toolbars ── */
+.toolbar {
+    background-color: #f2e9e1;
+    color: #575279;
+    border: 1px solid #cecacd;
+}
+
+.toolbar button {
+    color: #575279;
+}
+
+.toolbar button:hover {
+    background-color: #dfdad9;
+}
+
+/* Overlay mode edges */
+.overlay .toolbar-top {
+    border-bottom: 1px solid #cecacd;
+}
+
+.overlay .toolbar-bottom {
+    border-top: 1px solid #cecacd;
+}
+
+/* ── Tooltip ── */
+tooltip {
+    background-color: #fffaf3;
+    color: #575279;
+    border: 1px solid #cecacd;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+tooltip label {
+    color: #575279;
+}
+
+/* ── Dialogs ── */
+dialog {
+    background-color: #fffaf3;
+    color: #575279;
+    border: 1px solid #cecacd;
+    border-radius: 8px;
+}
+
+/* ── Toolbar toggle buttons (tool selection, color swatches) ── */
+.toolbar button.toggle {
+    border: 1px solid #cecacd;
+    border-radius: 4px;
+}
+
+.toolbar button.toggle:checked,
+.toolbar button.toggle:active {
+    border-color: #907aa9;
+    background-color: #dfdad9;
+}

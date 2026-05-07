@@ -32,7 +32,7 @@ binds {
     Ctrl+Print          { screenshot-window write-to-disk=true; }
 
     // noctalia
-    Mod+Space           { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+    Mod+Space           { spawn-sh "vicinae toggle"; }
     Mod+V               { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
     Mod+L               { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
 

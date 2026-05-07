@@ -30,17 +30,18 @@ layout {
         proportion 0.75
     }
     struts {
-      // left 2
-      // right 
+      left 5
+      right 5
         // left 625
-      top 10
-      bottom 10
+      top 5
+      bottom 5
     }
     tab-indicator {
-        width 8
-        gap 8
+        off
+        width 5
+        gap 7
         length total-proportion=0.5
-        position "left"
+        position "top"
         place-within-column
     }
 }

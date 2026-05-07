@@ -17,6 +17,8 @@ load-env {
   XDG_CACHE_HOME: "/var/home/cyrene/.cache"
 }
 
+$env.EXA_API_KEY = (bash -c 'source ~/.bashrc;echo $EXA_API_KEY')
+
 let mise_path = $nu.default-config-dir | path join mise.nu
 if (which mise | is-not-empty) {
   ^mise activate nu | save $mise_path --force

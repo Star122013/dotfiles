@@ -1,0 +1,101 @@
+version = 1
+
+[envs.opencode]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { opencode = "*" }
+exposed = { opencode = "opencode" }
+
+[envs.gh]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { gh = "*" }
+exposed = { gh = "gh" }
+
+[envs.claude-code]
+channels = ["https://prefix.dev/longred-forge"]
+dependencies = { claude-code = "*" }
+exposed = { claude = "claude" }
+
+[envs.pi-coding-agent]
+channels = ["https://prefix.dev/conda-forge"]
+dependencies = { pi-coding-agent = "*" }
+exposed = { pi = "pi" }
+
+[envs.typst]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { typst = "*" }
+exposed = { typst = "typst" }
+
+[envs.jj]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { jj = "*" }
+exposed = { jj = "jj" }
+
+[envs.ripgrep]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { ripgrep = "*" }
+exposed = { rg = "rg" }
+
+[envs.fd]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { fd = "*" }
+exposed = { fd = "fd" }
+
+[envs.btop]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { btop = "*" }
+exposed = { btop = "btop", install = "install", setuid = "setuid", uninstall = "uninstall" }
+
+[envs.tealdeer]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { tealdeer = "*" }
+exposed = { tealdeer = "tealdeer" }
+
+[envs.bat]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { bat = "*" }
+exposed = { bat = "bat" }
+
+[envs.mise]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { mise = "*" }
+exposed = { mise = "mise" }
+
+[envs.fastfetch]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { fastfetch = "*" }
+exposed = { fastfetch = "fastfetch", flashfetch = "flashfetch" }
+
+[envs.uv]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { uv = "*" }
+exposed = { uv = "uv", uvx = "uvx" }
+
+[envs.yazi]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { yazi = "*" }
+exposed = { ya = "ya", yazi = "yazi" }
+
+[envs.chezmoi]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { chezmoi = "*" }
+exposed = { chezmoi = "chezmoi" }
+
+[envs.starship]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { starship = "*" }
+exposed = { starship = "starship" }
+
+[envs.zoxide]
+channels = ["https://prefix.dev/github-releases"]
+dependencies = { zoxide = "*" }
+exposed = { zoxide = "zoxide" }
+
+[envs.helix]
+channels = ["https://prefix.dev/conda-forge"]
+dependencies = { helix = "*" }
+exposed = { hx = "hx" }
+
+[envs.nvtop]
+channels = ["https://prefix.dev/conda-forge"]
+dependencies = { nvtop = "*" }
+exposed = { nvtop = "nvtop" }

@@ -1,0 +1,10 @@
+output "HKC OVERSEAS LIMITED SG27Q PLUS 0000000000001" {
+	mode 2560x1440@170.00
+	position 0,0
+  	scale 1
+  	alias $HOME_1
+}
+
+profile home_1 {
+  	output $HOME_1 enable
+}

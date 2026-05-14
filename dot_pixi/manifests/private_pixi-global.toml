@@ -90,11 +90,6 @@ channels = ["https://prefix.dev/github-releases"]
 dependencies = { zoxide = "*" }
 exposed = { zoxide = "zoxide" }
 
-[envs.helix]
-channels = ["https://prefix.dev/conda-forge"]
-dependencies = { helix = "*" }
-exposed = { hx = "hx" }
-
 [envs.nvtop]
 channels = ["https://prefix.dev/conda-forge"]
 dependencies = { nvtop = "*" }

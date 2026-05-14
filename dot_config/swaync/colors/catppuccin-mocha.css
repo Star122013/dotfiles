@@ -1,0 +1,23 @@
+/*
+* Variant: Catppuccin Mocha
+* Maintainer: DankChoir
+*/
+
+@define-color base #1e1e2e;
+@define-color surface #313244;
+@define-color overlay #45475a;
+
+@define-color muted #7f849c;
+@define-color subtle #a6adc8;
+@define-color text #cdd6f4;
+
+@define-color love #f38ba8;
+@define-color gold #f9e2af;
+@define-color rose #fab387;
+@define-color pine #94e2d5;
+@define-color foam #89dceb;
+@define-color iris #cba6f7;
+
+@define-color highlightLow #313244;
+@define-color highlightMed #45475a;
+@define-color highlightHigh #585b70;

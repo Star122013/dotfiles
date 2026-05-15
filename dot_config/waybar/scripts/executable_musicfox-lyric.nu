@@ -1,9 +1,10 @@
 #!/usr/bin/env nu
 
-def compact [text: string, limit: int = 44] {
+def compact [text: string, limit: int = 40] {
   let cleaned = ($text | str replace --all "\n" " " | str trim)
-  if (($cleaned | str length) > $limit) {
-    $cleaned | str substring 0..($limit - 1) | $"($in)…"
+  let chars = ($cleaned | split chars)
+  if (($chars | length) > $limit) {
+    $chars | first ($limit - 1) | str join | $"($in)…"
   } else {
     $cleaned
   }

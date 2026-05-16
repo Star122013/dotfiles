@@ -1,0 +1,193 @@
+@import "colors/colors.css";
+
+* {
+  font-family: "Symbols Nerd Fonts Mono", "Maple Mono NF CN";
+  font-size: 17px;
+  min-height: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.background {
+  background: transparent;
+}
+
+#bar {
+  background-color: alpha(@mantle, 0.72);
+  color: @text;
+  margin: 0;
+  border-top: 1px solid alpha(@surface1, 0.5);
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+#bar button:focus,
+#bar button:focus-visible,
+#bar button:active,
+#bar .item:focus,
+#bar .item:focus-visible,
+#bar .item:active {
+  outline: none;
+  box-shadow: none;
+  background-image: none;
+}
+
+#bar > box {
+  margin: 1px 0;
+}
+
+#workspaces,
+#cpu,
+#memory,
+#temperature,
+#music,
+#network,
+#pulseaudio,
+#backlight,
+#clock,
+#tray,
+#swaync,
+#lock,
+#power {
+  background-color: alpha(@surface0, 0.88);
+  padding: 5px 12px;
+}
+
+#workspaces,
+#cpu,
+#network,
+#music {
+  margin-left: 16px;
+}
+
+#temperature,
+#clock,
+#tray,
+#power {
+  margin-right: 16px;
+}
+
+#workspaces {
+  border-radius: 1rem;
+  padding: 2px;
+}
+
+.workspaces .item {
+  color: @lavender;
+  background-color: transparent;
+  border-radius: 1rem;
+  padding: 5px 8px;
+  margin: 0;
+}
+
+.workspaces .item.visible,
+.workspaces .item.inactive {
+  background-color: alpha(@surface0, 0.88);
+}
+
+.workspaces .item.focused {
+  color: @sky;
+  background-color: alpha(@surface1, 0.8);
+}
+
+.workspaces .item:hover {
+  color: @sapphire;
+  background-color: alpha(@surface1, 0.45);
+}
+
+#cpu {
+  color: @teal;
+  border-radius: 1rem 0 0 1rem;
+}
+
+#memory {
+  color: @green;
+  border-radius: 0;
+}
+
+#temperature {
+  color: @peach;
+  border-radius: 0 1rem 1rem 0;
+}
+
+#music {
+  color: @mauve;
+  border-radius: 1rem;
+}
+
+#network {
+  color: @sky;
+  border-radius: 1rem 0 0 1rem;
+}
+
+#pulseaudio {
+  color: @maroon;
+  border-radius: 0;
+  padding-right: 14px;
+}
+
+#pulseaudio .sink {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#backlight {
+  color: @yellow;
+  border-radius: 0;
+}
+
+#clock {
+  color: @blue;
+  border-radius: 0 1rem 1rem 0;
+}
+
+#tray {
+  border-radius: 1rem;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tray .item {
+  padding: 0 5px;
+  margin: 0 2px;
+}
+
+#swaync {
+  color: @blue;
+  border-radius: 1rem 0 0 1rem;
+  padding-right: 10px;
+}
+
+#lock {
+  color: @lavender;
+  border-radius: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#power {
+  color: @red;
+  border-radius: 0 1rem 1rem 0;
+  padding-left: 10px;
+  padding-right: 14px;
+}
+
+.notifications .button {
+  color: inherit;
+}
+
+.notifications .count {
+  background-color: @surface1;
+  color: @text;
+  border-radius: 999px;
+  min-width: 1.2em;
+  min-height: 1.2em;
+  padding: 0 4px;
+  margin-left: 4px;
+  font-size: 12px;
+}

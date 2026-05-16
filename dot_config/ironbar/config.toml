@@ -1,0 +1,105 @@
+position = "top"
+anchor_to_edges = true
+layer = "top"
+
+[[start]]
+type = "workspaces"
+name = "workspaces"
+format = ""
+sort = "index"
+all_monitors = false
+
+[[start]]
+type = "sys_info"
+name = "cpu"
+format = [" {cpu_percent}%"]
+interval = 2
+
+[[start]]
+type = "sys_info"
+name = "memory"
+format = [" {memory_percent}%"]
+interval = 5
+
+[[start]]
+type = "sys_info"
+name = "temperature"
+format = [" {temp_c}°"]
+interval = 5
+show_if = "sh -lc 'test -r /sys/class/thermal/thermal_zone0/temp || test -d /sys/class/hwmon'"
+
+[[center]]
+type = "label"
+name = "music"
+label = "  {{poll:1000:/home/cyrene/.config/ironbar/scripts/musicfox-lyric.nu}}"
+on_click_left = "playerctl play-pause"
+
+[center.truncate]
+mode = "end"
+max_length = 44
+
+[[end]]
+type = "label"
+name = "network"
+label = "{{poll:2000:/home/cyrene/.config/ironbar/scripts/network-status.sh}}"
+
+[[end]]
+type = "volume"
+name = "pulseaudio"
+format = "{icon} {percentage}%"
+mute_format = ""
+show_sources = false
+disable_popup = true
+on_click_left = "pavucontrol"
+
+[end.icons]
+volume_high = ""
+volume_medium = ""
+volume_low = ""
+muted = ""
+
+# [[end]]
+# type = "brightness"
+# name = "backlight"
+# format = ""
+
+# [end.mode]
+# type = "systemd"
+# subsystem = "backlight"
+# name = "intel_backlight"
+
+[[end]]
+type = "label"
+name = "clock"
+label = " {{poll:1000:TZ=Asia/Shanghai date '+%H:%M'}}"
+
+[[end]]
+type = "tray"
+name = "tray"
+icon_size = 21
+
+[[end]]
+type = "notifications"
+name = "swaync"
+show_count = true
+on_click_right = "swaync-client -d -sw"
+
+[end.icons]
+closed_none = "󰂜"
+closed_some = ""
+closed_dnd = "󰪓"
+open_none = "󰂜"
+open_some = ""
+open_dnd = "󰪓"
+
+[[end]]
+type = "label"
+name = "lock"
+label = ""
+on_click_left = "sh -lc 'if command -v swaylock >/dev/null; then (sleep 0.5; swaylock --grace 0) & disown; else loginctl lock-session; fi'"
+
+[[end]]
+type = "label"
+name = "power"
+label = ""
+on_click_left = "sh -lc 'if command -v wlogout >/dev/null; then wlogout; else notify-send \"wlogout not found\"; fi'"

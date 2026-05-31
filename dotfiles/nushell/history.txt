@@ -1,0 +1,794 @@
+home-manager switch --show-trace -b backup
+sudo nano /etc/dae/config.dae
+hx
+sudot nano /etc/dae/config.dae
+echo $env.TERMINFO
+echo $env.TERMINFO_DIRS
+reboot
+echo $env.TERMINFO_DIRS
+sudot nano /etc/dae/config.dae
+echo $env.TERMINFO
+cd .config/home-manager/
+grep TERMINFO_DIRS ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+bash
+hx
+nushell
+echo $env.TERMINFO_DIRS
+sudot nano /etc/dae/config.dae
+hx
+sudo nano /etc/dae/config.dae
+cd ~/Documents/typst-blog/
+ls ~/.nix-profile/share/terminfo/
+bh sudo
+cat ~/.config/nushell/config.nu
+cd ~/fedora-niri-atomic/
+jj desc -m "use nix self intead judge hash"
+jj desc -m "use nix self build intead of hash judgement"
+jj bookmark set main -r @
+jj git push
+hx
+deno task build
+deno task rebuild
+deno task perview
+deno task prrview
+deno task preview
+ls ~/.nix-profile/share/terminfo/
+ls ~/.nix-profile/share/terminfo/x/
+ls ~/.nix-profile/share/terminfo/x/xterm-ghostty
+cat ~/.nix-profile/share/terminfo/x/xterm-ghostty
+ls
+ls /nix/store/ | where name =~ "ghostty" 
+clear
+ls /nix/store/ | where name =~ "ghostty" 
+qq
+ls /nix/store/ | where name =~ "ghostty" 
+ls /nix/store/ip3szhv5zllixrvh4cfz4fhl9vlazacx-ghostty-1.3.1-terminfo
+ls /nix/store/ip3szhv5zllixrvh4cfz4fhl9vlazacx-ghostty-1.3.1-terminfo/share/
+ls /nix/store/ip3szhv5zllixrvh4cfz4fhl9vlazacx-ghostty-1.3.1-terminfo/share/terminfo/
+ls /nix/store/ip3szhv5zllixrvh4cfz4fhl9vlazacx-ghostty-1.3.1-terminfo/share/terminfo/x
+cat /nix/store/ip3szhv5zllixrvh4cfz4fhl9vlazacx-ghostty-1.3.1-terminfo/share/terminfo/x/xterm-ghostty
+nice
+bh nice
+btop
+nix run nixpkgs#htop
+chrt -m
+bh chrt
+bh taskset
+sudo bootc upgrade
+reboot
+cd ./fedora-niri-atomic/
+yazi
+systemctl status fedora-nix-graphics-rebuild.service
+cd ~/Documents/typst-blog/
+hx
+jj desc -m "complete bootc & nix"
+jj bookmark set main -r @
+jj git push
+nix flake show github:caelestia-dots/shell
+cd ~/.config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+caelestia-shell 
+hx
+reboot
+fastfetch 
+hyprland
+fastfetch 
+cd .config/home-manager/
+ls
+yazi
+caelestia scheme set
+caelestia-shell  scheme set
+caelestia-shell ipc call  scheme set
+fastfetch 
+cd .config/home-manager/
+journal
+journactl
+journalctl
+systemctl status xdg-desktop-portal
+journalctl -b
+systemctl status xdg-desktop-portal --user
+cd .config/home-manager/
+rpm -q hyprland
+rpm -q xdf-portal-desktop
+rpm -q xdg-portal-desktop
+rpm -q xdg-desktop-portal
+rpm -q xdg-desktop-portal-hyprland
+cd ./fedora-niri-atomic/
+ls /usr/sbin/
+ls /usr/sbin/ | where  name =~ "unix"
+cd
+cd ./fedora-niri-atomic/
+hx
+yazi
+jj desc -m "add nix-wrappers.conf"
+jj bookmark set main -r @
+jj git push
+jj git fetch
+jj
+jj rebase
+jj rebase onto l
+jj rebase --help
+jj
+jj rebase -s p -o l
+jj
+jj log 
+jj log -r "all()"
+jj git push
+sudo bootc upgrade
+reboot
+cd ~/Documents/typst-blog/
+hx
+cd
+cd ./fedora-niri-atomic/
+fastfetch 
+cd .config/home-manager/
+nwg-look
+cd .config/home-manager/
+nwg-look
+cd .config/home-manager/
+hx
+nix run git+https://codeberg.org/fn3x/sneemok.git#sneewok
+hyprctl
+hyprctl clients
+cd .config/home-manager/
+hx
+yazi
+hyprland
+reboot
+fastfetch 
+cd .config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+yazi
+reboot
+fastfetch 
+cd .config/home-manager/
+cat ~/.config/niri/config/execs.kdl
+hx
+ls /usr/lib/systemd/system/ | where name =~ "ly"
+systemctl status ly-kmsconvt@.service
+systemctl status ly-kmsconvt@tty2.service
+cd .config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+cd .config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+nix flake show github:vicinaehq/vicinae
+hx
+nix flake show github:vicinaehq/vicinae
+home-manager switch --show-trace -b backup
+cd ~/fedora-niri-atomic/
+hx
+jj desc -m "remove unused packages and repos"
+jj bookmark set main -r @
+jj git push
+sudo bootc upgrade
+reboot
+cd ~/fedora-niri-atomic/
+cd ~/.config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+nix run nixpkgs#nwg-look
+jj workspace
+jj workspace add test
+jj log
+jj log -h
+jj log -r "test()"
+jj log -r "all()"
+jj log -r 
+jj log --help
+jj help -k revsets
+jj help -k revsets | bat -lp help
+jj help -k revsets | bat -lp man
+jj help -k revsets | bat 
+bat -h
+bh
+cat ~/.config/nushell/config.nu
+jj help -k revsets | bat -pl man
+jj help -k revsets | bat -pl help
+jj log -r "workspace(test)"
+jj log -r 'workspace("test")'
+jj workspace list
+jj log -r "::"
+jj log -r "test@"
+jj log -r "::test@"
+yazi
+jj workspace remove test
+jj workspace --help
+jj workspace forget test
+ls
+yazi
+home-manager
+home-manager packages list
+home-manager packages
+home-manager packages | lines | wrap
+home-manager packages | lines | wrap "packages"
+hx
+hx
+home-manager switch --show-trace -b backup
+echo $env.PATH
+yazi
+home-manager switch --show-trace -b backup
+yazi
+home-manager switch --show-trace -b backup
+emacs
+yazi
+home-manager switch --show-trace -b backup
+emacs
+yazi
+emacs
+hx
+emacs
+hx
+emacs
+hx ../fontconfig/fonts.conf
+emacs
+pi
+cd ../fontconfig/fonts.conf
+cd ../fontconfig/
+nvim
+music
+musicfox
+yazi
+cd .config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+emacs
+yazi
+home-manager switch --show-trace
+yazi
+home-manager switch --show-trace
+emacs
+btop
+yazi
+emacs
+emacs
+emacs --debug-init
+emacs
+emacs --debug-init
+yazi
+home-manager switch --show-trace
+git clone https://codeberg.org/cyrene/nvim.git ~/.config/nvim
+nvim
+yazi
+nvim
+cd ../nvim/
+yazi
+nvim
+journalctl | less
+q
+journalctl | bat
+hx
+emacs
+nvim
+nvim
+yazi
+cd ../nvim/
+nvim
+nvim
+yazi
+journalctl -b | bat
+nvim
+yazi
+bash
+ls -la
+btop
+nvim
+ls -la
+hx
+nvim --clean plasma.nix
+yazi
+hx
+nix flake show github:nix-community/nixd
+hx
+home-manager switch --show-trace
+yazi
+home-manager switch --show-trace -b backup
+hx
+cd .config/home-manager/
+emacs
+yazi
+home-manager switch --show-trace -b backup
+hx
+git clone https://github.com/nix-community/home-manager.git --depth=1 ~/Documents/home-manager
+cd ~/Documents/home-manager/
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+cd ~/Documents/home-manager/
+fastfetch 
+dconf
+dconf list
+dconf list /
+dconf watch /
+dconf list /org
+dconf list //org
+dconf list /
+dconf list /org/
+dconf list /org/gnome
+dconf list /org/gnome/
+hx
+cd ~/.config/home-manager/
+dconf list /org/gnome/desktop/
+dconf list /org/gnome/desktop/interface/
+dconf list /org/gnome/desktop/interface/color-scheme
+dconf list /org/gnome/desktop/interface/color-scheme/
+fc-list | rg Sarara
+fc-list | rg Sarasa
+fc-list | rg Maple
+fc-list | rg Sarasa
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+reboot
+cd ~/.config/home-manager/
+dconf list /org/gnome/desktop/interface/color-scheme/
+dconf list /org/gnome/desktop/interface/
+home-manager switch --show-trace -b backup
+hx
+cd ~/.config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+nwg-look
+nix run nixpkgs#nwg-look
+hx
+home-manager switch --show-trace -b backup
+reboot
+cd ~/.config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+hx 
+cat ../vicinae/settings.json
+yazi
+home-manager switch --show-trace -b backup
+vicinae server --replace
+reboot
+cd ~/.config/home-manager/
+hx
+home-manager switch --show-trace -b backup
+vivaldi 
+hx
+home-manager switch --show-trace -b backup
+vivaldi 
+ffmpeg
+hx
+vivaldi 
+home-manager switch --show-trace -b backup
+viva
+vivaldi 
+hx
+flatpak list
+home-manager switch --show-trace -b backup
+cd ~/.config/home-manager/
+hx
+flatpak lis
+flatpak list
+flatpak uninstall com.google.Chrome
+flatpak uninstall io.github.go_musicfox.go-musicfox
+partitionmanager 
+filelight
+btop
+yazi
+podman system reset
+filelight
+pi
+coredumpctl list
+fuzzel
+nix flake show github:noctalia-dev/noctalia-shell/v5
+cd ~/.config/home-manager/
+nix flake show github:noctalia-dev/noctalia-shell/v5
+hx
+home-manager switch --show-trace -b backup
+noctalia-shell
+btop
+nix run nixpkgs#nvtop
+nix run nixpkgs#htop
+nix run nixpkgs#nvtopPackages.amd
+hx
+reboot
+hyprctl clients
+systemctl status plasmalogin
+nix run nixpkgs#nvtopPackages.amd
+systemctl status dae
+systemctl restart dae
+cd ~/.config/home-manager/
+nix repl
+nix repl -f '<nixpkgs>'
+$env.NIX_PATH
+hx
+home-manager switch --show-trace -b backup
+$env.NIX_PATH
+hx
+home
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+flatpak list
+flatpak uninstall com.qq.QQ
+hx
+musicfox
+musicfox -h
+musicfox --debug
+home-manager switch --show-trace -b backup
+hx
+yazi
+home-manager switch --show-trace -b backup
+yazi
+hx
+yazi
+musicfox --debug
+home-manager switch --show-trace -b backup
+yazi
+hx
+home-manager switch --show-trace -b backup
+flatpak list
+flatpak uninstall com.visualstudio.code 
+hyprctl clients
+hx
+cd ~/fedora-niri-atomic/
+hx
+nix gc
+nix
+nix --help
+nix fmt
+nix --help
+nix edit pkgs.qq
+nix edit
+nix help
+nix help-stores
+systemctl status nix-gc
+sudo nix store gc
+hx
+home-manager switch --show-trace -b backup
+nix log /nix/store/25cgmac9hs59rq1ahgnfpi060mv1bqdh-home-manager-files.drv
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+hx
+home-manager switch --show-trace -b backup
+direnv
+hx
+home-manager switch --show-trace -b backup
+systemctl mask --user drkonqi-coredump-launcher
+nh
+nh home
+nh home switch
+hx 
+hx
+jj desc -m "remove unused packages and repos"
+jj bookmark set main -r @
+jj git push
+sudo bootc upgrade
+reboot
+musicfox --debug
+nix repl -f '<nixpkgs>'
+dolphin
+nix run nixpkgs#dolphin
+nix run nixpkgs#kdePackages.dolphin
+cd ~/fedora-niri-atomic/
+hx
+cd ~/.config/home-manager/
+hx
+nh home switch .
+jj desc
+jj bookmark set main -r @
+jj git push
+fcitx5
+pixi
+brew
+mise
+pi
+nh search pi
+pi -v
+nix run nixpkgs#pi-coding-agent -v
+nix run nixpkgs#pi-coding-agent -- version
+pi --help
+nix run nixpkgs#pi-coding-agent -- --version
+hx
+yazi
+nh home switch .
+pi
+npm
+hx
+nh home switch .
+nh search node
+nh search node-npm
+hx
+nh home switch .
+pi
+npm
+nh search npm
+hx
+nh home switch .
+pi
+sudo npm
+pi
+cd ~/.config/home-manager/
+cat ~/.config/home-manager/dotfiles/hypr/modules/keybindings.lua
+nh home switch .
+pi
+hx
+nh home switch .
+pi
+pi -v
+yazi
+pi install npm:pi-exa
+pi
+cd ~/.config/home-manager/
+yazi
+cd .config/home-manager/
+yazi
+hx
+nh home switch . --ask
+devenv
+cd ~/Documents/
+git clone https://codeberg.org/ziglings/exercises.git -b v0.16.0 ./ziglings
+cd ./ziglings/
+ls
+devenv
+devenv init
+ls
+hx ./devenv.nix
+devenv
+devenv shell
+hx ./devenv.nix
+devenv shell
+hx ./devenv.nix
+devenv shell
+devenv update
+devenv shell
+devenv allow
+devenv shell
+devenv init --include-envrc
+devenv init -- --include-envrc
+hx ./devenv.nix
+yazi
+direnv
+git status
+yazi
+nix flake init
+ls
+cat /etc/nix/nix.conf
+hx ./flake.nix
+hx .envrc
+direnv allow
+direnv reload
+yazi
+cd ..
+cd ./ziglings/
+hx ./flake.nix
+direnv reload
+zig
+direnv -h
+direnv 
+direnv reload
+cd ../
+cd
+libvirted
+libvirt
+systemctl status libvirt
+fastfetch 
+cd ./ziglings/
+cat ~/.config/nushell/config.nu
+zig
+cd ./fedora-niri-atomic/
+hx
+pi
+hx
+cd ~/.config/home-manager/
+nix flake show github:mitchellh/zig-overlay
+nix flake show github:mitchellh/zig-overlay | detect columns 
+nix flake show github:mitchellh/zig-overlay | rg 0.16
+nix flake show github:mitchellh/zig-overlay
+hx ./flake.nix
+cd ../
+cd ./ziglings/
+zig
+ostree admin config-diff
+速度哦ostree admin config-diff
+sudo ostree admin config-diff
+cd ~/fedora-niri-atomic/
+cat /usr/etc/ly/config.ini.rpmnew
+cat /usr/etc/ly/config.ini
+cp -h
+yazi
+jj desc -m "test /etc file recovery"
+jj bookmark set test/etc-recovery -r @
+jj git push
+jj bookmark track test/etc-recovery --remote=origin
+jj git push
+sudo ostree admin config-diff
+sudo cpr
+sudo rm -rf /etc/ly/
+sudo cp -a /usr/etc/ly /etc/ly
+ls /etc/ly
+sudo ostree admin config-diff
+ls /etc/ly
+sudo bootc upgrade
+reboot
+ls /etc/ly
+ls -la /etc/ly/
+ls -ls /usr/etc/ly/
+cd ~/fedora-niri-atomic/
+jj desc -m "fix ly config error"
+jj git push
+jj git fetch
+cd ~/.config/home-manager/
+hx
+nh home switch . --ask
+sudo bootc upgrade
+reboot
+cd ~/.config/home-manager/
+nix run nixpkgs#nwg-look
+hyprctl setcursor
+hyprctl setcursor Bibata-Modern-Ice
+hyprctl setcursor Bibata-Modern-Ice 24
+hx
+cd ~/fedora-niri-atomic/
+hx
+jj desc -m "remove unused packages and repos"
+jj bookmark set main -r @
+jj
+jj new main
+jj 
+jj log
+jj abondon
+jj abandon
+jj abandon qy
+jj log
+jj log -r "::"
+hx
+jj desc -m "remove unused packages and repos"
+jj bookmark set main -r @
+jj git push
+mise
+yazi
+cd
+cd ~/.config/home-manager/
+hx
+nh home switch . --ask
+starship
+hx
+nh home switch . --ask
+ls
+hyprctl setcursor Bibata-Modern-Ice 24
+fastfetch 
+nh search throne
+nh search singbox
+cd ~/.config/home-manager/
+nix flake update
+systemctl status dae
+systemctl restart  dae
+nix run nixpkgs#gui-for-singbox
+nix run nixpkgs#chromium
+nh home switch . --ask
+hx
+nh home switch . --ask
+sudo bootc upgrade
+nh home switch . --ask
+reboot
+cd ~/.config/home-manager/
+journalctl -b | bat
+journalctl -b
+cd ~/fedora-niri-atomic/
+dnf list
+sudo dnf list
+sudo dnf lista --help
+sudo dnf list --help
+sudo dnf list kmson
+sudo dnf list kmscon
+hx
+jj desc -m "add ly deps"
+cd ~/Documents/ziglings/
+zig
+nh home switch . --ask
+hx
+nh home switch . --ask
+hx
+nh home switch . --ask
+hx
+nh home switch . --ask
+btop
+bat
+sudo hx /etc/nix/nix.conf
+sudoedit /etc/nix/nix.conf
+deven
+devenv
+cd ~/Documents/
+mkdir ./mojo-test
+cd ./mojo-test/
+devenv init
+devenv lsp
+hx ./devenv.nix
+devenv enter
+devenv shell
+hx ./devenv.nix
+devenv shell
+devenv update
+devenv shell
+env | grep -E 'NIX_CONFIG|NIX_SYSTEM'
+env
+env | grep -E 'NIX_CONFIG|NIX_SYSTEM'
+journalctl -b
+yazi
+pi
+hx
+nh home switch . --ask
+yazi
+ls
+ls -a
+nix flake init 
+hx ./flake.nix
+nix flake --help
+nix flake init --help
+cd ..
+jj git clone git@github.com:Star122013/dev-templates.git
+cd ./dev-templates/
+direnv allow
+hx
+cat ./flake.nix
+yazi
+jj desc -m "add zig"
+jj bookmark set main -r @
+jj git push
+yazi
+nix flake init --help
+nix flake init -t github:Star122013/dev-templates#zig
+git status
+yazi
+direnv allow
+cd ../
+cd ./ziglings/
+程度
+cd ~/Documents/dev-templates/
+jj desc -m "fix zig error"
+jj bookmark set main -r @
+jj git push
+pi
+yazi
+cd ~/.config/home-manager/
+yazi
+cd
+cd .pi/
+yazi
+pi
+hx
+nix run nixpkgs#vscode
+yazi
+nh home switch . --ask
+hx
+nh home switch . --ask
+hx
+yazi
+jj git init
+jj git 
+jj git  remote
+jj git  remote add 
+jj git  remote add origin git@github.com:Star122013/dotfiles.git
+jj log
+jj desc
+jj bookmark set home-manager -r @
+jj git push
+jj bookmark track home-manager --remote=origin
+jj git push
+fastfetch 
+jj git fetch
+jj log
+ls
+jj config set --repo snapshot.max-new-file-size 6649499
+jj  log -r "::"

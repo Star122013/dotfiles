@@ -1,0 +1,18 @@
+{
+   "$schema": "https://vicinae.com/schemas/config.json",
+   "favicon_service": "twenty",
+   "font": {
+      "normal": {
+         "family": "Maple Mono NF CN"
+      }
+   },
+   "theme": {
+      "light": {
+         "name": "catppuccin-mocha"
+      },
+      "dark": {
+         "name": "catppuccin-mocha",
+         "icon_theme": "Papirus-Dark"
+      }
+   }
+}

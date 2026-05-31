@@ -1,0 +1,4 @@
+inherits = "catppuccin_mocha"
+"ui.background" ={}
+"ui.virtual.inlay-hint"={ fg = "#6c7086" }
+

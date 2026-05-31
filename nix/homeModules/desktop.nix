@@ -1,0 +1,78 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+{
+  home.pointerCursor = {
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
+  gtk = {
+    enable = true;
+    gtk2.force = lib.mkForce true;
+    font = {
+      name = "Sarasa Gothic SC";
+      package = pkgs.sarasa-gothic;
+    };
+    theme = {
+      name = "Catppuccin-GTK-Dark";
+      package = pkgs.magnetic-catppuccin-gtk;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+    cursorTheme = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+      size = 24;
+    };
+    colorScheme = "dark";
+  };
+
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = with pkgs; [
+        kdePackages.fcitx5-chinese-addons
+        fcitx5-pinyin-moegirl
+        fcitx5-pinyin-zhwiki
+        fcitx5-pinyin-minecraft
+        fcitx5-mellow-themes
+      ];
+    };
+  };
+
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        enable-hot-corners = false;
+        cursor-theme = "Bibata-Modern-Ice";
+        cursor-size = 24;
+        font-name = "Sarasa Gothic SC 11";
+        gtk-theme = "Catppuccin-GTK-Dark";
+        icon-theme = "Papirus-Dark";
+      };
+    };
+  };
+
+  fonts.fontconfig.enable = true;
+
+  xdg.configFile."gtk-4.0/gtk.css".source =
+    "${pkgs.magnetic-catppuccin-gtk}/share/themes/Catppuccin-GTK-Dark/gtk-4.0/gtk.css";
+  xdg.configFile."gtk-4.0/gtk-dark.css".source =
+    "${pkgs.magnetic-catppuccin-gtk}/share/themes/Catppuccin-GTK-Dark/gtk-4.0/gtk-dark.css";
+  xdg.configFile."gtk-4.0/assets".source =
+    "${pkgs.magnetic-catppuccin-gtk}/share/themes/Catppuccin-GTK-Dark/gtk-4.0/assets";
+}

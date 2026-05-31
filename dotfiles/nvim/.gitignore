@@ -1,0 +1,4 @@
+.nvimlog
+.claude/settings.local.json
+lua/generated-matugen.lua
+

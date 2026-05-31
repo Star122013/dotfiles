@@ -1,4 +1,0 @@
-yazi
-jj desc 
-jj bookmark set home-manager -r @
-jj git push

@@ -13,7 +13,8 @@ in
   xdg.configFile."ghostty".source = mkOutOfStoreSymlink "${dotfilesDir}/ghostty";
   xdg.configFile."helix".source = mkOutOfStoreSymlink "${dotfilesDir}/helix";
   xdg.configFile."nvim".source = mkOutOfStoreSymlink "${dotfilesDir}/nvim";
-  xdg.configFile."nushell".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell";
+  xdg.configFile."nushell/env.nu".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell/env.nu";
+  xdg.configFile."nushell/config.nu".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell/config.nu";
   xdg.configFile."vicinae/settings.json".source =
     mkOutOfStoreSymlink "${dotfilesDir}/vicinae/settings.json";
   xdg.configFile."emacs/init.el".source = mkOutOfStoreSymlink "${dotfilesDir}/emacs/init.el";

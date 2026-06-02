@@ -11,13 +11,20 @@ in
   xdg.configFile."hypr/hyprland.lua".source = mkOutOfStoreSymlink "${dotfilesDir}/hypr/hyprland.lua";
   xdg.configFile."hypr/modules".source = mkOutOfStoreSymlink "${dotfilesDir}/hypr/modules";
   xdg.configFile."ghostty".source = mkOutOfStoreSymlink "${dotfilesDir}/ghostty";
-  xdg.configFile."helix".source = mkOutOfStoreSymlink "${dotfilesDir}/helix";
+  xdg.configFile."helix/config.toml".source = mkOutOfStoreSymlink "${dotfilesDir}/helix/config.toml";
+  xdg.configFile."helix/languages.toml".source =
+    mkOutOfStoreSymlink "${dotfilesDir}/helix/languages.toml";
+  xdg.configFile."helix/themes".source = mkOutOfStoreSymlink "${dotfilesDir}/helix/themes";
+  xdg.configFile."hellwal".source = mkOutOfStoreSymlink "${dotfilesDir}/hellwal";
   xdg.configFile."nvim".source = mkOutOfStoreSymlink "${dotfilesDir}/nvim";
   xdg.configFile."nushell/env.nu".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell/env.nu";
   xdg.configFile."nushell/config.nu".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell/config.nu";
   xdg.configFile."vicinae/settings.json".source =
     mkOutOfStoreSymlink "${dotfilesDir}/vicinae/settings.json";
   xdg.configFile."emacs/init.el".source = mkOutOfStoreSymlink "${dotfilesDir}/emacs/init.el";
+  xdg.configFile."emacs/early-init.el".source =
+    mkOutOfStoreSymlink "${dotfilesDir}/emacs/early-init.el";
+  xdg.configFile."emacs/extras".source = mkOutOfStoreSymlink "${dotfilesDir}/emacs/extras";
   xdg.configFile."go-musicfox/config.toml".source =
     mkOutOfStoreSymlink "${dotfilesDir}/go-musicfox/config.toml";
 }

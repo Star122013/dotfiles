@@ -11,6 +11,7 @@
     inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     jujutsu
+    hellwal
     bat
     git
     wget
@@ -73,5 +74,8 @@
     devenv
     nodejs-slim_26.npm
     nodejs-slim_26
+    gcc
+    tree-sitter
+    zig
   ];
 }

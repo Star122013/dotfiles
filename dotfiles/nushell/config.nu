@@ -30,14 +30,22 @@ def bh [...args: string] {
   run-external $command ...$subcommand "--help" o+e>| bat -pl help
 }
 
-def musicfox [] {
-  ^flatpak run io.github.go_musicfox.go-musicfox
-}
-
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 zoxide init nushell --cmd cd | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
-if (which mise | is-not-empty) {
-  use ($nu.default-config-dir | path join mise.nu)
-}
+use std/config *
+
+# Initialize the PWD hook as an empty list if it doesn't exist
+$env.config.hooks.env_change.PWD = $env.config.hooks.env_change.PWD? | default []
+
+$env.config.hooks.env_change.PWD ++= [{||
+  if (which direnv | is-empty) {
+    # If direnv isn't installed, do nothing
+    return
+  }
+
+  direnv export json | from json | default {} | load-env
+  # If direnv changes the PATH, it will become a string and we need to re-convert it to a list
+  $env.PATH = do (env-conversions).path.from_string $env.PATH
+}]

@@ -17,6 +17,8 @@ in
   xdg.configFile."helix/themes".source = mkOutOfStoreSymlink "${dotfilesDir}/helix/themes";
   xdg.configFile."hellwal".source = mkOutOfStoreSymlink "${dotfilesDir}/hellwal";
   xdg.configFile."nvim".source = mkOutOfStoreSymlink "${dotfilesDir}/nvim";
+  xdg.configFile."mpv".source = mkOutOfStoreSymlink "${dotfilesDir}/mpv";
+  xdg.configFile."yt-dlp".source = mkOutOfStoreSymlink "${dotfilesDir}/yt-dlp";
   xdg.configFile."nushell/env.nu".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell/env.nu";
   xdg.configFile."nushell/config.nu".source = mkOutOfStoreSymlink "${dotfilesDir}/nushell/config.nu";
   xdg.configFile."vicinae/settings.json".source =

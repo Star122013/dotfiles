@@ -11,7 +11,7 @@ shell-integration = nushell
 shell-integration-features = no-cursor,ssh-terminfo
 
 # Font
-font-family = "Maple Mono NF CN"
+font-family = "IoskeleyMono Nerd Font"
 font-size = 14
 
 # Appearance

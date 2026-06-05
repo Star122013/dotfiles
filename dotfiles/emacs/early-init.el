@@ -45,4 +45,4 @@
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
-(push '(font . "Maple Mono NF CN-13") default-frame-alist)
+(push '(font . "IoskeleyMono Nerd Font-13.6") default-frame-alist)

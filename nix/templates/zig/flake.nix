@@ -28,7 +28,7 @@
         "x86_64-darwin"
       ];
       perSystem =
-        { pkgs, system, ... }:
+        { pkgs, system', ... }:
         {
           treefmt = {
             projectRootFile = "flake.nix";
@@ -41,7 +41,7 @@
           devShells.default = pkgs.mkShellNoCC {
             name = "nix devShell";
             buildInputs = with pkgs; [
-              zig.packages.${system}."0.16.0"
+              zig.packages.master
               zls
               zig-zlint
             ];

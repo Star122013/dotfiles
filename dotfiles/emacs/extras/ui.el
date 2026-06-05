@@ -4,20 +4,46 @@
   :ensure t
   :hook (after-init . doom-modeline-mode)
   :custom
-  (doom-modeline-minor-modes t)
-  (doom-modeline-irc nil)
-  (doom-modeline-mu4e nil)
-  (doom-modeline-gnus nil)
+  (doom-modeline-height 25)
+  (doom-modeline-icon t)
+  (doom-modeline-bar-width 4)
+  (doom-modeline-project-name t)
+  (doom-modeline-workspace-name t)
+  (doom-modeline-persp-name t)
+  (doom-modeline-persp-icon t)
+  (doom-modeline-buffer-file-name-style 'file-name)
+  (doom-modeline-position-column-line-format '("%l:%c"))
+  (doom-modeline-minor-modes nil)
+  (doom-modeline-indent-info t)
+  (doom-modeline-vcs-icon t)
+  (doom-modeline-vcs-max-length 15)
+  (doom-modeline-check 'auto)
   (doom-modeline-lsp t)
-  (doom-modeline-github nil)
-  (doom-modeline-persp-name nil)
-  (doom-modeline-unicode-fallback t)
-  (doom-modeline-enable-word-count nil))
+  (doom-modeline-time t)
+  (doom-modeline-time-analogue-clock t)
+  )
 
 (use-package minions
   :ensure t
   :config (minions-mode 1))
 
+
+;; tabbar
+(use-package centaur-tabs
+  :ensure t
+  :demand t
+  :config
+  (centaur-tabs-mode t)
+ 
+  (setq centaur-tabs-style "bar"          
+        centaur-tabs-height 32
+        centaur-tabs-icon-type 'nerd-icons
+        centaur-tabs-set-icons t          
+        centaur-tabs-set-modified-marker t 
+        centaur-tabs-modified-marker "●")
+  :bind
+  ("M-<left>" . centaur-tabs-backward)
+  ("M-<right>" . centaur-tabs-forward))
 
 ;; Colorize color names in buffers
 (use-package

@@ -62,7 +62,14 @@
          )
   :config
   ;; Narrowing lets you restrict results to certain groups of candidates
-  (setq consult-narrow-key "<"))
+  (setq consult-narrow-key "<")
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep consult-man
+   consult-bookmark consult-recent-file consult-xref
+   consult-source-bookmark consult-source-file-register
+   consult-source-recent-file consult-source-project-recent-file
+   :preview-key '(:debounce 0.4 any))) ;; Option 1: Delay preview
+   ;; :preview-key "M-."              ;; Option 2: Manual preview
 
 (use-package embark-consult
   :ensure t)

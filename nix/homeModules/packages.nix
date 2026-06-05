@@ -35,6 +35,7 @@
     # editor & lsp
     inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix
 
+    nixd
     nil
     nixfmt
     lua-language-server
@@ -44,18 +45,21 @@
 
     # fonts
     maple-mono.NF-CN
+    ioskeley-mono.normal-NF
 
     # theme
     papirus-icon-theme
     magnetic-catppuccin-gtk
 
-    emacs
+    emacs-pgtk
     neovim
 
     firefox
 
     mpv
     go-musicfox
+    yt-dlp
+    freetube
 
     (qq.override {
       commandLineArgs = [

@@ -1,0 +1,162 @@
+# Syntax highlighting
+# -------------------
+"attribute" = { fg = "primary", modifiers = ["bold"] }
+
+"type" = "primary"
+"type.enum.variant" = "secondary"
+
+"constructor" = "tertiary"
+
+"constant" = "secondary"
+"constant.character" = "secondaryContainer"
+"constant.character.escape" = "tertiaryContainer"
+
+"string" = { fg = "tertiary"}
+"string.regexp" = { fg = "tertiaryContainer" }
+"string.special" = { fg = "tertiary" }
+"string.special.symbol" = { fg = "tertiary" }
+"string.special.path" = { fg = "secondary", underline = { color = "secondary", style = "line" } }
+
+"path" = { fg = "secondary", underline = { color = "secondary", style = "line" } }
+
+"comment" = { fg = "outline", modifiers = ["italic"] }
+
+"variable" = "onSurface"
+"variable.builtin" = "secondary"
+"variable.parameter" = { fg = "onSurfaceVariant", modifiers = ["italic"] }
+"variable.other.member" = "primary"
+
+"label" = "secondary"
+
+"punctuation" = "outlineVariant"
+"punctuation.special" = "outline"
+
+"keyword" = { fg = "primary", modifiers = ["bold"] }
+"keyword.control.conditional" = { fg = "tertiary", modifiers = ["italic", "bold"] }
+
+"operator" = { fg = "secondary", modifiers = ["bold"] }
+
+"function" = "tertiary"
+"function.macro" = "tertiary"
+
+"tag" = "secondary"
+
+"namespace" = { fg = "secondary", modifiers = ["italic"] }
+
+"special" = "secondary"
+
+"markup.heading" = "primary"
+"markup.list" = "onSurface"
+"markup.bold" = { fg = "secondary", modifiers = ["bold"] }
+"markup.italic" = { fg = "secondary", modifiers = ["italic"] }
+"markup.link.url" = { fg = "secondary", modifiers = ["italic", "underlined"] }
+"markup.link.label" = "primary"
+"markup.raw" = "onSurface"
+"markup.quote" = "secondary"
+
+"diff.plus" = "plus"
+"diff.minus" = "error"
+"diff.delta" = "delta"
+
+# User Interface
+# --------------
+"ui.background" = "none"
+
+"ui.cursor" = { fg = "onSecondary", bg = "secondary" }
+"ui.cursor.match" = { fg = "onTertiary", bg = "tertiary", modifiers = ["bold"] }
+"ui.cursor.primary" = { fg = "onPrimary", bg = "primary" }
+
+"ui.linenr" = { fg = "onSurfaceVariant" }
+"ui.linenr.selected" = { fg = "primary" }
+
+"ui.statusline" = { fg = "onSurface", bg = "surfaceContainerLow" }
+"ui.statusline.inactive" = { fg = "onSurface", bg = "surfaceContainerLowest" }
+"ui.statusline.normal" = { fg = "onPrimary", bg = "primary", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "onTertiary", bg = "tertiary", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "onSecondary", bg = "secondary", modifiers = ["bold"] }
+
+"ui.bufferline" = { fg = "onSurface", bg = "surfaceContainerLowest" }
+"ui.bufferline.active" = { fg = "onSurface", bg = "surfaceContainer", underline = { color = "primary", style = "line" } }
+"ui.bufferline.background" = { bg = "surfaceContainerLowest" }
+
+"ui.popup" = { fg = "onSurface", bg = "surfaceContainerLow" }
+
+"ui.window" = { fg = "onSurface" }
+"ui.help" = { fg = "onSurface", bg = "surfaceContainerLow" }
+
+"ui.text" = { fg = "onBackground" }
+"ui.text.focus" = { fg = "onSurface", bg = "surfaceContainer", modifiers = ["bold"] }
+
+"ui.virtual" = "surfaceVariant"
+"ui.virtual.ruler" = { bg = "surfaceContainerLow" }
+"ui.virtual.indent-guide" = "surfaceVariant"
+"ui.virtual.inlay-hint" = { fg = "onSurfaceVariant", bg = "surfaceContainer", modifiers = ["dim"] }
+"ui.virtual.jump-label" = { fg = "primary", modifiers = ["bold"] }
+
+"ui.menu" = { fg = "onSurface", bg = "surfaceContainer" }
+"ui.menu.selected" = { fg = "onPrimary", bg = "primary", modifiers = ["bold"] }
+
+"ui.selection" = { bg = "primary", fg = "onPrimary" }
+
+"ui.highlight" = { bg = "primaryContainer", modifiers = ["bold"] }
+
+"ui.cursorline" = { bg = "surfaceContainerLowest" }
+"ui.cursorline.primary" = { bg = "surfaceContainerLow" }
+"ui.cursorline.secondary" = { bg = "surfaceContainerLow" }
+
+error = "error"
+warning = "warning"
+info = "info"
+hint = "hint"
+
+"diagnostic.hint" = { underline = { color = "hint", style = "curl" } }
+"diagnostic.info" = { underline = { color = "info", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "warning", style = "curl" } }
+"diagnostic.error" = { underline = { color = "error", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+
+[palette]
+# Constants to be used in syntax highlighting, not meant for template processor.
+warning = "#f9e2af"
+info = "#89dceb"
+hint = "#94e2d5"
+plus = "#a6e3a1"
+delta = "#89b4fa"
+
+# Template colors
+primary = "#66dbb2"
+surfaceTint = "#66dbb2"
+onPrimary = "#003828"
+primaryContainer = "#00513c"
+onPrimaryContainer = "#84f8cd"
+
+secondary = "#8ad6b7"
+onSecondary = "#003828"
+secondaryContainer = "#00513c"
+onSecondaryContainer = "#a6f2d2"
+
+tertiary = "#86d1e9"
+onTertiary = "#003642"
+tertiaryContainer = "#004e5e"
+onTertiaryContainer = "#b2ebff"
+
+error = "#ffb4ab"
+onError = "#690005"
+errorContainer = "#93000a"
+onErrorContainer = "#ffdad6"
+
+background = "#0a1519"
+onBackground = "#d8e4ea"
+surface = "#0a1519"
+onSurface = "#d8e4ea"
+surfaceVariant = "#344a52"
+onSurfaceVariant = "#b2cad3"
+
+outline = "#7d949d"
+outlineVariant = "#344a52"
+
+surfaceContainerLowest = "#051013"
+surfaceContainerLow = "#121d21"
+surfaceContainer = "#162125"
+surfaceContainerHigh = "#202c30"
+surfaceContainerHighest = "#2b373b"

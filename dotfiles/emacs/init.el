@@ -168,7 +168,7 @@ If the new path's directories does not exist, create them."
 
 ;; Misc. UI tweaks
 (blink-cursor-mode -1)                                ; Steady cursor
-(pixel-scroll-precision-mode)                         ; Smooth scrolling
+(pixel-scroll-precision-mode -1)                         ; Smooth scrolling
 
 ;; Use common keystrokes by default
 (cua-mode)
@@ -213,10 +213,29 @@ If the new path's directories does not exist, create them."
 ;; (use-package emacs			
 ;;   :config
 ;;   (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
-(use-package tokyonight-themes
-  :vc (:url "https://github.com/xuchengpeng/tokyonight-themes")
+;; (use-package tokyonight-themes
+;;   :vc (:url "https://github.com/xuchengpeng/tokyonight-themes")
+;;   :config
+;;   (load-theme 'tokyonight-moon :no-confirm))
+(use-package doom-themes
+  :ensure t
+  :custom
+  ;; Global settings (defaults)
+  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;; for treemacs users
+  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'tokyonight-moon :no-confirm))
+  (load-theme 'doom-tokyo-night t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (nerd-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -253,7 +272,7 @@ If the new path's directories does not exist, create them."
 ;; Org-mode configuration
 ;; WARNING: need to customize things inside the elisp file before use! See
 ;; the file extras/org-intro.txt for help.
-;(load-file (expand-file-name "extras/org.el" user-emacs-directory))
+(load-file (expand-file-name "extras/org.el" user-emacs-directory))
 
 ;; Email configuration in Emacs
 ;; WARNING: needs the `mu' program installed; see the elisp file for more

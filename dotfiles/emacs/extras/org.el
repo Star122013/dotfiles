@@ -43,7 +43,7 @@
 ;; Agenda variables
 (setq org-directory "~/Documents/org/") ; Non-absolute paths for agenda and
                                         ; capture templates will look here.
-
+;; '("inbox.org" "work.org"))
 (setq org-agenda-files '("inbox.org" "work.org"))
 
 ;; Default tags
@@ -52,7 +52,7 @@
                       (:startgroup)
                       ("home" . ?h)
                       ("work" . ?w)
-                      ("school" . ?s)
+                      ("study" . ?s)
                       (:endgroup)
                       (:newline)
                       ;; scale
@@ -67,7 +67,9 @@
                       ("reading")))
 
 ;; Org-refile: where should org-refile look?
-(setq org-refile-targets 'FIXME)
+;; (setq org-refile-targets 'FIXME)
+(setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+(setq org-refile-use-outline-path 'file)
 
 ;;; Phase 3 variables
 
@@ -159,3 +161,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; TODO
+(use-package
+  org-modern
+  :ensure t
+  :defer t
+  :hook (org-mode . org-modern-mode))

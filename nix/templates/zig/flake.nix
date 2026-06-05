@@ -15,7 +15,12 @@
   };
 
   outputs =
-    inputs@{ flake-parts, treefmt-nix, zig, ... }:
+    inputs@{
+      flake-parts,
+      treefmt-nix,
+      zig,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         treefmt-nix.flakeModule

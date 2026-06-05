@@ -126,6 +126,9 @@
   :ensure t
   :init
   (global-corfu-mode)
+  (setq corfu-count 10)
+  (setq corfu-max-width 80)
+  (setq corfu-min-width 20)
   :bind
   (:map corfu-map
         ("SPC" . corfu-insert-separator)

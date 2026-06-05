@@ -46,6 +46,7 @@
     # fonts
     maple-mono.NF-CN
     ioskeley-mono.normal-NF
+    noto-fonts-color-emoji
 
     # theme
     papirus-icon-theme

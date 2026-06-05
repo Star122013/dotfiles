@@ -13,7 +13,6 @@
     gtk.enable = true;
     x11.enable = true;
   };
-
   gtk = {
     enable = true;
     gtk2.force = lib.mkForce true;
@@ -71,6 +70,7 @@
     enable = true;
 
     defaultFonts = {
+      emoji = [ "Noto Color Emoji" ];
       monospace = [ "IoskeleyMono Nerd Font" ];
       sansSerif = [ "Sarasa Gothic SC" ];
       serif = [ "Sarasa Gothic SC" ];

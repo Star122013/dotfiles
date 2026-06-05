@@ -226,7 +226,7 @@ If the new path's directories does not exist, create them."
   ;; for treemacs users
   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'doom-tokyo-night t)
+  (load-theme 'doom-one t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -253,16 +253,6 @@ If the new path's directories does not exist, create them."
 ;; Packages for software development
 (load-file (expand-file-name "extras/dev.el" user-emacs-directory))
 
-(use-package nerd-icons
-  :ensure t)
-
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode))
-
-(use-package perspective
-  :ensure t)
 
 (load-file (expand-file-name "extras/ui.el" user-emacs-directory))
 

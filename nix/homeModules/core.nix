@@ -22,6 +22,7 @@ in
       XCURSOR_SIZE = "24";
       XCURSOR_PATH = "${pkgs.bibata-cursors}/share/icons:${config.home.profileDirectory}/share/icons:${config.xdg.dataHome}/icons:/run/current-system/sw/share/icons";
       GDK_BACKEND = "wayland";
+      BROWSER = "firefox";
     };
 
     # Put npm global packages in a user-writable directory.

@@ -36,6 +36,13 @@
       url = "github:noctalia-dev/noctalia-shell/v5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-qq = {
+      url = "github:NixOS/nixpkgs/pull/527397/head";
+    };
+    bluebuild = {
+      url = "github:blue-build/cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

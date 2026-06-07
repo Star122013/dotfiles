@@ -131,6 +131,15 @@
     };
   };
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "text/html" = "firefox.desktop";
+    };
+  };
+
   xdg.configFile."gtk-4.0/gtk.css".source =
     "${pkgs.magnetic-catppuccin-gtk}/share/themes/Catppuccin-GTK-Dark/gtk-4.0/gtk.css";
   xdg.configFile."gtk-4.0/gtk-dark.css".source =

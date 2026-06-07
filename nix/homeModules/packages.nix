@@ -10,6 +10,7 @@
     inputs.hyprland-guiutils.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
 
+    inputs.bluebuild.packages.${pkgs.stdenv.hostPlatform.system}.default
     jujutsu
     hellwal
     bat
@@ -46,7 +47,11 @@
     # fonts
     maple-mono.NF-CN
     ioskeley-mono.normal-NF
+    nerd-fonts.symbols-only
     noto-fonts-color-emoji
+    noto-fonts-lgc-plus
+    noto-fonts
+    font-awesome
 
     # theme
     papirus-icon-theme
@@ -62,15 +67,23 @@
     yt-dlp
     freetube
 
-    (qq.override {
-      commandLineArgs = [
-        "--enable-features=UseOzonePlatform"
-        "--ozone-platform=wayland"
-        "--ozone-platform-hint=auto"
-        "--enable-wayland-ime"
-        "--wayland-text-input-version=3"
-      ];
-    })
+    (
+      let
+        nixpkgs-qq-unfree = import inputs.nixpkgs-qq {
+          system = pkgs.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
+      in
+      nixpkgs-qq-unfree.qq.override {
+        commandLineArgs = [
+          "--enable-features=UseOzonePlatform"
+          "--ozone-platform=wayland"
+          "--ozone-platform-hint=auto"
+          "--enable-wayland-ime"
+          "--wayland-text-input-version=3"
+        ];
+      }
+    )
 
     # ai
     pi-coding-agent

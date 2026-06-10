@@ -1,5 +1,8 @@
 # config.nu
 #
+
+$env.LANG = "en_US.UTF-8"
+
 # Installed by:
 # version = "0.111.0"
 #

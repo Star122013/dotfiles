@@ -102,12 +102,18 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Use the default block cursor.
+(setq-default cursor-type 'box)
+
 ;; Vertico: better vertical completion for minibuffer commands
 (use-package vertico
   :ensure t
   :init
   ;; You'll want to make sure that e.g. fido-mode isn't enabled
-  (vertico-mode))
+  (vertico-mode)
+  :custom-face
+  ;; Selected row, similar to Telescope/nvim picker cursor highlight.
+  (vertico-current ((t (:background "#2e4a6e" :foreground "#ffffff" :extend t)))))
 
 (use-package vertico-directory
   :ensure nil
@@ -126,11 +132,38 @@
   :ensure t
   :init
   (global-corfu-mode)
+  :custom
+  (corfu-min-width 25)
+  (corfu-max-width 60)
+  (corfu-count 10)
+  (corfu-scroll-margin 2)
+  (corfu-left-margin-width 0.8)
+  (corfu-right-margin-width 0.8)
+  ;; Neovim-like styling.  Keep real border at 0; Corfu can otherwise clip the
+  ;; last candidate line on some frames/terminals.  The popup still looks
+  ;; "floating" because corfu-default differs from the editor background.
+  (corfu-border-width 0)
+  ;; Slightly different completion styles for more natural feel
+  (corfu-quit-at-boundary 'separator)
+  (corfu-quit-no-match 'separator)
   :bind
   (:map corfu-map
         ("SPC" . corfu-insert-separator)
         ("C-n" . corfu-next)
-        ("C-p" . corfu-previous)))
+        ("C-p" . corfu-previous))
+  :custom-face
+  ;; Popup background: slightly lighter than editor bg (like nvim-cmp floating window)
+  (corfu-default ((t (:background "#23272e" :foreground "#bbc2cf" :extend t))))
+  ;; Selected candidate: distinct blue highlight bar (like nvim-cmp's selection)
+  (corfu-current ((t (:background "#2e4a6e" :foreground "#ffffff" :extend t))))
+  ;; Border face kept for future use, but actual border width is 0 to avoid clipping.
+  (corfu-border ((t (:background "#1c1f24" :inherit nil))))
+  ;; Scrollbar: right-side indicator, subtle
+  (corfu-bar ((t (:background "#3f444a"))))
+  ;; Annotations: muted text for extra info
+  (corfu-annotations ((t (:foreground "#5B6268" :slant italic))))
+  ;; Deprecated candidates: muted with strikethrough
+  (corfu-deprecated ((t (:foreground "#5B6268" :strike-through t)))))
 
 ;; Part of corfu
 (use-package corfu-popupinfo
@@ -140,8 +173,16 @@
   :custom
   (corfu-popupinfo-delay '(0.25 . 0.1))
   (corfu-popupinfo-hide nil)
+  (corfu-popupinfo-width 60)
+  (corfu-popupinfo-max-height 25)
   :config
-  (corfu-popupinfo-mode))
+  (corfu-popupinfo-mode)
+  ;; Style the info popup to match the completion popup (nvim-cmp doc window look)
+  (set-face-attribute 'corfu-popupinfo nil
+                      :background "#1e2228"
+                      :foreground "#bbc2cf"
+                      :inherit nil
+                      :height 0.9))
 
 ;; Make corfu popup come up in terminal overlay
 (use-package corfu-terminal
@@ -164,6 +205,14 @@
   :ensure t
   :after corfu
   :config
+  ;; Neat, compact icons like nvim-cmp.  Keep SVG icons below line height to
+  ;; avoid Corfu clipping the last candidate.
+  (setq kind-icon-default-face 'corfu-default)
+  (setq kind-icon-blend-background nil)
+  (setq kind-icon-blend-frac 0.08)
+  (setq kind-icon-margin t)
+  (setq kind-icon-default-style
+        '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 0.85 :scale 0.85 :background nil))
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package eshell

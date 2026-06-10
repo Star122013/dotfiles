@@ -11,13 +11,8 @@ shell-integration = nushell
 shell-integration-features = no-cursor,ssh-terminfo
 
 # Font
-font-family = "Maple Mono NF CN"
+font-family = "Iosevka Term Custom"
 font-size = 14
-font-feature = -calt
-font-feature = -liga
-font-feature = -dlig
-font-feature = -hlig
-font-feature = -kern
 
 # Appearance
 background-opacity = 1.0

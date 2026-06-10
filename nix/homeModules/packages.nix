@@ -32,6 +32,7 @@
     gh
     fastfetch
     yazi
+    llama-cpp
 
     # editor & lsp
     inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix
@@ -52,6 +53,9 @@
     noto-fonts-lgc-plus
     noto-fonts
     font-awesome
+    inputs.iosevka.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.iosevka.packages.${pkgs.stdenv.hostPlatform.system}.normal
+    inputs.iosevka.packages.${pkgs.stdenv.hostPlatform.system}.mono
 
     # theme
     papirus-icon-theme

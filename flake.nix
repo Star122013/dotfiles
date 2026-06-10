@@ -43,9 +43,12 @@
       url = "github:blue-build/cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    iosevka = {
+      url = "github:Star122013/Iosevka-custom";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } (import ./nix/flake);
+    inputs@{ flake-parts, ... }: flake-parts.lib.mkFlake { inherit inputs; } (import ./nix/flake);
 }

@@ -6,10 +6,21 @@ local gh = function(x) return "https://github.com/" .. x end
 vim.pack.add({
   gh("folke/tokyonight.nvim"),
   gh("mvllow/modes.nvim"),
+  gh("olimorris/onedarkpro.nvim"),
   { src = gh("catppuccin/nvim"), name = "catppuccin" },
 })
 require("tokyonight").setup({
   transparent = true,
+})
+
+require("onedarkpro").setup({
+  options = {
+    cursorline = false, -- Use cursorline highlighting?
+    transparency = true, -- Use a transparent background?
+    terminal_colors = true, -- Use the theme's colors for Neovim's :terminal?
+    lualine_transparency = false, -- Center bar transparency?
+    highlight_inactive_windows = false, -- When the window is out of focus, change the normal background?
+  }
 })
 
 local colors = require("tokyonight.colors").setup()
@@ -34,7 +45,7 @@ require("catppuccin").setup({
     solid = true, -- use solid styling for floating windows, see |winborder|
   },
 })
-vim.cmd.colorscheme("catppuccin")
+vim.cmd("colorscheme vaporwave")
 --=============================================================================
 -- Core (mini.nvim suite - ai, pairs, tabline, pick, icons, extra)
 --=============================================================================
@@ -106,7 +117,19 @@ vim.api.nvim_create_autocmd("PackChanged", {
 --=============================================================================
 -- Syntax Highlighting (Treesitter)
 --=============================================================================
-vim.pack.add({ gh("nvim-treesitter/nvim-treesitter") })
+-- vim.pack.add({ gh("nvim-treesitter/nvim-treesitter") })
+vim.pack.add {
+  gh("romus204/tree-sitter-manager.nvim")
+}
+
+require("tree-sitter-manager").setup({
+  -- Default Options
+  ensure_installed = "all", -- list of parsers to install at the start of a neovim session. If set to "all", install all parsers.
+  -- border = nil, -- border style for the window (e.g. "rounded", "single"), if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+  auto_install = true, -- if enabled, install missing parsers when editing a new file
+  highlight = true, -- treesitter highlighting is enabled by default
+  -- languages = {}, -- override or add new parser sources
+})
 
 --=============================================================================
 -- Completion (blink.cmp + snippets)
@@ -316,5 +339,35 @@ require("tiny-code-action").setup({
 --=============================================================================
 -- tools 
 --=============================================================================
-vim.pack.add({ gh("chomosuke/typst-preview.nvim") })
+vim.pack.add({
+  gh("chomosuke/typst-preview.nvim"),
+  gh("lewis6991/gitsigns.nvim"),
+  gh("NeogitOrg/neogit"),
+})
 require("typst-preview").setup()
+require("gitsigns").setup({
+  signs = {
+    add = { text = "▎" },
+    change = { text = "▎" },
+    delete = { text = "▁" },
+    topdelete = { text = "▔" },
+    changedelete = { text = "▎" },
+  },
+  current_line_blame = false,
+  preview_config = { border = vim.o.winborder },
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+    local map = function(lhs, rhs, desc)
+      vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
+    end
+    map("]h", function() gs.nav_hunk("next") end, "Next Git hunk")
+    map("[h", function() gs.nav_hunk("prev") end, "Previous Git hunk")
+    map("<Leader>hp", gs.preview_hunk, "Preview hunk")
+    map("<Leader>hs", gs.stage_hunk, "Stage hunk")
+    map("<Leader>hr", gs.reset_hunk, "Reset hunk")
+    map("<Leader>hb", function() gs.blame_line({ full = true }) end, "Blame line")
+  end,
+})
+require("neogit").setup({})
+vim.keymap.set("n", "<Leader>gg", function() require("neogit").open() end, { desc = "Neogit" })
+

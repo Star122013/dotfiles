@@ -27,6 +27,7 @@ in
   xdg.configFile."emacs/early-init.el".source =
     mkOutOfStoreSymlink "${dotfilesDir}/emacs/early-init.el";
   xdg.configFile."emacs/extras".source = mkOutOfStoreSymlink "${dotfilesDir}/emacs/extras";
+  xdg.configFile."emacs/lang".source = mkOutOfStoreSymlink "${dotfilesDir}/emacs/lang";
   xdg.configFile."go-musicfox/config.toml".source =
     mkOutOfStoreSymlink "${dotfilesDir}/go-musicfox/config.toml";
 }

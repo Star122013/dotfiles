@@ -154,7 +154,7 @@ If the new path's directories does not exist, create them."
 (setopt x-underline-at-descent-line nil)           ; Prettier underlines
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
 
-(setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces
+(setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces(
 (setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
 
 ;; Enable horizontal scrolling
@@ -168,7 +168,7 @@ If the new path's directories does not exist, create them."
 
 ;; Misc. UI tweaks
 (blink-cursor-mode -1)                                ; Steady cursor
-(pixel-scroll-precision-mode -1)                         ; Smooth scrolling
+(pixel-scroll-precision-mode 1)                         ; Smooth scrolling
 
 ;; Use common keystrokes by default
 (cua-mode)
@@ -210,6 +210,9 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package ansi-color
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 ;; (use-package emacs			
 ;;   :config
 ;;   (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
@@ -224,7 +227,7 @@ If the new path's directories does not exist, create them."
   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
   ;; for treemacs users
-  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
   :config
   (load-theme 'doom-one t)
 
@@ -283,7 +286,10 @@ If the new path's directories does not exist, create them."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages nil)
+ '(package-vc-selected-packages
+   '((tramp-rpc :url "https://github.com/ArthurHeymans/emacs-tramp-rpc"
+		:lisp-dir "lisp"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

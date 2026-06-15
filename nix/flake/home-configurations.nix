@@ -8,6 +8,7 @@ let
   modules = [
     config.flake.homeModules.cyrene
     { nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ]; }
+    inputs.chaotic.homeManagerModules.default
   ];
 in
 {

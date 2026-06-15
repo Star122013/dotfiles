@@ -33,6 +33,16 @@ def bh [...args: string] {
   run-external $command ...$subcommand "--help" o+e>| bat -pl help
 }
 
+# fix xterm-ghostty error: preserve TERMINFO_DIRS across sudo
+$env.TERMINFO_DIRS = $"($env.HOME)/.nix-profile/share/terminfo"
+def --wrapped sudo [...args] {
+  if ($env.TERMINFO_DIRS? | is-not-empty) {
+    ^sudo --preserve-env=TERMINFO_DIRS ...$args
+  } else {
+    ^sudo ...$args
+  }
+}
+
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 zoxide init nushell --cmd cd | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")

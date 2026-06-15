@@ -5,6 +5,7 @@
 }:
 
 {
+  nix.package = pkgs.nix;
   home.packages = with pkgs; [
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.hyprland-guiutils.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -32,30 +33,23 @@
     gh
     fastfetch
     yazi
+    just
     llama-cpp
 
     # editor & lsp
-    inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix
+    # inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix
+    helix_git
 
     nixd
     nil
     nixfmt
     lua-language-server
+    emmylua-ls
+    typescript-language-server
 
-    inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ghostty_git
     kitty
-
-    # fonts
-    maple-mono.NF-CN
-    ioskeley-mono.normal-NF
-    nerd-fonts.symbols-only
-    noto-fonts-color-emoji
-    noto-fonts-lgc-plus
-    noto-fonts
-    font-awesome
-    inputs.iosevka.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.iosevka.packages.${pkgs.stdenv.hostPlatform.system}.normal
-    inputs.iosevka.packages.${pkgs.stdenv.hostPlatform.system}.mono
 
     # theme
     papirus-icon-theme
@@ -65,11 +59,15 @@
     neovim
 
     firefox
+    piliplus
 
     mpv
     go-musicfox
     yt-dlp
     freetube
+    zed-editor
+    obsidian
+    nautilus
 
     (
       let
@@ -99,5 +97,7 @@
     gcc
     tree-sitter
     zig
+    uv
+    cargo
   ];
 }

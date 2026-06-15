@@ -14,7 +14,7 @@ vim.opt.undofile = true
 vim.opt.fillchars:append({ eob = " " })
 vim.opt.sessionoptions = "curdir,folds,globals,help,tabpages,terminal,winsize"
 vim.o.cmdheight = 1
-vim.o.winborder = "rounded"
+vim.o.winborder = "none"
 -- stylua: ignore start
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {

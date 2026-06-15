@@ -161,7 +161,7 @@ window-rule {
     
     draw-border-with-background false
     open-on-workspace "code"
-    opacity 0.9    
+    opacity 1.0    
     background-effect {
         blur true
         xray false

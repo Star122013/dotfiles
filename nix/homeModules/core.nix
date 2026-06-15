@@ -10,6 +10,15 @@ in
 {
   programs.home-manager.enable = true;
 
+  nix.settings = {
+    extra-substituters = [
+      "https://star122013.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "star122013.cachix.org-1:VJPo5Pk/QRlq0tBwurSIxKq6+YUJ8s/3sM19BSt93lg="
+    ];
+  };
+
   home = {
     username = "cyrene";
     homeDirectory = "/var/home/cyrene";

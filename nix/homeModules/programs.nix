@@ -29,13 +29,6 @@
     helix = {
       enable = true;
       package = pkgs.helix_git;
-      themes = {
-        catppuccin_mocha = ''
-          inherits = "catppuccin_mocha"
-          "ui.background" = {}
-          "ui.virtual.inlay-hint" = { fg = "#6c7086" }
-        '';
-      };
       settings = {
         editor = {
           color-modes = true;

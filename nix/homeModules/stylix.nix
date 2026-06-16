@@ -57,7 +57,8 @@
 
     targets.ghostty.enable = true;
     targets.fontconfig.enable = true;
-    # targets.gtk.enable = true;
+    targets.gtk.enable = true;
+    targets.helix.enable = true;
   };
 
   # Generate Stylix base16 colors for Neovim.

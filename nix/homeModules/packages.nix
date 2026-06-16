@@ -38,7 +38,6 @@
 
     # editor & lsp
     # inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix
-    helix_git
 
     nixd
     nil
@@ -58,8 +57,8 @@
     emacs-pgtk
     neovim
 
-    firefox
     piliplus
+    cinny-desktop
 
     mpv
     go-musicfox

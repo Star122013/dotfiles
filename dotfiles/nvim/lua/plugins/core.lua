@@ -5,20 +5,19 @@ local gh = function(x) return "https://github.com/" .. x end
 -- Core — mini.nvim modules
 --=============================================================================
 vim.pack.add({
-  gh("nvim-mini/mini.nvim"),
+  gh("nvim-mini/mini.ai"),
+  gh("nvim-mini/mini.pairs"),
+  gh("nvim-mini/mini.indentscope"),
+  gh("nvim-mini/mini.cursorword"),
+  gh("nvim-mini/mini.clue"),
+  gh("nvim-mini/mini.files"),
 })
 
 require("mini.ai").setup()
 require("mini.pairs").setup()
 
-require("mini.tabline").setup({
-  show_icons = false,
-})
-
-require("mini.icons").setup()
 require("mini.indentscope").setup()
 require("mini.cursorword").setup()
-require("mini.notify").setup()
 
 require("mini.clue").setup({
   triggers = {

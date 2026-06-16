@@ -1,4 +1,1 @@
-inherits = "catppuccin_mocha"
-"ui.background" ={}
-"ui.virtual.inlay-hint"={ fg = "#6c7086" }
-
+/nix/store/34rawjsahsn7qaybhn031yxn67m0i88w-home-manager-files/.config/helix/themes/catppuccin_mocha.toml

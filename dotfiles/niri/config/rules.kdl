@@ -158,14 +158,20 @@ window-rule {
     match app-id="foot$"
     match app-id="com.mitchellh.ghostty$"
     match app-id="neovide$"
+    match app-id="emacs$"
     
     draw-border-with-background false
+    open-floating false
+    open-maximized false
+    default-column-width { proportion 1.0; }
     open-on-workspace "code"
     opacity 1.0    
     background-effect {
         blur true
         xray false
     }
+    max-width 2540
+    max-height 1378
 }
 
 window-rule {

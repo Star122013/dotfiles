@@ -49,7 +49,11 @@ require("gitsigns").setup({
 
 -- Neogit — lazy via keymap (require inside callback)
 vim.pack.add({ gh("NeogitOrg/neogit") })
-vim.keymap.set("n", "<Leader>gg", function() require("neogit").open() end, { desc = "Neogit" })
+vim.keymap.set("n", "<Leader>gg", function()
+  local neogit = require("neogit")
+  neogit.setup({ graph_style = "kitty" })
+  neogit.open()
+end, { desc = "Neogit" })
 
 --=============================================================================
 -- Typst preview — lazy via FileType

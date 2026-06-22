@@ -1,14 +1,8 @@
 ;;; zig.el --- Zig configuration -*- lexical-binding: t; -*-
 
-(with-eval-after-load 'treesit
-  (add-to-list 'treesit-language-source-alist
-               '(zig . ("https://github.com/tree-sitter-grammars/tree-sitter-zig"))))
-
 (use-package zig-mode
   :ensure t
-  :mode ("\\.zig\\'" "\\.zon\\'")
-  :init
-  (add-to-list 'major-mode-remap-alist '(zig-mode . zig-ts-mode)))
+  :mode ("\\.zig\\'" "\\.zon\\'"))
 
 (use-package zig-ts-mode
   :vc (:url "https://codeberg.org/meow_king/zig-ts-mode" :rev :newest)

@@ -13,31 +13,10 @@
 
 require("plugins.themes")
 
-vim.api.nvim_create_autocmd("UIEnter", {
-  once = true,
-  callback = function()
-    vim.schedule(function()
-      require("plugins.ui")
-      require("plugins.core")
-    end)
-  end,
-})
+require("plugins.ui")
+require("plugins.core")
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  once = true,
-  callback = function()
-    vim.schedule(function()
-      require("plugins.lsp")
-      require("plugins.tools")
-    end)
-  end,
-})
+require("plugins.lsp")
+require("plugins.tools")
 
-vim.api.nvim_create_autocmd("InsertEnter", {
-  once = true,
-  callback = function()
-    vim.schedule(function()
-      require("plugins.completion")
-    end)
-  end,
-})
+require("plugins.completion")

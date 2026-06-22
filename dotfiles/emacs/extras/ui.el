@@ -1,3 +1,4 @@
+q ;;; ui.el -*- lexical-binding: t; -*-
 ;; Set up doom-modeline
 (use-package
   doom-modeline
@@ -13,7 +14,7 @@
   (doom-modeline-persp-icon t)
   (doom-modeline-buffer-file-name-style 'file-name)
   (doom-modeline-position-column-line-format '("%l:%c"))
-  (doom-modeline-minor-modes nil)
+  (doom-modeline-minor-modes t)
   (doom-modeline-indent-info t)
   (doom-modeline-vcs-icon t)
   (doom-modeline-vcs-max-length 15)
@@ -26,114 +27,99 @@
 
 ;; Git gutter, similar to gitsigns.nvim.
 ;; Use git-gutter instead of diff-hl because vc-handled-backends is disabled.
-(use-package git-gutter
+(use-package
+  git-gutter
   :ensure t
-  :hook ((prog-mode . git-gutter-mode)
-         (text-mode . git-gutter-mode))
+  :hook ((prog-mode . git-gutter-mode) (text-mode . git-gutter-mode))
   :custom
   (git-gutter:update-interval 0.5)
   (git-gutter:added-sign "▎")
   (git-gutter:modified-sign "▎")
   (git-gutter:deleted-sign "▁")
   :custom-face
-  (git-gutter:added ((t (:foreground "#98be65" :background "#98be65"))))
-  (git-gutter:modified ((t (:foreground "#ECBE7B" :background "#ECBE7B"))))
-  (git-gutter:deleted ((t (:foreground "#ff6c6b" :background "#ff6c6b")))))
+  (git-gutter:added
+    ((t (:foreground "#98be65" :background "#98be65"))))
+  (git-gutter:modified
+    ((t (:foreground "#ECBE7B" :background "#ECBE7B"))))
+  (git-gutter:deleted
+    ((t (:foreground "#ff6c6b" :background "#ff6c6b")))))
 
-;; tabbar
+;; tab-bar
 (use-package
   centaur-tabs
-  :ensure t
-  :demand t
+  :init (setq centaur-tabs-enable-key-bindings t)
   :config
   (setq
     centaur-tabs-style "bar"
-    centaur-tabs-set-bar 'under
-    x-underline-at-descent-line t
     centaur-tabs-height 32
-    centaur-tabs-icon-type 'nerd-icons
     centaur-tabs-set-icons t
+    centaur-tabs-show-new-tab-button t
     centaur-tabs-set-modified-marker t
-    centaur-tabs-modified-marker "●")
-
-  (defun my-centaur-tabs-hide-filter (buffer)
-    (let ((name (buffer-name buffer)))
-      (and (string-prefix-p "*" name)
-        (not (string-match-p "ghostel" name)))))
-  (setq centaur-tabs-hide-tab-function #'my-centaur-tabs-hide-filter)
+    centaur-tabs-show-navigation-buttons t
+    centaur-tabs-set-bar 'under
+    centaur-tabs-show-count nil
+    ;; centaur-tabs-label-fixed-length 15
+    ;; centaur-tabs-gray-out-icons 'buffer
+    ;; centaur-tabs-plain-icons t
+    x-underline-at-descent-line t
+    centaur-tabs-left-edge-margin nil)
+  (centaur-tabs-headline-match)
+  ;; (centaur-tabs-enable-buffer-alphabetical-reordering)
+  ;; (setq centaur-tabs-adjust-buffer-order t)
+  (centaur-tabs-mode t)
   (setq uniquify-separator "/")
   (setq uniquify-buffer-name-style 'forward)
+  (defun centaur-tabs-buffer-groups ()
+    "`centaur-tabs-buffer-groups' control buffers' group rules.
 
-  (advice-add
-    'centaur-tabs-get-buffers
-    :filter-return
-    (lambda (buffers)
-      (seq-filter
-        (lambda (buf)
-          (let ((name (buffer-name buf)))
-            (not
-              (and (string-prefix-p "*" name)
-                (not (string-match-p "ghostel" name))))))
-        buffers)))
-
-  ;; Centaur Tabs uses Emacs' tab-line/header-line, so it appears on every
-  ;; split window.  Hide it while the frame has multiple windows to avoid a
-  ;; repeated tabbar on each window, closer to Neovim's single global tabline.
-  (defvar-local my-centaur-tabs-auto-hidden nil)
-
-  (defun my-centaur-tabs-set-auto-hidden (hide)
-    (when (bound-and-true-p centaur-tabs-mode)
+Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+All buffer name start with * will group to \"Emacs\".
+Other buffer group by `centaur-tabs-get-group-name' with project name."
+    (list
       (cond
-        ((and hide (not centaur-tabs-local-mode))
-          (ignore-errors
-            (centaur-tabs-local-mode 1)
-            (setq my-centaur-tabs-auto-hidden t)))
-        ((and (not hide) my-centaur-tabs-auto-hidden)
-          (ignore-errors
-            (centaur-tabs-local-mode -1)
-            (setq my-centaur-tabs-auto-hidden nil))))))
-
-  (defun my-centaur-tabs-update-window-visibility (&rest _)
-    (let ((hide (> (length (window-list nil 'no-minibuf)) 1)))
-      (dolist (buffer (buffer-list))
-        (with-current-buffer buffer
-          (my-centaur-tabs-set-auto-hidden hide)))))
-
-  (add-hook 'window-configuration-change-hook #'my-centaur-tabs-update-window-visibility)
-  (add-hook 'buffer-list-update-hook #'my-centaur-tabs-update-window-visibility)
-  (centaur-tabs-mode t)
-  (my-centaur-tabs-update-window-visibility)
-
-  :bind
-  ("M-<left>" . centaur-tabs-backward)
-  ("M-<right>" . centaur-tabs-forward)
+        ;; ((not (eq (file-remote-p (buffer-file-name)) nil))
+        ;; "Remote")
+        (
+          (or (string-equal "*" (substring (buffer-name) 0 1))
+            (memq
+              major-mode
+              '
+              (magit-process-mode
+                magit-status-mode
+                magit-diff-mode
+                magit-log-mode
+                magit-file-mode
+                magit-blob-mode
+                magit-blame-mode)))
+          "Emacs")
+        ((derived-mode-p 'prog-mode)
+          "Editing")
+        ((derived-mode-p 'dired-mode)
+          "Dired")
+        ((memq major-mode '(helpful-mode help-mode))
+          "Help")
+        (
+          (memq
+            major-mode
+            '
+            (org-mode
+              org-agenda-clockreport-mode
+              org-src-mode
+              org-agenda-mode
+              org-beamer-mode
+              org-indent-mode
+              org-bullets-mode
+              org-cdlatex-mode
+              org-agenda-log-mode
+              diary-mode))
+          "OrgMode")
+        (t
+          (centaur-tabs-get-group-name (current-buffer))))))
   :hook
   (dashboard-mode . centaur-tabs-local-mode)
-  (navigel-tablist-mode . centaur-tabs-local-mode)
-  ;; (eldoc-mode . centaur-tabs-local-mode)
-  (mpdel-browser-mode . centaur-tabs-local-mode)
-  (mpdel-song-mode . centaur-tabs-local-mode)
-  (mpdel-tablist-mode . centaur-tabs-local-mode)
-  (dirvish-directory-view-mode . centaur-tabs-local-mode)
-  (dirvish-special-preview-mode . centaur-tabs-local-mode)
-  (dired-mode . centaur-tabs-local-mode)
-  (elfeed-show-mode . centaur-tabs-local-mode)
-  (elfeed-search-mode . centaur-tabs-local-mode)
-  (helpful-mode . centaur-tabs-local-mode)
-  (mpdel-playlist-mode . centaur-tabs-local-mode)
-  (magit-process-mode . centaur-tabs-local-mode)
-  (magit-status-mode . centaur-tabs-local-mode)
-  (magit-diff-mode . centaur-tabs-local-mode)
-  (magit-log-mode . centaur-tabs-local-mode)
-  (magit-file-mode . centaur-tabs-local-mode)
-  (magit-blob-mode . centaur-tabs-local-mode)
-  (magit-blame-mode . centaur-tabs-local-mode)
+  (term-mode . centaur-tabs-local-mode)
   (calendar-mode . centaur-tabs-local-mode)
   (org-agenda-mode . centaur-tabs-local-mode)
-  (pdf-view-mode . centaur-tabs-local-mode)
-  (ement-room-list-mode . centaur-tabs-local-mode)
-  (ement-room-mode . centaur-tabs-local-mode)
-  (ghostel-mode . centaur-tabs-local-mode)
   :bind
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward)

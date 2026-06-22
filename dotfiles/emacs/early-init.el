@@ -1,3 +1,4 @@
+;;; early-init.el -*- lexical-binding: t; -*-
 ;;;  ________                                                _______                 __                            __
 ;;; /        |                                              /       \               /  |                          /  |
 ;;; $$$$$$$$/ _____  ____   ______   _______  _______       $$$$$$$  | ______   ____$$ | ______   ______   _______$$ |   __
@@ -25,24 +26,25 @@
 ;; Silence stupid startup message
 (setq inhibit-startup-echo-area-message (user-login-name))
 
-;; Default frame configuration: full screen, good-looking title bar on macOS
+;; Default frame configuration (no fullscreen/maximized: let the Wayland
+;; compositor / niri window-rule decide initial size).
 (setq frame-resize-pixelwise t)
 (tool-bar-mode -1)                      ; All these tools are in the menu-bar anyway
-(setq default-frame-alist '((fullscreen . maximized)
+(setq default-frame-alist
+      '(
+        ;; You can turn off scroll bars by uncommenting these lines:
+        ;; (vertical-scroll-bars . nil)
+        ;; (horizontal-scroll-bars . nil)
 
-                            ;; You can turn off scroll bars by uncommenting these lines:
-                            ;; (vertical-scroll-bars . nil)
-                            ;; (horizontal-scroll-bars . nil)
-
-                            ;; Setting the face in here prevents flashes of
-                            ;; color as the theme gets activated
-                            (background-color . "#000000")
-                            (foreground-color . "#ffffff")
-                            (ns-appearance . dark)
-                            (ns-transparent-titlebar . t)))
+        ;; Setting the face in here prevents flashes of
+        ;; color as the theme gets activated
+        (background-color . "#000000")
+        (foreground-color . "#ffffff")
+        (ns-appearance . dark)
+        (ns-transparent-titlebar . t)))
 ;; no decorations
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
-(push '(font . "IoskeleyMono Nerd Font-16") default-frame-alist)
+(push '(font . "Iosevka Mono Custom-16") default-frame-alist)

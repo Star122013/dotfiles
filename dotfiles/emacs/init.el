@@ -1,3 +1,4 @@
+;;; init.el -*- lexical-binding: t; -*-
 ;;;  ________                                                _______                 __                            __
 ;;; /        |                                              /       \               /  |                          /  |
 ;;; $$$$$$$$/ _____  ____   ______   _______  _______       $$$$$$$  | ______   ____$$ | ______   ______   _______$$ |   __
@@ -22,7 +23,6 @@
 ;;;  - Built-in customization framework
 
 ;;; Guardrail
-
 (when (< emacs-major-version 29)
   (error "Emacs Bedrock only works with Emacs 29 and newer; you have version %s" emacs-major-version))
 
@@ -173,10 +173,6 @@ If the new path's directories does not exist, create them."
 ;; Use common keystrokes by default
 (cua-mode)
 
-;; For terminal users, make the mouse more useful
-
-(xterm-mouse-mode 1)
-
 ;; Display line numbers in programming mode
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setopt display-line-numbers-width 3)           ; Set a minimum width
@@ -195,7 +191,7 @@ If the new path's directories does not exist, create them."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Show the tab-bar as soon as tab-bar functions are invoked
-(setopt tab-bar-show 1)
+(setopt tab-bar-show 0)
 
 ;; Add the time to the tab-bar, if visible
 (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
@@ -225,11 +221,11 @@ If the new path's directories does not exist, create them."
   :custom
   ;; Global settings (defaults)
   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
-  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics are universally disabled
   ;; for treemacs users
   (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-dracula t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)

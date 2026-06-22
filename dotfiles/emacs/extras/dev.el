@@ -1,3 +1,4 @@
+;;; dev.el  -*- lexical-binding: t;-*- 
 ;;; Emacs Bedrock
 ;;;
 ;;; Extra config: Development tools
@@ -37,19 +38,18 @@
   envrc
   :vc (:url "https://codeberg.org/pastor/envrc")
   :bind (:map envrc-mode-map ("C-c e" . envrc-command-map))
-  :config (setq envrc-indicator '(" [" (:eval (envrc--status)) "]"))
-  :init (add-hook 'after-init-hook #'envrc-global-mode 99))
+  :custom (envrc-indicator '(" [" (:eval (envrc--status)) "]"))
+  :hook (after-init-hook . envrc-global-mode))
 
 (use-package
   project
   :custom
-  (when (>= emacs-major-version 30)
-    (project-mode-line t))) ; show project name in modeline
+  (project-mode-line t)) ; show project name in modeline
 
 (use-package
   rainbow-delimiters
   :ensure t
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :hook (prog-mode-hook . rainbow-delimiters-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Version Control
@@ -99,6 +99,8 @@
   :custom
   (eglot-send-changes-idle-time 0.1)
   (eglot-extend-to-xref t) ; activate Eglot in referenced non-project files
+  (eglot-documentation-renderer 'markdown-ts-view-mode)
+  (eglot-code-action-indications nil) 
   :config
   (fset #'jsonrpc--log-event #'ignore)) ; massive perf boost---don't log every event
 
@@ -117,53 +119,7 @@
       (warning "▲" compilation-warning)
       (note "●" compilation-info))))
 
-;; Diagnostic popup at point, similar to `vim.diagnostic.open_float()`.
-(use-package flymake-popon
-  :ensure t
-  :after flymake
-  :hook (flymake-mode . flymake-popon-mode)
-  :custom
-  (flymake-popon-delay 0.2)
-  (flymake-popon-method 'posframe)
-  :custom-face
-  (flymake-popon ((t (:background "#1e2228" :foreground "#bbc2cf")))))
-
-;; Manual LSP hover/docs popup. Keep it manual to avoid fighting with Flymake popups.
-(use-package
-  eldoc-box
-  :ensure t
-  :bind
-  (:map
-    prog-mode-map
-    ("M-h" . eldoc-box-help-at-point)
-    ("M-n" . eldoc-box-scroll-up)
-    ("M-p" . eldoc-box-scroll-down))
-  :config
-  (setq eldoc-box-clear-with-buffer-switch t)
-  (setq eldoc-box-max-pixel-width 600
-        eldoc-box-max-pixel-height 400)
-  ;; LSP hover/docs popup. Diagnostics should not be shown here.
-  (set-face-attribute 'eldoc-box-border nil
-                      :background "#1c1f24")
-  (set-face-attribute 'eldoc-box-body nil
-                      :background "#1e2228"
-                      :foreground "#bbc2cf")
-
-  (defun my/eldoc-box-hide-flymake-diagnostics ()
-    "Keep eldoc-box focused on LSP hover/docs, not Flymake diagnostics."
-    (remove-hook 'eldoc-documentation-functions #'flymake-eldoc-function t))
-
-  (add-hook 'eglot-managed-mode-hook
-            (lambda ()
-              (setq-local eldoc-documentation-strategy #'eldoc-documentation-compose)
-              (my/eldoc-box-hide-flymake-diagnostics)))
-  (add-hook 'flymake-mode-hook #'my/eldoc-box-hide-flymake-diagnostics 100)
-  (add-hook 'eldoc-box-buffer-hook
-            (lambda ()
-              (setq-local header-line-format nil)
-              (setq-local mode-line-format nil)
-              (when (fboundp 'centaur-tabs-local-mode)
-                (centaur-tabs-local-mode +1)))))
+(setopt eldoc-help-at-pt t)
 (global-set-key (kbd "<f1>") #'eldoc)
 
 (use-package

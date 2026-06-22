@@ -1,32 +1,19 @@
-{ config, pkgs, ... }:
-
 {
-  programs = {
-    firefox = {
-      enable = true;
-      profiles.default-release = {
-        id = 0;
-        path = "toq0r65u.default-release";
-        settings = {
-          "media.hardware-video-decoding.enabled" = true;
-          "media.ffmpeg.vaapi.enabled" = true;
-          "media.rdd-ffmpeg.enabled" = true;
-          "media.ffvpx.enabled" = false;
-        };
-      };
-    };
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
+let
+  cfg = config.my.programs.helix;
+  dotfilesDir = "${config.home.homeDirectory}/.config/home-manager/dotfiles";
+in
+{
+  options.my.programs.helix.enable = lib.mkEnableOption "Helix editor";
 
-    nh = {
-      enable = true;
-      homeFlake = "${config.home.homeDirectory}/.config/home-manager";
-    };
-
-    helix = {
+  config = lib.mkIf cfg.enable {
+    programs.helix = {
       enable = true;
       package = pkgs.helix_git;
       settings = {
@@ -111,5 +98,9 @@
         };
       };
     };
+
+    # Out-of-store symlink so edits in this repo are picked up live.
+    xdg.configFile."helix/languages.toml".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/helix/languages.toml";
   };
 }

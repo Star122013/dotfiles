@@ -44,7 +44,6 @@ def --wrapped sudo [...args] {
 }
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 zoxide init nushell --cmd cd | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
 use std/config *

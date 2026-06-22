@@ -1,3 +1,4 @@
+;;; base.el  -*- lexical-binding: t; -*- 
 ;;; Emacs Bedrock
 ;;;
 ;;; Extra config: Base enhancements

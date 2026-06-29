@@ -54,4 +54,3 @@
 (let ((dir (expand-file-name "user-lisp/" user-emacs-directory)))
   (when (file-directory-p dir)
     (add-to-list 'load-path dir)))
-

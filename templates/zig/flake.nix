@@ -39,7 +39,12 @@
         "x86_64-darwin"
       ];
       perSystem =
-        { pkgs, system, ... }:
+        {
+          pkgs,
+          system,
+          config,
+          ...
+        }:
         {
           pre-commit.settings.hooks = {
             treefmt.enable = true;
@@ -47,19 +52,22 @@
 
           treefmt = {
             projectRootFile = "flake.nix";
-            programs.deadnix.enable = true;
-            programs.nixfmt.enable = true;
-            programs.jsonfmt.enable = true;
-            programs.zig.enable = true;
+            programs = {
+              deadnix.enable = true;
+              nixfmt.enable = true;
+              jsonfmt.enable = true;
+              zig.enable = true;
+            };
           };
 
           devShells.default = pkgs.mkShellNoCC {
-            name = "nix devShell";
+            name = "zig devShell";
             buildInputs = with pkgs; [
               zig.packages.${system}.default
               zls
               zig-zlint
             ];
+            inputsFrom = [ config.pre-commit.devShell ];
           };
         };
     };

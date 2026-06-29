@@ -33,4 +33,3 @@ language-servers = [ { name = "vscode-json-language-server", except-features = [
 [[language]]
 name = "dockerfile"
 auto-format = true
-

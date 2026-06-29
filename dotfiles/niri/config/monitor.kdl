@@ -17,4 +17,3 @@ output "Red Hat, Inc. QEMU Monitor Unknown" {
     mode "3840x2160@60"
     scale 1.5
 }
-

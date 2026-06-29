@@ -14,33 +14,56 @@ in
     nameservers = [ net.lanIp ];
   };
 
-  systemd.network = {
-    enable = true;
-    networks = {
-      "10-wan" = {
-        matchConfig.Name = net.wanInterface;
-        networkConfig = {
-          Description = "WAN";
-          DHCP = "yes";
-        };
-      };
+  services.resolved.enable = false;
 
-      "10-lan" = {
-        matchConfig.Name = net.lanInterface;
-        networkConfig = {
-          Description = "LAN (USB NIC)";
-          Address = net.lanAddress;
-          IPMasquerade = "both";
+  systemd = {
+    network = {
+      enable = true;
+      networks = {
+        "10-wan" = {
+          matchConfig.Name = net.wanInterface;
+          networkConfig = {
+            Description = "WAN";
+            DHCP = "yes";
+          };
         };
-        linkConfig.RequiredForOnline = true;
+
+        "10-lan" = {
+          matchConfig.Name = net.lanInterface;
+          networkConfig = {
+            Description = "LAN (USB NIC)";
+            Address = net.lanAddress;
+            IPMasquerade = "both";
+          };
+          linkConfig.RequiredForOnline = true;
+        };
       };
     };
-  };
 
-  services.resolved.enable = false;
-  systemd.services.systemd-resolved = {
-    enable = false;
-    unitConfig.ConditionPathExists = "/nonexistent";
+    services = {
+      systemd-resolved = {
+        enable = false;
+        unitConfig.ConditionPathExists = "/nonexistent";
+      };
+
+      iproute-singbox = {
+        enable = true;
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        path = [ pkgs.iproute2 ];
+        script = ''
+          grep -q "^100 singbox$" /etc/iproute2/rt_tables || echo "100 singbox" >> /etc/iproute2/rt_tables
+
+          ip -4 rule add fwmark 1 lookup singbox priority 100 2>/dev/null || true
+          ip -4 route add local 0.0.0.0/0 dev lo table singbox 2>/dev/null || true
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = "yes";
+        };
+      };
+    };
   };
 
   networking.nftables = {
@@ -117,25 +140,5 @@ in
   networking.iproute2 = {
     enable = true;
     rttablesExtraConfig = "100 singbox";
-  };
-
-  systemd.services = {
-    iproute-singbox = {
-      enable = true;
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.iproute2 ];
-      script = ''
-        grep -q "^100 singbox$" /etc/iproute2/rt_tables || echo "100 singbox" >> /etc/iproute2/rt_tables
-
-        ip -4 rule add fwmark 1 lookup singbox priority 100 2>/dev/null || true
-        ip -4 route add local 0.0.0.0/0 dev lo table singbox 2>/dev/null || true
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = "yes";
-      };
-    };
   };
 }

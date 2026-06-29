@@ -71,8 +71,10 @@ in
     # stylix references font names that the fonts module must install, so the
     # stylix module itself pulls in fonts via its own mkDefault (see
     # stylix.nix). Here we only set the three group defaults.
-    my.desktop.appearance.enable = lib.mkDefault true;
-    my.desktop.fonts.enable = lib.mkDefault true;
-    my.desktop.stylix.enable = lib.mkDefault true;
+    my.desktop = {
+      appearance.enable = lib.mkDefault true;
+      fonts.enable = lib.mkDefault true;
+      stylix.enable = lib.mkDefault true;
+    };
   };
 }

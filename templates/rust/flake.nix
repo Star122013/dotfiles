@@ -34,6 +34,7 @@
         {
           pkgs,
           system,
+          config,
           ...
         }:
         {
@@ -45,10 +46,12 @@
 
           treefmt = {
             projectRootFile = "flake.nix";
-            programs.deadnix.enable = true;
-            programs.nixfmt.enable = true;
-            programs.jsonfmt.enable = true;
-            programs.rustfmt.enable = true;
+            programs = {
+              deadnix.enable = true;
+              nixfmt.enable = true;
+              jsonfmt.enable = true;
+              rustfmt.enable = true;
+            };
           };
 
           _module.args.pkgs = import inputs.nixpkgs {
@@ -67,6 +70,7 @@
                 fd
                 rust-bin.beta.latest.default
               ];
+              inputsFrom = [ config.pre-commit.devShell ];
               shellHook = ''
                 alias ls=eza
                 alias find=fd

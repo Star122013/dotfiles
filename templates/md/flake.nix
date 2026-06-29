@@ -30,7 +30,7 @@
         "x86_64-darwin"
       ];
       perSystem =
-        { pkgs, ... }:
+        { pkgs, config, ... }:
         {
           pre-commit.settings.hooks = {
             treefmt.enable = true;
@@ -38,10 +38,12 @@
 
           treefmt = {
             projectRootFile = "flake.nix";
-            programs.deadnix.enable = true;
-            programs.nixfmt.enable = true;
-            programs.jsonfmt.enable = true;
-            programs.mdformat.enable = true;
+            programs = {
+              deadnix.enable = true;
+              nixfmt.enable = true;
+              jsonfmt.enable = true;
+              mdformat.enable = true;
+            };
           };
 
           devShells.default = pkgs.mkShell {
@@ -50,8 +52,8 @@
               markdown-oxide
               markdown-toc
               markdownlint-cli
-              mdformat
             ];
+            inputsFrom = [ config.pre-commit.devShell ];
           };
         };
     };

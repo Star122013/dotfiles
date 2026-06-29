@@ -33,10 +33,12 @@ in
         sizes.terminal = desktop.fonts.terminalSize;
       };
 
-      targets.ghostty.enable = true;
-      targets.fontconfig.enable = true;
-      targets.gtk.enable = true;
-      targets.helix.enable = true;
+      targets = {
+        ghostty.enable = true;
+        fontconfig.enable = true;
+        gtk.enable = true;
+        helix.enable = true;
+      };
     };
 
     # Generate Stylix base16 colors for Neovim.

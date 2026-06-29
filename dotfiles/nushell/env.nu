@@ -19,4 +19,3 @@ load-env {
   XDG_CACHE_HOME: "/var/home/qwerhyy/.cache"
   TERMINFO_DIRS: $"($env.HOME)/.nix-profile/share/terminfo"
 }
-

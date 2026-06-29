@@ -31,7 +31,6 @@
 #   - https://github.com/NapNeko/NapCat-Docker/blob/main/compose/astrbot.yml
 #   - https://github.com/AstrBotDevs/shipyard-neo
 { pkgs, ... }:
-
 let
   # 持久化数据目录
   astrbotDataDir = "/var/lib/astrbot";
@@ -39,14 +38,11 @@ let
   napcatQQDir = "/var/lib/napcat/ntqq";
   bayDataDir = "/var/lib/astrbot/bay-data";
   bayCargosDir = "/var/lib/astrbot/bay-cargos";
-
   # 容器共享的 podman 网络
   networkName = "astrbot_network";
-
   # 宿主机上 NapCat 容器进程的 uid/gid
   napcatUid = 1000;
   napcatGid = 1000;
-
   # Bay 配置文件路径
   bayConfigFile = "/var/lib/astrbot/bay-config.yaml";
 in
@@ -54,7 +50,6 @@ in
   # ---------- podman docker socket ----------
   # Bay 需要通过 Docker socket 动态创建沙箱容器
   virtualisation.podman.dockerSocket.enable = true;
-
   # ---------- 容器 ----------
   # (podman 已在 sub-store.nix 中启用)
   virtualisation.oci-containers.containers = {
@@ -79,7 +74,6 @@ in
         "--restart=always"
       ];
     };
-
     napcat = {
       image = "docker.io/mlikiowa/napcat-docker:latest";
       autoStart = true;
@@ -102,7 +96,6 @@ in
         "--restart=always"
       ];
     };
-
     # Shipyard Neo: 共享浏览器池
     gull-service = {
       image = "ghcr.io/astrbotdevs/shipyard-neo-gull:latest";
@@ -122,7 +115,6 @@ in
         "--restart=always"
       ];
     };
-
     # Shipyard Neo: Bay 控制面 API
     bay = {
       image = "ghcr.io/astrbotdevs/shipyard-neo-bay:latest";
@@ -146,97 +138,92 @@ in
       ];
     };
   };
-
-  # ---------- podman network ----------
-  systemd.services.podman-network-astrbot = {
-    description = "Create podman network for AstrBot + NapCat + Shipyard Neo";
-    after = [ "podman.service" ];
-    wants = [ "podman.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.podman}/bin/podman network create --ignore ${networkName}";
-      ExecStop = "${pkgs.podman}/bin/podman network rm --force ${networkName}";
+  # ---------- systemd ----------
+  systemd = {
+    tmpfiles.rules = [
+      "d ${astrbotDataDir} 0755 ${toString napcatUid} ${toString napcatGid} -"
+      "d ${astrbotDataDir}/temp 0755 ${toString napcatUid} ${toString napcatGid} -"
+      "d ${napcatConfigDir} 0755 ${toString napcatUid} ${toString napcatGid} -"
+      "d ${napcatQQDir} 0755 ${toString napcatUid} ${toString napcatGid} -"
+      "d ${bayDataDir} 0755 root root -"
+      "d ${bayCargosDir} 0755 root root -"
+    ];
+    services = {
+      podman-network-astrbot = {
+        description = "Create podman network for AstrBot + NapCat + Shipyard Neo";
+        after = [ "podman.service" ];
+        wants = [ "podman.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${pkgs.podman}/bin/podman network create --ignore ${networkName}";
+          ExecStop = "${pkgs.podman}/bin/podman network rm --force ${networkName}";
+        };
+      };
+      # Bay 配置文件：从 assets/bay-config.yaml 复制
+      podman-bay-config = {
+        description = "Create Shipyard Neo Bay config if missing";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        path = [ pkgs.coreutils ];
+        script = ''
+          if [ ! -f ${bayConfigFile} ]; then
+            cp ${./assets/bay-config.yaml} ${bayConfigFile}
+            chmod 600 ${bayConfigFile}
+          fi
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+      };
+      # 服务依赖
+      podman-astrbot = {
+        after = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+          "podman-bay-config.service"
+        ];
+        wants = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+          "podman-bay-config.service"
+        ];
+      };
+      podman-napcat = {
+        after = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+        ];
+        wants = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+        ];
+      };
+      podman-gull-service = {
+        after = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+        ];
+        wants = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+        ];
+      };
+      podman-bay = {
+        after = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+          "podman-bay-config.service"
+        ];
+        wants = [
+          "network-online.target"
+          "podman-network-astrbot.service"
+          "podman-bay-config.service"
+        ];
+      };
     };
-  };
-
-  # ---------- Bay 配置文件 ----------
-  # 从 assets/bay-config.yaml 复制，之后改配置只需编辑那个文件 + 重启 bay 容器
-  systemd.services.podman-bay-config = {
-    description = "Create Shipyard Neo Bay config if missing";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.coreutils ];
-    script = ''
-      if [ ! -f ${bayConfigFile} ]; then
-        cp ${./assets/bay-config.yaml} ${bayConfigFile}
-        chmod 600 ${bayConfigFile}
-      fi
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-  };
-
-  # ---------- 数据目录 ----------
-  systemd.tmpfiles.rules = [
-    "d ${astrbotDataDir} 0755 ${toString napcatUid} ${toString napcatGid} -"
-    "d ${astrbotDataDir}/temp 0755 ${toString napcatUid} ${toString napcatGid} -"
-    "d ${napcatConfigDir} 0755 ${toString napcatUid} ${toString napcatGid} -"
-    "d ${napcatQQDir} 0755 ${toString napcatUid} ${toString napcatGid} -"
-    "d ${bayDataDir} 0755 root root -"
-    "d ${bayCargosDir} 0755 root root -"
-  ];
-
-  # ---------- 服务依赖 ----------
-  systemd.services.podman-astrbot = {
-    after = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-      "podman-bay-config.service"
-    ];
-    wants = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-      "podman-bay-config.service"
-    ];
-  };
-
-  systemd.services.podman-napcat = {
-    after = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-    ];
-    wants = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-    ];
-  };
-
-  systemd.services.podman-gull-service = {
-    after = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-    ];
-    wants = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-    ];
-  };
-
-  systemd.services.podman-bay = {
-    after = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-      "podman-bay-config.service"
-    ];
-    wants = [
-      "network-online.target"
-      "podman-network-astrbot.service"
-      "podman-bay-config.service"
-    ];
   };
 }

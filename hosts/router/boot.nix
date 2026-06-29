@@ -1,5 +1,5 @@
 # Boot / firmware configuration for the router.
-{ ... }:
+_:
 
 {
   boot = {

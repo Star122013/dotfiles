@@ -53,8 +53,7 @@ in
     };
 
     home = {
-      username = cfg.username;
-      homeDirectory = cfg.homeDirectory;
+      inherit (cfg) username homeDirectory;
       stateVersion = "26.05";
       enableNixpkgsReleaseCheck = false;
 

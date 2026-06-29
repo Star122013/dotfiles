@@ -30,7 +30,7 @@
         "x86_64-darwin"
       ];
       perSystem =
-        { pkgs, ... }:
+        { pkgs, config, ... }:
         {
           pre-commit.settings.hooks = {
             treefmt.enable = true;
@@ -40,11 +40,13 @@
 
           treefmt = {
             projectRootFile = "flake.nix";
-            programs.deadnix.enable = true;
-            programs.nixfmt.enable = true;
-            programs.jsonfmt.enable = true;
-            programs.clang-format.enable = true;
-            programs.cmake-format.enable = true;
+            programs = {
+              deadnix.enable = true;
+              nixfmt.enable = true;
+              jsonfmt.enable = true;
+              clang-format.enable = true;
+              cmake-format.enable = true;
+            };
           };
 
           devShells.default = pkgs.mkShell {
@@ -54,10 +56,10 @@
               vcpkg
               vcpkg-tool
               cmake
-              cmake-format
               cmake-language-server
               cmake-lint
             ];
+            inputsFrom = [ config.pre-commit.devShell ];
           };
         };
     };

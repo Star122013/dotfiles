@@ -2,11 +2,13 @@
 # default.nix, which is reserved for aggregation), returning a list
 # of paths suitable for use in `imports`.
 #
+# Skips files and directories whose name starts with `_`.
+#
 # Example:
 #   imports = import ./importDir.nix ./.;
 { lib }:
 let
-  inherit (lib) hasSuffix;
+  inherit (lib) hasSuffix hasPrefix;
   collect =
     d:
     let
@@ -19,7 +21,9 @@ let
       let
         path = d + "/${name}";
       in
-      if entries.${name} == "directory" then
+      if hasPrefix "_" name then
+        [ ]
+      else if entries.${name} == "directory" then
         collect path
       else if name == "default.nix" then
         [ ]

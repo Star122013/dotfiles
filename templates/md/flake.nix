@@ -8,6 +8,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -15,6 +19,8 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         treefmt-nix.flakeModule
+        inputs.git-hooks-nix.flakeModule
+        ./_common/pre-commit.nix
       ];
 
       systems = [
@@ -26,6 +32,10 @@
       perSystem =
         { pkgs, ... }:
         {
+          pre-commit.settings.hooks = {
+            treefmt.enable = true;
+          };
+
           treefmt = {
             projectRootFile = "flake.nix";
             programs.deadnix.enable = true;

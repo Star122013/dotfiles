@@ -1,35 +1,30 @@
-{ ... }:
+{ lib, ... }:
 
 let
-  templates = {
-    nix = {
-      path = ../../templates/nix;
-      description = "A basic Nix devShell.";
-    };
+  inherit (lib) hasPrefix;
 
-    cpp = {
-      path = ../../templates/cpp;
-      description = "A basic cpp devShell with cmake.";
-    };
+  readDescription = dir:
+    let
+      content = builtins.readFile (dir + "/flake.nix");
+      matches = builtins.match ".*description[[:space:]]*=[[:space:]]*\"([^\"]+)\".*" content;
+    in
+    if matches != null then builtins.head matches else "A ${builtins.baseNameOf dir} devShell";
 
-    rust = {
-      path = ../../templates/rust;
-      description = "A basic rust devShell with rust-overlay.";
-    };
-
-    md = {
-      path = ../../templates/md;
-      description = "A basic markdown devShell.";
-    };
-
-    zig = {
-      path = ../../templates/zig;
-      description = "A basic zig devShell using zig-overlay";
-    };
-  };
+  templatesDir = ../../templates;
+  entries = builtins.readDir templatesDir;
 in
-{
-  flake.templates = templates // {
-    default = templates.nix;
+builtins.attrNames entries
+|> builtins.filter (name: entries.${name} == "directory" && !hasPrefix "_" name)
+|> map (name: {
+  inherit name;
+  value = {
+    path = templatesDir + "/${name}";
+    description = readDescription (templatesDir + "/${name}");
   };
-}
+})
+|> builtins.listToAttrs
+|> (templates: {
+  flake.templates = templates // {
+    default = templates.nix or (builtins.elemAt (builtins.attrValues templates) 0);
+  };
+})

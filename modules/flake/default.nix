@@ -6,7 +6,10 @@ in
 {
   # Auto-import every flake-parts module under ./flake. The devShells live
   # in a single file (../devshells/default.nix) and are imported explicitly.
-  imports = (importDir ./.);
+  imports = (importDir ./.) ++ [
+    inputs.treefmt-nix.flakeModule
+    inputs.git-hooks-nix.flakeModule
+  ];
 
   systems = [
     "x86_64-linux"

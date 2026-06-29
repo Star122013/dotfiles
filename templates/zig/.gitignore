@@ -1,0 +1,7 @@
+.pre-commit-config.yaml
+.direnv/
+result
+result-*
+zig-out/
+zig-cache/
+.zig-cache/

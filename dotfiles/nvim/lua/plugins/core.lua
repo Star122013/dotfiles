@@ -1,6 +1,6 @@
 -- mini.ai
 local gen_ai_spec = require('mini.extra').gen_ai_spec
-require('mini.ai').setup({
+require('mini.ai').setup {
   custom_textobjects = {
     B = gen_ai_spec.buffer(),
     D = gen_ai_spec.diagnostic(),
@@ -8,19 +8,19 @@ require('mini.ai').setup({
     L = gen_ai_spec.line(),
     N = gen_ai_spec.number(),
   },
-})
+}
 
 -- mini.trailspace
-require('mini.trailspace').setup({
-  only_in_normal_buffers = true
+require('mini.trailspace').setup {
+  only_in_normal_buffers = true,
+}
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*',
+  callback = function()
+    MiniTrailspace.trim()
+    MiniTrailspace.trim_last_lines()
+  end,
 })
-vim.api.nvim_create_autocmd("BufWritePre", {
-     pattern = "*",
-     callback = function()
-       MiniTrailspace.trim()
-       MiniTrailspace.trim_last_lines()
-     end,
-   })
 
 require('mini.animate').setup()
 require('mini.bracketed').setup()

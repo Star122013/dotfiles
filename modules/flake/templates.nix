@@ -3,7 +3,8 @@
 let
   inherit (lib) hasPrefix;
 
-  readDescription = dir:
+  readDescription =
+    dir:
     let
       content = builtins.readFile (dir + "/flake.nix");
       matches = builtins.match ".*description[[:space:]]*=[[:space:]]*\"([^\"]+)\".*" content;

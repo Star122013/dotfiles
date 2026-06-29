@@ -8,6 +8,22 @@
   perSystem =
     { pkgs, ... }:
     {
+      treefmt = {
+        projectRootFile = "flake.nix";
+        programs.deadnix.enable = true;
+        programs.nixfmt.enable = true;
+        programs.jsonfmt.enable = true;
+        programs.stylua.enable = true;
+      };
+
+      pre-commit.settings.hooks = {
+        treefmt.enable = true;
+        deadnix.enable = true;
+        statix.enable = true;
+        end-of-file-fixer.enable = true;
+        check-merge-conflicts.enable = true;
+      };
+
       devShells = {
         # `nix develop` — Nix tooling for working on this flake.
         default = pkgs.mkShell {

@@ -178,7 +178,7 @@
       }
     ],
     "rule_set": [
-       {
+      {
         "type": "remote",
         "tag": "volcengine",
         "format": "binary",

@@ -1,6 +1,5 @@
 # Base system: hostname, locale, users, packages, ssh, nix settings.
 {
-  lib,
   pkgs,
   ...
 }:
@@ -50,7 +49,10 @@ in
   services.openssh = {
     enable = true;
     listenAddresses = [
-      { addr = net.lanIp; port = 22; }
+      {
+        addr = net.lanIp;
+        port = 22;
+      }
     ];
     settings.PermitRootLogin = "prohibit-password";
   };

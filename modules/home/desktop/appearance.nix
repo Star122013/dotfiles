@@ -9,7 +9,8 @@ let
   cfg = config.my.desktop.appearance;
 in
 {
-  options.my.desktop.appearance.enable = lib.mkEnableOption "desktop appearance (cursor, GTK, fcitx5, dconf, mime)";
+  options.my.desktop.appearance.enable =
+    lib.mkEnableOption "desktop appearance (cursor, GTK, fcitx5, dconf, mime)";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

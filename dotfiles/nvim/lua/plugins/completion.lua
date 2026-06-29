@@ -1,5 +1,5 @@
 -- blink.cmp
-require('blink.cmp').setup({
+require('blink.cmp').setup {
   keymap = {
     preset = 'default',
     ['<Tab>'] = { 'select_next', 'fallback' },
@@ -30,4 +30,4 @@ require('blink.cmp').setup({
   sources = {
     default = { 'lsp', 'path', 'snippets', 'buffer' },
   },
-})
+}

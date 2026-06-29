@@ -1,5 +1,5 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- stylua: ignore start
 vim.keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true, desc = "Move Left" })

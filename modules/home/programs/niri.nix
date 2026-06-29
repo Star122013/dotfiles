@@ -12,8 +12,11 @@ in
   options.my.programs.niri.enable = lib.mkEnableOption "Niri window manager dotfiles";
 
   config = lib.mkIf cfg.enable {
-    xdg.configFile."niri/config".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/niri/config";
-    xdg.configFile."niri/colors".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/niri/colors";
-    xdg.configFile."niri/config.kdl".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/niri/config.kdl";
+    xdg.configFile."niri/config".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/niri/config";
+    xdg.configFile."niri/colors".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/niri/colors";
+    xdg.configFile."niri/config.kdl".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/niri/config.kdl";
   };
 }

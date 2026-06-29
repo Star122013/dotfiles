@@ -25,8 +25,14 @@ in
 
   systemd.services.sing-box = {
     description = "sing-box";
-    after = [ "network-online.target" "adguardhome.service" ];
-    wants = [ "network-online.target" "adguardhome.service" ];
+    after = [
+      "network-online.target"
+      "adguardhome.service"
+    ];
+    wants = [
+      "network-online.target"
+      "adguardhome.service"
+    ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = "${lib.getExe pkgs.sing-box} run -C ${configDir}";
@@ -49,7 +55,10 @@ in
   # 每天 7 点从路由器 SubStore 拉取节点配置并重启 sing-box
   systemd.services.sing-box-update = {
     description = "Update sing-box node config from router SubStore";
-    after = [ "network-online.target" "sing-box.service" ];
+    after = [
+      "network-online.target"
+      "sing-box.service"
+    ];
     wants = [ "network-online.target" ];
     path = [ pkgs.curl ];
     serviceConfig = {

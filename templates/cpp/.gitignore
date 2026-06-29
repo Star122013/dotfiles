@@ -1,0 +1,15 @@
+.pre-commit-config.yaml
+.direnv/
+result
+result-*
+build/
+CMakeCache.txt
+CMakeFiles/
+cmake-build-*/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib

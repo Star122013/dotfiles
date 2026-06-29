@@ -122,9 +122,9 @@ in
   systemd.services = {
     iproute-singbox = {
       enable = true;
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
       path = [ pkgs.iproute2 ];
       script = ''
         grep -q "^100 singbox$" /etc/iproute2/rt_tables || echo "100 singbox" >> /etc/iproute2/rt_tables

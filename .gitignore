@@ -2,3 +2,4 @@ result/
 result-*
 dotfiles/nushell/history.txt
 .direnv/
+.pre-commit-config.yaml

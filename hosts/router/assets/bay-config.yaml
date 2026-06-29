@@ -1,0 +1,117 @@
+# Bay Production Config
+server:
+  host: "0.0.0.0"
+  port: 8114
+
+database:
+  url: "sqlite+aiosqlite:///./data/bay.db"
+  echo: false
+
+driver:
+  type: docker
+  image_pull_policy: always
+  docker:
+    socket: "unix:///var/run/docker.sock"
+    connect_mode: container_network
+    network: "astrbot_network"
+    publish_ports: false
+    host_port: null
+
+cargo:
+  root_path: "/var/lib/bay/cargos"
+  default_size_limit_mb: 1024
+  mount_path: "/workspace"
+
+security:
+  allow_anonymous: false
+
+proxy:
+  enabled: false
+
+warm_pool:
+  enabled: true
+  warmup_queue_workers: 2
+  warmup_queue_max_size: 256
+  warmup_queue_drop_policy: "drop_newest"
+  warmup_queue_drop_alert_threshold: 50
+  interval_seconds: 30
+  run_on_startup: true
+
+profiles:
+  - id: python-default
+    description: "Standard Python sandbox with filesystem and shell access"
+    image: "ghcr.io/astrbotdevs/shipyard-neo-ship:latest"
+    runtime_type: ship
+    runtime_port: 8123
+    resources:
+      cpus: 1.0
+      memory: "1g"
+    capabilities:
+      - filesystem
+      - shell
+      - python
+    idle_timeout: 1800
+    warm_pool_size: 1
+    env: {}
+
+  - id: python-data
+    description: "Data science sandbox with extra CPU and memory"
+    image: "ghcr.io/astrbotdevs/shipyard-neo-ship:latest"
+    runtime_type: ship
+    runtime_port: 8123
+    resources:
+      cpus: 2.0
+      memory: "4g"
+    capabilities:
+      - filesystem
+      - shell
+      - python
+    idle_timeout: 1800
+    warm_pool_size: 1
+    env: {}
+
+  - id: browser-python
+    description: "Browser automation with Python backend"
+    containers:
+      - name: ship
+        image: "ghcr.io/astrbotdevs/shipyard-neo-ship:latest"
+        runtime_type: ship
+        runtime_port: 8123
+        resources:
+          cpus: 1.0
+          memory: "1g"
+        capabilities:
+          - python
+          - shell
+          - filesystem
+        primary_for:
+          - filesystem
+          - python
+          - shell
+        env: {}
+      - name: browser
+        image: "ghcr.io/astrbotdevs/shipyard-neo-gull:latest"
+        runtime_type: gull
+        runtime_port: 8115
+        resources:
+          cpus: 1.0
+          memory: "2g"
+        capabilities:
+          - browser
+        env: {}
+    idle_timeout: 1800
+    warm_pool_size: 1
+
+gc:
+  enabled: true
+  run_on_startup: true
+  interval_seconds: 300
+  instance_id: "bay-prod"
+  idle_session:
+    enabled: true
+  expired_sandbox:
+    enabled: true
+  orphan_cargo:
+    enabled: true
+  orphan_container:
+    enabled: true

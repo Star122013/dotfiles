@@ -1,0 +1,286 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "warn",
+    "timestamp": true
+  },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m"
+  },
+  "endpoints": [],
+  "inbounds": [
+    {
+      "type": "tproxy",
+      "tag": "tproxy-in",
+      "listen": "::",
+      "listen_port": 12345
+    },
+    {
+      "type": "socks",
+      "tag": "socks-in",
+      "listen_port": 2080,
+      "listen": "127.0.0.1"
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "🎯 Direct",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "direct",
+        "block"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🚀 节点选择",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "🇭🇰 香港",
+        "🇯🇵 日本",
+        "🇸🇬 新加坡"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🇭🇰 香港",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "香港A02 | IEPL",
+        "香港A03 | IEPL",
+        "香港A04 | IEPL",
+        "香港A05 | IEPL"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🇹🇼 台湾",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "block"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🇸🇬 新加坡",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "新加坡A01 | IEPL | x2",
+        "新加坡A02 | IEPL | x2",
+        "新加坡A03 | IEPL | x2"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🇯🇵 日本",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "日本A01 | IEPL",
+        "日本A02 | IEPL",
+        "日本A03 | IEPL",
+        "日本A04 | IEPL",
+        "日本A07 | IEPL",
+        "日本A08 | IEPL",
+        "日本A09 | IEPL",
+        "日本A10 | IEPL",
+        "日本A11 | IEPL"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🇺🇸 美国",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "block"
+      ]
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    }
+  ],
+  "route": {
+    "default_mark": 1234,
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "direct",
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "edu.cn",
+          "bilibili.com",
+          "bilicdn.com"
+        ],
+        "action": "route",
+        "outbound": "🎯 Direct"
+      },
+      {
+        "domain_suffix": [
+          "github.com",
+          "githubusercontent.com"
+        ],
+        "action": "route",
+        "outbound": "🇭🇰 香港"
+      },
+      {
+        "rule_set": [
+          "bilibili",
+          "bilibili2",
+          "bilibili-cdn",
+          "tencent",
+          "aliyun",
+          "tencent-games",
+          "category-education-cn",
+          "volcengine"
+        ],
+        "action": "route",
+        "outbound": "🎯 Direct"
+      },
+      {
+        "rule_set": [
+          "Github"
+        ],
+        "action": "route",
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "rule_set": [
+          "Gemini",
+          "Openai"
+        ],
+        "action": "route",
+        "outbound": "🇭🇰 香港"
+      },
+      {
+        "rule_set": [
+          "CN"
+        ],
+        "action": "route",
+        "outbound": "🎯 Direct"
+      }
+    ],
+    "rule_set": [
+       {
+        "type": "remote",
+        "tag": "volcengine",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-volcengine.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "bilibili",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bilibili.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "bilibili2",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bilibili2.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "bilibili-cdn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bilibili-cdn.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "tencent",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-tencent.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "aliyun",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-aliyun.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "tencent-games",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-tencent-games.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "category-education-cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-category-education-cn.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "CN",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-cn.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "Github",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-github.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "Gemini",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-google-gemini.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "Openai",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-openai.srs",
+        "download_detour": "🇭🇰 香港"
+      }
+    ],
+    "final": "🚀 节点选择",
+    "auto_detect_interface": true
+  },
+  "services": [],
+  "experimental": {
+    "clash_api": {
+      "external_controller": "0.0.0.0:9090",
+      "external_ui": "dashboard",
+      "external_ui_download_url": "",
+      "external_ui_download_detour": "🇭🇰 香港",
+      "secret": "",
+      "default_mode": "rule"
+    },
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db",
+      "store_rdrc": true,
+      "rdrc_timeout": "7d"
+    }
+  }
+}

@@ -23,8 +23,8 @@
 ;;;  - Built-in customization framework
 
 ;;; Guardrail
-(when (< emacs-major-version 29)
-  (error "Emacs Bedrock only works with Emacs 29 and newer; you have version %s" emacs-major-version))
+(when (< emacs-major-version 31)
+  (error "This config requires Emacs 31 and newer; you have version %s" emacs-major-version))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -131,11 +131,14 @@ If the new path's directories does not exist, create them."
 (setopt completions-group t)
 (setopt completion-auto-select 'second-tab)            ; Much more eager
 ;(setopt completion-auto-select t)                     ; See `C-h v completion-auto-select' for more possible values
+(setopt completion-eager-display t)
+(setopt completion-eager-update t)
+
 
 (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
-
+(setopt minibuffer-visible-completions 'up-down)
 ;; For a fancier built-in completion option, try ido-mode,
-;; icomplete-vertical, or fido-mode. See also the file extras/base.el
+;; icomplete-vertical, or fido-mode. See also the file user-lisp/extras/base.el
 
 ;(icomplete-vertical-mode)
 ;; (fido-vertical-mode)
@@ -155,7 +158,7 @@ If the new path's directories does not exist, create them."
 (setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
 
 (setopt show-trailing-whitespace nil)      ; By default, don't underline trailing spaces(
-(setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
+(setopt indicate-buffer-boundaries nil)  ; Show buffer top and bottom in the margin
 
 ;; Enable horizontal scrolling
 (setopt mouse-wheel-tilt-scroll t)
@@ -225,7 +228,7 @@ If the new path's directories does not exist, create them."
   ;; for treemacs users
   (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'doom-dracula t)
+  (load-theme 'doom-nord t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -242,34 +245,30 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Uncomment the (load-file …) lines or copy code from the extras/ elisp files
-;; as desired
+;; Uncomment the (require …) lines as desired.
+;; All files live in user-lisp/ and are auto-loaded via load-path.
 
-;; UI/UX enhancements mostly focused on minibuffer and autocompletion interfaces
-;; These ones are *strongly* recommended!
-(load-file (expand-file-name "extras/base.el" user-emacs-directory))
+;; UI/UX enhancements (minibuffer, autocompletion)
+(require 'extras-base)
 
-;; Packages for software development
-(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
+;; Development tools (eglot, magit, per-language config)
+(require 'extras-dev)
 
-
-(load-file (expand-file-name "extras/ui.el" user-emacs-directory))
+;; UI enhancements (modeline, tabs, dashboard)
+(require 'extras-ui)
 
 ;; Vim-bindings in Emacs (evil-mode configuration)
-;(load-file (expand-file-name "extras/vim-like.el" user-emacs-directory))
+;(require 'extras-vim-like)
 
 ;; Org-mode configuration
-;; WARNING: need to customize things inside the elisp file before use! See
-;; the file extras/org-intro.txt for help.
-(load-file (expand-file-name "extras/org.el" user-emacs-directory))
+;; WARNING: customize variables inside user-lisp/extras-org.el before use!
+(require 'extras-org)
 
-;; Email configuration in Emacs
-;; WARNING: needs the `mu' program installed; see the elisp file for more
-;; details.
-;(load-file (expand-file-name "extras/email.el" user-emacs-directory))
+;; Email configuration (needs `mu` program installed)
+;(require 'extras-email)
 
-;; Tools for academic researchers
-;(load-file (expand-file-name "extras/researcher.el" user-emacs-directory))
+;; Academic research tools
+;(require 'extras-researcher)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

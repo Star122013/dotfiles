@@ -10,15 +10,13 @@ load-env {
     | append "/usr/bin"
     | append "/bin"
     | append "/home/linuxbrew/.linuxbrew/bin/"
-    | append "/var/home/cyrene/.zvm/bin"
-    | append "/var/home/cyrene/.pixi/bin"
+    | append "/var/home/qwerhyy/.zvm/bin"
+    | append "/var/home/qwerhyy/.pixi/bin"
     | str join ":"
   )
   EDITOR: "hx"
-  HOME: "/var/home/cyrene"
-  XDG_CACHE_HOME: "/var/home/cyrene/.cache"
+  HOME: "/var/home/qwerhyy"
+  XDG_CACHE_HOME: "/var/home/qwerhyy/.cache"
   TERMINFO_DIRS: $"($env.HOME)/.nix-profile/share/terminfo"
 }
-
-$env.EXA_API_KEY = (bash -c 'source ~/.bashrc;echo $EXA_API_KEY')
 

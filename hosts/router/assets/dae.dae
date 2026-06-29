@@ -1,4 +1,3 @@
-
 global {
   # tproxy port to listen on. It is NOT a HTTP/SOCKS port, and is just used by eBPF program.
   # In normal case, you do not need to use it.
@@ -82,6 +81,7 @@ routing {
   l4proto(udp) && dport(53) -> direct
   pname(NetworkManager) -> direct
   pname(mihomo) -> must_direct
+  pname(sing-box) -> must_direct
   pname(flclash) -> must_direct
   pname(clash) -> must_direct
   pname(clash-meta) -> must_direct
@@ -92,6 +92,7 @@ routing {
 
   # 需要指定代理的网站或进程
   domain(suffix: github.com) -> proxy_0
+  domain(suffix: ghcr.io) -> proxy_0
 
   # AI
   # domain(suffix: chatgpt.com) -> proxy_AI

@@ -1,5 +1,5 @@
 update:
-    nix flake update --option access-tokens "github.com=$(gh auth token)"
+    nix flake update --option access-tokens "github.com=$(gh auth token)" --commit-lock-file
 # reboot:
 #    nh os boot . --show-trace --ask && reboot
 push:

@@ -1,68 +1,88 @@
----@diagnostic disable: unused-local, redundant-parameter
-local gh = function(x) return "https://github.com/" .. x end
-
---=============================================================================
--- Inline diagnostics
---=============================================================================
-vim.pack.add({ gh("rachartier/tiny-inline-diagnostic.nvim") })
-require("tiny-inline-diagnostic").setup({
-  preset = "compact",
-  transparent_bg = true,
-  signs = { enabled = false },
-})
-
---=============================================================================
--- Code actions
---=============================================================================
-vim.pack.add({ gh("rachartier/tiny-code-action.nvim") })
-require("tiny-code-action").setup({
-  picker = "telescope",
-})
-
---=============================================================================
--- Git signs
---=============================================================================
-vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
-require("gitsigns").setup({
-  signs = {
-    add          = { text = "▎" },
-    change       = { text = "▎" },
-    delete       = { text = "▁" },
-    topdelete    = { text = "▔" },
-    changedelete = { text = "▎" },
+-- TODO: config
+require('mini.pick').setup()
+require('mini.extra').setup()
+require('mini.files').setup()
+require('mini.jump').setup()
+require('mini.jump2d').setup()
+-- mini.diff
+require('mini.diff').setup({
+  view = {
+    style = 'sign',
+    signs = { add = '│', change = '│', delete = '│' },
   },
-  current_line_blame = false,
-  preview_config = { border = vim.o.winborder },
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
-    local map = function(lhs, rhs, desc)
-      vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
-    end
-    map("]h", function() gs.nav_hunk("next") end, "Next Git hunk")
-    map("[h", function() gs.nav_hunk("prev") end, "Previous Git hunk")
-    map("<Leader>hp", gs.preview_hunk, "Preview hunk")
-    map("<Leader>hs", gs.stage_hunk, "Stage hunk")
-    map("<Leader>hr", gs.reset_hunk, "Reset hunk")
-    map("<Leader>hb", function() gs.blame_line({ full = true }) end, "Blame line")
-  end,
+})
+vim.keymap.set('n', '<Leader>go', function() MiniDiff.toggle_overlay() end, { desc = 'Diff overlay' })
+
+-- neogit
+require('neogit').setup()
+vim.keymap.set('n', '<Leader>gg', function() require('neogit').open() end, { desc = 'Neogit' })
+
+-- codediff.nvim
+require('codediff').setup()
+vim.keymap.set('n', '<Leader>gv', '<Cmd>CodeDiff<CR>', { desc = 'CodeDiff' })
+
+
+-- mini.clue
+local miniclue = require('mini.clue')
+miniclue.setup({
+  triggers = {
+    -- Leader triggers
+    { mode = { 'n', 'x' }, keys = '<Leader>' },
+
+    -- `[` and `]` keys
+    { mode = 'n', keys = '[' },
+    { mode = 'n', keys = ']' },
+
+    -- Built-in completion
+    { mode = 'i', keys = '<C-x>' },
+
+    -- `g` key
+    { mode = { 'n', 'x' }, keys = 'g' },
+
+    -- Marks
+    { mode = { 'n', 'x' }, keys = "'" },
+    { mode = { 'n', 'x' }, keys = '`' },
+
+    -- Registers
+    { mode = { 'n', 'x' }, keys = '"' },
+    { mode = { 'i', 'c' }, keys = '<C-r>' },
+
+    -- Window commands
+    { mode = 'n', keys = '<C-w>' },
+
+    -- `z` key
+    { mode = { 'n', 'x' }, keys = 'z' },
+
+    -- Jump2d
+    { mode = 'n', keys = '<Leader>j' },
+  },
+
+  clues = {
+    -- Enhance this by adding descriptions for <Leader> mapping groups
+    miniclue.gen_clues.square_brackets(),
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.marks(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.windows(),
+    miniclue.gen_clues.z(),
+
+    -- <Leader>g group
+    { mode = 'n', keys = '<Leader>g', desc = '+goto/git' },
+  },
 })
 
--- Neogit — lazy via keymap (require inside callback)
-vim.pack.add({ gh("NeogitOrg/neogit") })
-vim.keymap.set("n", "<Leader>gg", function()
-  local neogit = require("neogit")
-  neogit.setup({ graph_style = "kitty" })
-  neogit.open()
-end, { desc = "Neogit" })
+-- mini.hipatterns
+local hipatterns = require('mini.hipatterns')
+hipatterns.setup({
+  highlighters = {
+    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+    fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+    hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
+    todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
+    note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
 
---=============================================================================
--- Typst preview — lazy via FileType
---=============================================================================
-vim.pack.add({ gh("chomosuke/typst-preview.nvim") })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "typst",
-  once = true,
-  callback = function()
-    require("typst-preview").setup()
-  end,
+    -- Highlight hex color strings (`#rrggbb`) using that color
+    hex_color = hipatterns.gen_highlighter.hex_color(),
+  },
 })

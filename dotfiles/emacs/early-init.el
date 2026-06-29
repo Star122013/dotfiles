@@ -48,3 +48,10 @@
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
 (push '(font . "Iosevka Mono Custom-16") default-frame-alist)
+
+;; Add user-lisp/ to load-path so (require 'extras-base) etc. work.
+;; Emacs 31 does this automatically; we do it explicitly for 29/30 compatibility.
+(let ((dir (expand-file-name "user-lisp/" user-emacs-directory)))
+  (when (file-directory-p dir)
+    (add-to-list 'load-path dir)))
+

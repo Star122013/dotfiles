@@ -21,7 +21,6 @@
       imports = [
         treefmt-nix.flakeModule
         inputs.git-hooks-nix.flakeModule
-        ./_common/pre-commit.nix
       ];
 
       systems = [
@@ -42,6 +41,8 @@
             treefmt.enable = true;
             clippy.enable = true;
             rustfmt.enable = true;
+            end-of-file-fixer.enable = true;
+            check-merge-conflicts.enable = true;
           };
 
           treefmt = {

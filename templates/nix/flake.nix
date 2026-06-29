@@ -20,7 +20,6 @@
       imports = [
         treefmt-nix.flakeModule
         inputs.git-hooks-nix.flakeModule
-        ./_common/pre-commit.nix
       ];
 
       systems = [
@@ -36,6 +35,8 @@
             treefmt.enable = true;
             deadnix.enable = true;
             statix.enable = true;
+            end-of-file-fixer.enable = true;
+            check-merge-conflicts.enable = true;
           };
 
           treefmt = {

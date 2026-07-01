@@ -67,7 +67,10 @@ in
     settings = {
       # ---- DNS server (LAN-facing, replaces sing-box dns-in) ----
       dns = {
-        bind_hosts = [ net.lanIp ];
+        bind_hosts = [
+          net.lanIp
+          "127.0.0.1"
+        ];
         port = 53;
 
         # 默认上游（非中国域名）—— 走 TProxy 代理出去

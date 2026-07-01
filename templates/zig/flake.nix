@@ -8,10 +8,6 @@
       url = "github:mitchellh/zig-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,13 +17,11 @@
   outputs =
     inputs@{
       flake-parts,
-      treefmt-nix,
       zig,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        treefmt-nix.flakeModule
         inputs.git-hooks-nix.flakeModule
       ];
 
@@ -46,25 +40,23 @@
         }:
         {
           pre-commit.settings.hooks = {
-            treefmt.enable = true;
+            treefmt = {
+              enable = true;
+              settings = {
+                formatters = with pkgs; [
+                  zig.packages.${system}.default
+                  nixfmt
+                ];
+                fail-on-change = false;
+              };
+            };
             end-of-file-fixer.enable = true;
             check-merge-conflicts.enable = true;
-          };
-
-          treefmt = {
-            projectRootFile = "flake.nix";
-            programs = {
-              deadnix.enable = true;
-              nixfmt.enable = true;
-              jsonfmt.enable = true;
-              zig.enable = true;
-            };
           };
 
           devShells.default = pkgs.mkShellNoCC {
             name = "zig devShell";
             buildInputs = with pkgs; [
-              zig.packages.${system}.default
               zls
               zig-zlint
             ];

@@ -57,6 +57,7 @@ in
       image = "docker.io/soulter/astrbot:latest";
       autoStart = true;
       autoRemoveOnStop = false;
+      pull = "always";
       ports = [ "6185:6185" ];
       volumes = [
         "${astrbotDataDir}:/AstrBot/data"
@@ -78,6 +79,7 @@ in
       image = "docker.io/mlikiowa/napcat-docker:latest";
       autoStart = true;
       autoRemoveOnStop = false;
+      pull = "always";
       ports = [ "6099:6099" ];
       volumes = [
         "${astrbotDataDir}:/AstrBot/data"
@@ -101,6 +103,7 @@ in
       image = "ghcr.io/astrbotdevs/shipyard-neo-gull:latest";
       autoStart = true;
       autoRemoveOnStop = false;
+      pull = "always";
       volumes = [
         "${bayCargosDir}:/cargos:ro"
       ];
@@ -120,6 +123,7 @@ in
       image = "ghcr.io/astrbotdevs/shipyard-neo-bay:latest";
       autoStart = true;
       autoRemoveOnStop = false;
+      pull = "always";
       ports = [ "8114:8114" ];
       volumes = [
         "/var/run/docker.sock:/var/run/docker.sock"

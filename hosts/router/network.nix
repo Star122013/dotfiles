@@ -11,7 +11,7 @@ in
     useDHCP = false;
     resolvconf.useLocalResolver = false;
     firewall.enable = false;
-    nameservers = [ net.lanIp ];
+    nameservers = [ "127.0.0.1" ];
   };
 
   services.resolved.enable = false;

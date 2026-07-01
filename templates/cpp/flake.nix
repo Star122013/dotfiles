@@ -4,10 +4,6 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,10 +11,9 @@
   };
 
   outputs =
-    inputs@{ flake-parts, treefmt-nix, ... }:
+    inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        treefmt-nix.flakeModule
         inputs.git-hooks-nix.flakeModule
       ];
 
@@ -32,28 +27,24 @@
         { pkgs, config, ... }:
         {
           pre-commit.settings.hooks = {
-            treefmt.enable = true;
-            clang-format.enable = true;
-            cmake-format.enable = true;
+            treefmt = {
+              enable = true;
+              settings = {
+                formatters = with pkgs; [
+                  clang-tools
+                  cmake-format
+                  nixfmt
+                ];
+                fail-on-change = false;
+              };
+            };
             end-of-file-fixer.enable = true;
             check-merge-conflicts.enable = true;
-          };
-
-          treefmt = {
-            projectRootFile = "flake.nix";
-            programs = {
-              deadnix.enable = true;
-              nixfmt.enable = true;
-              jsonfmt.enable = true;
-              clang-format.enable = true;
-              cmake-format.enable = true;
-            };
           };
 
           devShells.default = pkgs.mkShell {
             name = "c-cpp devShell";
             buildInputs = with pkgs; [
-              clang-tools
               vcpkg
               vcpkg-tool
               cmake

@@ -52,6 +52,8 @@ vim.keymap.set({ "n", "x" }, "<leader>ap", function() require("sidekick.cli").pr
 vim.keymap.set({ "n", "x" }, "<leader>as", function() require("sidekick.cli").select() end, { desc = "Sidekick select CLI" })
 vim.keymap.set({ "n", "t" }, "<c-.>", function() require("sidekick.cli").focus() end, { desc = "Sidekick focus" })
 vim.keymap.set("n", "<leader>aa", function() require("sidekick.cli").toggle() end, { desc = "Sidekick toggle CLI" })
+
+vim.keymap.set({ "n", "x" }, "<Leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 -- You may want these if you use the opinionated `<C-a>` and `<C-x>` keymaps above — otherwise consider `<leader>o…` (and remove terminal mode from the `toggle` keymap)
 vim.keymap.set("n", "+", "<C-a>", { desc = "Increment under cursor", noremap = true })
 vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement under cursor", noremap = true })

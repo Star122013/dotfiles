@@ -33,3 +33,7 @@ require('mini.operators').setup()
 require('mini.pairs').setup()
 require('mini.splitjoin').setup()
 require('mini.surround').setup()
+
+require('tree-sitter-manager').setup {
+  auto_install = true, -- auto-install when a new filetype is encountered
+}

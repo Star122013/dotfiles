@@ -30,6 +30,7 @@ in
       lua-language-server
       emmylua-ls
       typescript-language-server
+      vscode-langservers-extracted
     ];
   };
 }

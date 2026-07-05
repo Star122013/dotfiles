@@ -10,11 +10,7 @@
     ./boot.nix
     ./base.nix
     ./network.nix
-    ./proxy.nix
-    ./sub-store.nix
-    ./sing-box.nix
-    ./adguardhome.nix
-    ./astrbot.nix
+    ./services
   ];
 
   system.stateVersion = "26.05";

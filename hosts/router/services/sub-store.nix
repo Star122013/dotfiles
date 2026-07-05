@@ -38,7 +38,7 @@ in
           SUB_STORE_FRONTEND_BACKEND_PATH = "/qwerhyy123";
           # 每天 23:55 定时同步订阅/文件到私有 Gist
           SUB_STORE_BACKEND_SYNC_CRON = "55 23 * * *";
-          # 默认代理 (如需让 Sub-Store 走 mihomo/dae 抓订阅可填):
+          # 默认代理 (如需让 Sub-Store 走代理抓订阅可填):
           # SUB_STORE_BACKEND_DEFAULT_PROXY = "http://127.0.0.1:7890";
           # 推送服务 (Bark / PushPlus / Telegram), 取消注释填自己的 key:
           # SUB_STORE_PUSH_SERVICE = "https://api.day.app/XXXXXXXX/[推送标题]/[推送内容]";

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -14,9 +15,9 @@ in
   config = lib.mkIf cfg.enable {
     programs.ghostty = {
       enable = true;
-      package = pkgs.ghostty_git;
+      package = inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default;
       settings = {
-        command = "nu";
+        command = "/usr/bin/bash";
         shell-integration-features = [
           "no-cursor"
           "ssh-terminfo"

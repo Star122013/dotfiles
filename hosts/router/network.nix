@@ -1,5 +1,6 @@
-# Networking: networkd (WAN/LAN + NAT), DNS+DHCP (AdGuard Home), proxy (sing-box).
-{ pkgs, ... }:
+# Networking: networkd (WAN/LAN + NAT), DNS hijack (AdGuard Home).
+# Transparent proxy is handled by dae via eBPF; no nftables TProxy here.
+_:
 
 let
   net = import ./net.nix;
@@ -40,29 +41,9 @@ in
       };
     };
 
-    services = {
-      systemd-resolved = {
-        enable = false;
-        unitConfig.ConditionPathExists = "/nonexistent";
-      };
-
-      iproute-singbox = {
-        enable = true;
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
-        path = [ pkgs.iproute2 ];
-        script = ''
-          grep -q "^100 singbox$" /etc/iproute2/rt_tables || echo "100 singbox" >> /etc/iproute2/rt_tables
-
-          ip -4 rule add fwmark 1 lookup singbox priority 100 2>/dev/null || true
-          ip -4 route add local 0.0.0.0/0 dev lo table singbox 2>/dev/null || true
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = "yes";
-        };
-      };
+    services.systemd-resolved = {
+      enable = false;
+      unitConfig.ConditionPathExists = "/nonexistent";
     };
   };
 
@@ -109,36 +90,6 @@ in
           }
         '';
       };
-
-      singbox = {
-        enable = true;
-        name = "singbox";
-        family = "inet";
-        content = ''
-          chain prerouting {
-            type filter hook prerouting priority -150; policy accept;
-
-            meta mark 1234 accept                               # sing-box 已处理的跳过
-            ip daddr { 127.0.0.0/8, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 } accept
-            ip6 daddr { ::1, fc00::/7 } accept                  # 私有地址直连
-
-            meta l4proto tcp meta mark set 1 tproxy to :12345 accept   # 所有 TCP → TProxy + 打标记
-            udp dport 443 drop;                                 # 禁用 QUIC/HTTP3
-          }
-          chain output {
-            type route hook output priority -150; policy accept;
-
-            meta mark 1234 accept                               # Sing-Box 已处理的跳过
-            skgid == 999 accept                                 # Sing-Box 用户组流量跳过
-            ip daddr { 127.0.0.0/8, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 } accept  # 私有地址直连
-            meta l4proto tcp meta mark set 1 accept             # 其他 TCP 打标记 → lo → PREROUTING TProxy
-          }
-        '';
-      };
     };
-  };
-  networking.iproute2 = {
-    enable = true;
-    rttablesExtraConfig = "100 singbox";
   };
 }

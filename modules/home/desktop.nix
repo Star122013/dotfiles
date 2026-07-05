@@ -46,6 +46,11 @@ in
         default = "LXGW WenKai Screen";
         description = "Serif / sans-serif font name.";
       };
+      sansSerif = lib.mkOption {
+        type = lib.types.str;
+        default = "LXGW WenKai Screen";
+        description = "Sans-serif font name.";
+      };
       emoji = lib.mkOption {
         type = lib.types.str;
         default = "Noto Color Emoji";

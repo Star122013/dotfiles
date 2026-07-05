@@ -79,7 +79,6 @@ in
       image = "docker.io/mlikiowa/napcat-docker:latest";
       autoStart = true;
       autoRemoveOnStop = false;
-      pull = "always";
       ports = [ "6099:6099" ];
       volumes = [
         "${astrbotDataDir}:/AstrBot/data"
@@ -154,7 +153,7 @@ in
     ];
     services = {
       podman-network-astrbot = {
-        description = "Create podman network for AstrBot + NapCat + Shipyard Neo";
+        description = "Create podman network for AstrBot + NapCat + Shipyard";
         after = [ "podman.service" ];
         wants = [ "podman.service" ];
         wantedBy = [ "multi-user.target" ];
@@ -174,7 +173,7 @@ in
         path = [ pkgs.coreutils ];
         script = ''
           if [ ! -f ${bayConfigFile} ]; then
-            cp ${./assets/bay-config.yaml} ${bayConfigFile}
+            cp ${../assets/bay-config.yaml} ${bayConfigFile}
             chmod 600 ${bayConfigFile}
           fi
         '';

@@ -8,19 +8,16 @@ _:
   perSystem =
     { pkgs, config, ... }:
     {
-      treefmt = {
-        projectRootFile = "flake.nix";
-        programs = {
-          deadnix.enable = true;
-          nixfmt.enable = true;
-          jsonfmt.enable = true;
-          stylua.enable = true;
-        };
-      };
-
       pre-commit.settings = {
         hooks = {
-          treefmt.enable = true;
+          treefmt = {
+            enable = true;
+            settings.formatters = [
+              pkgs.nixfmt
+              pkgs.stylua
+              pkgs.jsonfmt
+            ];
+          };
           deadnix.enable = true;
           statix = {
             enable = true;

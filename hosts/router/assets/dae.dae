@@ -1,125 +1,117 @@
 global {
-  # tproxy port to listen on. It is NOT a HTTP/SOCKS port, and is just used by eBPF program.
-  # In normal case, you do not need to use it.
-  tproxy_port: 12345
+    tproxy_port: 12345
+    tproxy_port_protect: true
+    log_level: warning
+    disable_waiting_network: true
 
-  # 将其设置为 true 以保护 tproxy 端口免受未经请求的流量的影响。将其设置为 false 以允许用户使用自我管理iptables tproxy
-  tproxy_port_protect: true
+    wan_interface: eno1
+    lan_interface: enp0s20f0u1
 
-  log_level: warning
+    dial_mode: domain+
+    allow_insecure: false
+    auto_config_kernel_parameter: true
 
-  # 拉取订阅前禁用等待网络（避免启动时 DNS 不通导致 dae 超时崩溃）
-  disable_waiting_network: true
+    # 不和 netavark (0x2000) 冲突
+    so_mark_from_dae: 0x1000
 
-  # 绑定的wan口
-  wan_interface: auto
-  lan_interface: enp0s20f0u1
+    fallback_resolver: '223.5.5.5:53'
 
-  # domain domain+ domain++ ip 四种模式
-  dial_mode: domain+
-
-  allow_insecure: false
-
-  auto_config_kernel_parameter: true
-
-  # 后备 DNS（系统 DNS 故障时使用 IP 直连，避免鸡生蛋问题）
-  # dae 需要 DNS 来解析 upstream 域名，但 DNS 又依赖 dae 转发
-  fallback_resolver: '223.5.5.5:53'
-
-  ##### 节点连通性检查（URL 后面跟 IP 后备，避免 DNS 依赖）
-  tcp_check_url: 'http://cp.cloudflare.com,1.1.1.1,2606:4700:4700::1111'
-  udp_check_dns: 'dns.google:53,8.8.8.8,2001:4860:4860::8888'
-  check_interval: 30s
-  check_tolerance: 50ms
-}
-# 订阅
-subscription {
-  # 在下面填入你的订阅链接。
+    tcp_check_url: 'http://cp.cloudflare.com,1.1.1.1,2606:4700:4700::1111'
+    udp_check_dns: 'dns.google:53,8.8.8.8,2001:4860:4860::8888'
+    check_interval: 30s
+    check_tolerance: 50ms
 }
 
 node {
-  'socks5://127.0.0.1:2080'
+    'socks5://127.0.0.1:2080'
 }
 
 dns {
-  upstream {
-    # unbound（127.0.0.1:53），处理国内域名
-    local_cache: 'udp://127.0.0.1:53'
-    # 国外 DNS，避免污染
-    googledns: 'https://1.1.1.1/dns-query'
-  }
-  routing {
-    request {
-      # 国内域名 → unbound
-      qname(geosite:cn) -> local_cache
-      # 国外域名 → 直接国外 DNS，避免污染
-      !qname(geosite:cn) -> googledns
-      # 如果 DNS 查询是由 dae 自身发起的（subscription/node），用 bootstrap_resolver
-      fallback: local_cache
+    upstream {
+        agh: 'udp://127.0.0.1:53'
     }
-    response {
-      # 信任 googledns 的结果
-      upstream(googledns) -> accept
-      # 如果响应的 IP 是私有地址且域名不是 CN，说明被污染了，重新用 googledns 查
-      ip(geoip:private) && !qname(geosite:cn) -> googledns
-      fallback: accept
+    routing {
+        request { fallback: agh }
+        response { fallback: accept }
     }
-  }
 }
+
 group {
-  proxy_0 {
-    policy: fixed(0)
-  }
+    proxy {
+        policy: fixed(0)
+    }
 }
-# 参考 https://github.com/daeuniverse/dae/blob/main/docs/routing.md
+
 routing {
-  pname(dnsmasq, systemd-resolved) && l4proto(udp) && dport(53) -> must_direct
-  pname(unbound) -> must_direct
+    # ── 基础设施直连（避免回环） ──
+    pname(dae, sing-box) -> must_direct
+    pname(aardvark-dns) -> must_direct
+    pname(systemd-networkd, NetworkManager) -> must_direct
+    pname(conmon, netavark) -> must_direct
+    pname(containerd, dockerd) -> must_direct
 
-  # LAN 客户端的 DNS 查询直接走 unbound，不经过 mihomo 代理
-  # 必须放在 domain() 规则之前，否则 DNS 查到 google.com 会被 domain 规则匹配走代理
-  l4proto(udp) && dport(53) -> direct
-  pname(NetworkManager) -> direct
-  pname(mihomo) -> must_direct
-  pname(sing-box) -> must_direct
-  pname(flclash) -> must_direct
-  pname(clash) -> must_direct
-  pname(clash-meta) -> must_direct
+    # ── DNS ──
+    l4proto(udp, tcp) && dport(53) -> direct
 
-  pname(Core) -> must_direct
-  pname(throne) -> must_direct
-  pname(Throne) -> must_direct
+    # ── 容器网段直连（容器间通信 + 容器→宿主机不走代理） ──
+    dip(10.88.0.0/16) -> direct
+    dip(10.89.0.0/24) -> direct
 
-  # 需要指定代理的网站或进程
-  domain(suffix: github.com) -> proxy_0
-  domain(suffix: ghcr.io) -> proxy_0
+    # ── 代理：非中国互联网服务 ──
+    domain(geosite:category-ai-!cn) -> proxy
+    domain(geosite:category-ai-chat-!cn) -> proxy
+    domain(geosite:category-social-media-!cn) -> proxy
+    domain(geosite:category-media) -> proxy
+    domain(geosite:category-communication) -> proxy
+    domain(geosite:category-container) -> proxy
+    domain(geosite:category-dev) -> proxy
+    domain(geosite:category-games-!cn) -> proxy
+    domain(geosite:category-cryptocurrency) -> proxy
+    domain(geosite:category-entertainment) -> proxy
+    domain(geosite:category-anticensorship) -> proxy
+    domain(geosite:category-scholar-!cn) -> proxy
+    domain(geosite:category-browser-!cn) -> proxy
+    domain(geosite:category-remote-control) -> proxy
+    domain(geosite:category-proxy-tunnels) -> proxy
+    domain(geosite:category-pt) -> proxy
+    domain(geosite:category-porn) -> block
 
-  # AI
-  # domain(suffix: chatgpt.com) -> proxy_AI
-  # domain(suffix: openai.com) -> proxy_AI
-  domain(suffix: google.com) -> proxy_0
+    # ── 直连：中国服务 ──
+    domain(geosite:cn) -> direct
+    domain(geosite:bilibili) -> direct
+    domain(geosite:bilibili2) -> direct
+    domain(geosite:bilibili-cdn) -> direct
+    domain(geosite:bilibili-game) -> direct
+    domain(geosite:netease) -> direct
+    domain(geosite:aliyun) -> direct
+    domain(geosite:alibaba) -> direct
+    domain(geosite:aligames) -> direct
+    domain(geosite:alibabacloud) -> direct
+    domain(geosite:tencent) -> direct
+    domain(geosite:tencent-dev) -> direct
+    domain(geosite:tencent-tme) -> direct
+    domain(geosite:tencent-games) -> direct
+    domain(geosite:category-media-cn) -> direct
+    domain(geosite:category-games-cn) -> direct
+    domain(geosite:category-entertainment-cn) -> direct
+    domain(geosite:category-education-cn) -> direct
+    domain(geosite:category-bank-cn) -> direct
+    domain(geosite:category-netdisk-cn) -> direct
+    domain(geosite:category-social-media-cn) -> direct
+    domain(geosite:category-scholar-cn) -> direct
+    domain(geosite:category-dev-cn) -> direct
 
-  # block
-  l4proto(udp) && dport(443) -> block
+    # ── 按 IP 直连 ──
+    dip(224.0.0.0/3, 'ff00::/8') -> direct
+    dip(geoip:private) -> direct
+    dip(geoip:cn) -> direct
 
-  # 需要指定直连的网站或进程
-  pname(qbittorrent) -> direct
-  domain(suffix: deepseek.com) -> direct
-  domain(suffix: firefox.com) -> direct
-  domain(suffix: push.services.mozilla.com) -> direct
-  domain(suffix: minecraft.net) -> direct
-  domain(suffix: microsoftonline.com) -> direct
-  domain(suffix: immersivetranslate.com) -> direct
-  domain(full: api.bilibili.com) -> direct
-  domain(suffix: bilibili.com) -> direct
-  domain(suffix: archlinux.org) -> direct
-  domain(suffix: cm.steampowered.com) -> direct
-  domain(suffix: steamserver.net) -> direct
+    # ── 禁 QUIC ──
+    l4proto(udp) && dport(443) -> block
 
-  dip(224.0.0.0/3, 'ff00::/8') -> direct
-  dip(geoip:private) -> direct
-  dip(geoip:cn) -> direct
-  domain(geosite:cn) -> direct
+    # ── UDP 全部直连（SOCKS5 接不住 UDP，且大部分 UDP 不需要代理） ──
+    l4proto(udp) -> direct
 
-  fallback: proxy_0
+    # ── 其余 TCP 走代理 ──
+    fallback: proxy
 }

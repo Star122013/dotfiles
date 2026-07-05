@@ -1,21 +1,13 @@
 # AdGuard Home: LAN DNS sinkhole + DHCP server.
 #
-# Replaces two things that used to live elsewhere:
-#   - Adguard (DHCP)
-#   - Adguard (LAN DNS)
-#   - sing-box (Tproxy)
-#
-# Sing-box is left with TProxy + outbound proxying only; its internal DNS
-# module still works for resolving rule_set URLs and outbound hostnames.
-#
 # Bind hosts are restricted to the LAN address. The nftables filter table
-# in network.nix already drops all inbound WAN, so this is defense-in-depth
+# in network.nix drops all inbound WAN, so this is defense-in-depth
 # rather than load-bearing — but it also keeps DNS off the WAN socket
 # entirely.
 { pkgs, ... }:
 
 let
-  net = import ./net.nix;
+  net = import ../net.nix;
 
   # dnsmasq-china-list: 中国域名列表，用于 AGH 分流
   # 格式转换：server=/domain/upstream → [/domain/]upstream
@@ -65,7 +57,7 @@ in
     openFirewall = false;
 
     settings = {
-      # ---- DNS server (LAN-facing, replaces sing-box dns-in) ----
+      # ---- DNS server (LAN-facing) ----
       dns = {
         bind_hosts = [
           net.lanIp
@@ -73,7 +65,7 @@ in
         ];
         port = 53;
 
-        # 默认上游（非中国域名）—— 走 TProxy 代理出去
+        # 默认上游（非中国域名）—— 走代理出去
         upstream_dns = [
           "https://1.1.1.1/dns-query"
           "https://8.8.8.8/dns-query"
@@ -112,7 +104,7 @@ in
         cache_size = 4194304; # 4 MiB (AGH default)
       };
 
-      # ---- DHCP server (replaces kea-dhcp4) ----
+      # ---- DHCP server ----
       dhcp = {
         enabled = true;
         interface_name = net.lanInterface;
@@ -124,7 +116,7 @@ in
           subnet_mask = "255.255.255.0";
           range_start = "10.10.10.2";
           range_end = "10.10.10.100";
-          lease_duration = 4000; # seconds; matches the old kea setting
+          lease_duration = 4000; # seconds
         };
 
         # DHCPv6 — explicitly disabled to avoid the "neither dhcpv4 nor
@@ -135,7 +127,6 @@ in
       };
 
       # ---- Web UI (LAN only) ----
-      # 3000 = AGH default. 3001 is taken by sub-store.
       web = {
         bind_host = net.lanIp;
         port = 3000;

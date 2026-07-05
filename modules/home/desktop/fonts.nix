@@ -10,6 +10,7 @@ let
   desktop = config.my.desktop;
   cfg = config.my.desktop.fonts;
   system = pkgs.stdenv.hostPlatform.system;
+  pragmataPro = pkgs.callPackage ../../../pkgs/pragmata-pro { };
 in
 {
   options.my.desktop.fonts.enable = lib.mkEnableOption "font packages and fontconfig";
@@ -26,6 +27,7 @@ in
       noto-fonts
       font-awesome
       lxgw-wenkai-screen
+      pragmataPro
       inputs.iosevka.packages.${system}.default
       inputs.iosevka.packages.${system}.normal
       inputs.iosevka.packages.${system}.mono
@@ -33,7 +35,7 @@ in
 
     fonts.fontconfig = {
       enable = true;
-      defaultFonts.monospace = lib.mkForce [
+      defaultFonts.monospace = [
         desktop.fonts.monospace
         desktop.fonts.monospaceFallback
       ];

@@ -28,7 +28,7 @@ in
       fonts = {
         monospace.name = desktop.fonts.monospace;
         serif.name = desktop.fonts.serif;
-        sansSerif.name = desktop.fonts.serif;
+        sansSerif.name = desktop.fonts.sansSerif;
         emoji.name = desktop.fonts.emoji;
         sizes.terminal = desktop.fonts.terminalSize;
       };

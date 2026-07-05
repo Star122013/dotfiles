@@ -31,6 +31,7 @@ in
       emmylua-ls
       typescript-language-server
       vscode-langservers-extracted
+      markdown-oxide
     ];
   };
 }

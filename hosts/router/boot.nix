@@ -10,7 +10,6 @@ _:
     blacklistedKernelModules = [ "r8153_ecm" ];
 
     kernel.sysctl."net.ipv4.ip_forward" = 1;
-    kernelModules = [ "nft_tproxy" ];
   };
 
   services.udev.extraRules = ''

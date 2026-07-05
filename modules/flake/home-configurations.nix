@@ -41,6 +41,8 @@ let
           kitty.enable = true;
           mpv.enable = true; # auto-enables yt-dlp (NAND: set yt-dlp.enable=false to skip)
           direnv.enable = true;
+          bash.enable = true;
+          starship.enable = true;
           nh.enable = true;
           # dotfile-only modules (out-of-store symlinks)
           niri.enable = true;
@@ -56,8 +58,15 @@ let
         # Enabling `desktop` auto-enables appearance / fonts / stylix (each
         # set with mkDefault, so any of them can be turned off individually —
         # e.g. `desktop.fonts.enable = false;` — a NAND override).
-        desktop.enable = true;
-        desktop.base16Scheme = "gruvbox-material-dark-soft";
+        desktop = {
+          enable = true;
+          base16Scheme = "gruvbox-material-dark-soft";
+          fonts = {
+            monospace = "PragmataPro";
+            serif = "LXGW WenKai Screen";
+            sansSerif = "LXGW WenKai Screen";
+          };
+        };
       };
     }
   ];

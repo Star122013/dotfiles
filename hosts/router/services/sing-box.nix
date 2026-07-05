@@ -1,5 +1,6 @@
-# sing-box: 读 /etc/sing-box 目录下所有 json 自动合并运行.
-# base.json / node.json 以及定时拉取脚本由你手动放在 /etc/sing-box.
+# sing-box: SOCKS5 proxy provider for dae.
+# dae performs eBPF-based transparent proxying and traffic splitting;
+# sing-box only handles outbound proxy connections.
 { lib, pkgs, ... }:
 
 let
@@ -82,7 +83,6 @@ in
 
   environment.systemPackages = [ pkgs.sing-box ];
   environment.etc."/singbox/base.json" = {
-    source = ./assets/singbox-base.json;
+    source = ../assets/singbox-base.json;
   };
-
 }

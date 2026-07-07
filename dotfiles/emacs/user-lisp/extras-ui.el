@@ -1,5 +1,17 @@
-;;; ui.el -*- lexical-binding: t; -*-
-;; Set up doom-modeline
+;;; extras-ui.el --- UI enhancements -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;;; Set up doom-modeline and other UI enhancements.
+;;;
+;;; This configures:
+;;;  - doom-modeline (status bar)
+;;;  - diff-hl (git signs)
+;;;  - tab-bar (built-in workspace tabs)
+;;;  - colorful-mode (color preview)
+;;;  - dashboard (startup screen)
+
+;;; Code:
+
 (use-package
   doom-modeline
   :ensure t
@@ -10,11 +22,6 @@
   (doom-modeline-bar-width 4)
   (doom-modeline-project-name t)
   (doom-modeline-workspace-name t)
-  ;; NOTE: doom-modeline only supports `persp-mode', NOT `perspective'.
-  ;; These two are no-ops with the `perspective' package — leave disabled
-  ;; unless you switch to `persp-mode'.
-  ;; (doom-modeline-persp-name t)
-  ;; (doom-modeline-persp-icon t)
   (doom-modeline-buffer-file-name-style 'file-name)
   (doom-modeline-position-column-line-format '("%l:%c"))
   (doom-modeline-minor-modes t)
@@ -26,99 +33,94 @@
   (doom-modeline-time t)
   (doom-modeline-time-analogue-clock t))
 
-(use-package minions :ensure t :config (minions-mode 1))
+(use-package minions :ensure t :commands minions-mode :init (minions-mode 1))
 
-;; Git gutter, similar to gitsigns.nvim.
-;; Use git-gutter instead of diff-hl because vc-handled-backends is disabled.
-(use-package
-  git-gutter
+;; diff-hl: git diff indicators in the fringe (left margin)
+;; Uses VC, so vc-handled-backends must not be nil.
+(use-package diff-hl
   :ensure t
-  :hook ((prog-mode . git-gutter-mode) (text-mode . git-gutter-mode))
+  :hook ((prog-mode . diff-hl-mode)
+         (text-mode . diff-hl-mode))
   :custom
-  (git-gutter:update-interval 0.5)
-  (git-gutter:added-sign "▎")
-  (git-gutter:modified-sign "▎")
-  (git-gutter:deleted-sign "▁")
-  :custom-face
-  (git-gutter:added
-    ((t (:foreground "#98be65" :background "#98be65"))))
-  (git-gutter:modified
-    ((t (:foreground "#ECBE7B" :background "#ECBE7B"))))
-  (git-gutter:deleted
-    ((t (:foreground "#ff6c6b" :background "#ff6c6b")))))
+  (diff-hl-draw-borders nil)
+  :config
+  ;; Update on save and revert
+  (diff-hl-flydiff-mode 1)
+  ;; Show margin instead of fringe in terminal
+  (unless (display-graphic-p)
+    (diff-hl-margin-mode 1))
+  ;; Pause flydiff timer during completion to avoid flicker
+  (defun my/diff-hl-pause ()
+    (when (bound-and-true-p diff-hl-flydiff-timer)
+      (cancel-timer diff-hl-flydiff-timer)
+      (setq diff-hl-flydiff-timer nil)))
+  (defun my/diff-hl-resume ()
+    (when diff-hl-flydiff-mode
+      (setq diff-hl-flydiff-timer
+            (run-with-idle-timer diff-hl-flydiff-delay t
+                                 #'diff-hl-flydiff-update))))
+  (add-hook 'completion-in-region-mode-hook
+            (defun my/diff-hl-completion-hook ()
+              (if completion-in-region-mode
+                  (my/diff-hl-pause)
+                (my/diff-hl-resume)))))
 
-;; tab-bar
+;; centaur-tabs: show buffers in header-line, filtered by current workspace
 (use-package
   centaur-tabs
   :ensure t
-  :init (setq centaur-tabs-enable-key-bindings t)
+  :custom
+  (centaur-tabs-enable-key-bindings t)
+  (centaur-tabs-style "bar")
+  (centaur-tabs-height 32)
+  (centaur-tabs-set-icons t)
+  (centaur-tabs-show-new-tab-button t)
+  (centaur-tabs-set-modified-marker t)
+  (centaur-tabs-show-navigation-buttons t)
+  (centaur-tabs-set-bar 'under)
+  (centaur-tabs-show-count nil)
+  (x-underline-at-descent-line t)
+  (centaur-tabs-left-edge-margin nil)
   :config
-  (setq
-    centaur-tabs-style "bar"
-    centaur-tabs-height 32
-    centaur-tabs-set-icons t
-    centaur-tabs-show-new-tab-button t
-    centaur-tabs-set-modified-marker t
-    centaur-tabs-show-navigation-buttons t
-    centaur-tabs-set-bar 'under
-    centaur-tabs-show-count nil
-    ;; centaur-tabs-label-fixed-length 15
-    ;; centaur-tabs-gray-out-icons 'buffer
-    ;; centaur-tabs-plain-icons t
-    x-underline-at-descent-line t
-    centaur-tabs-left-edge-margin nil)
   (centaur-tabs-headline-match)
-  ;; (centaur-tabs-enable-buffer-alphabetical-reordering)
-  ;; (setq centaur-tabs-adjust-buffer-order t)
   (centaur-tabs-mode t)
   (setq uniquify-separator "/")
   (setq uniquify-buffer-name-style 'forward)
-  (defun centaur-tabs-buffer-groups ()
-    "`centaur-tabs-buffer-groups' control buffers' group rules.
 
-Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
-All buffer name start with * will group to \"Emacs\".
-Other buffer group by `centaur-tabs-get-group-name' with project name."
+  ;; Only show buffers from the current tabspaces workspace
+  (defun my/centaur-tabs-buffer-list ()
+    "Like `centaur-tabs-buffer-list' but filtered by current workspace."
+    (seq-filter
+     (lambda (b)
+       (and (cond ((eq (current-buffer) b) t)
+                  ((buffer-file-name b) t)
+                  ((char-equal ?\s (aref (buffer-name b) 0)) nil)
+                  ((buffer-live-p b) t))
+            (or (not (bound-and-true-p tabspaces-mode))
+                (tabspaces--local-buffer-p b))))
+     (buffer-list)))
+  (setq centaur-tabs-buffer-list-function #'my/centaur-tabs-buffer-list)
+
+  (defun centaur-tabs-buffer-groups ()
+    "Group centaur-tabs by buffer type."
     (list
       (cond
-        ;; ((not (eq (file-remote-p (buffer-file-name)) nil))
-        ;; "Remote")
-        (
-          (or (string-equal "*" (substring (buffer-name) 0 1))
-            (memq
-              major-mode
-              '
-              (magit-process-mode
-                magit-status-mode
-                magit-diff-mode
-                magit-log-mode
-                magit-file-mode
-                magit-blob-mode
-                magit-blame-mode)))
-          "Emacs")
-        ((derived-mode-p 'prog-mode)
-          "Editing")
-        ((derived-mode-p 'dired-mode)
-          "Dired")
-        ((memq major-mode '(helpful-mode help-mode))
-          "Help")
-        (
-          (memq
-            major-mode
-            '
-            (org-mode
-              org-agenda-clockreport-mode
-              org-src-mode
-              org-agenda-mode
-              org-beamer-mode
-              org-indent-mode
-              org-bullets-mode
-              org-cdlatex-mode
-              org-agenda-log-mode
-              diary-mode))
-          "OrgMode")
-        (t
-          (centaur-tabs-get-group-name (current-buffer))))))
+        ((or (string-equal "*" (substring (buffer-name) 0 1))
+             (memq major-mode
+                   '(magit-process-mode magit-status-mode magit-diff-mode
+                     magit-log-mode magit-file-mode magit-blob-mode
+                     magit-blame-mode)))
+         "Emacs")
+        ((derived-mode-p 'prog-mode) "Editing")
+        ((derived-mode-p 'dired-mode) "Dired")
+        ((memq major-mode '(helpful-mode help-mode)) "Help")
+        ((memq major-mode
+               '(org-mode org-agenda-clockreport-mode org-src-mode
+                 org-agenda-mode org-beamer-mode org-indent-mode
+                 org-bullets-mode org-cdlatex-mode org-agenda-log-mode
+                 diary-mode))
+         "OrgMode")
+        (t (centaur-tabs-get-group-name (current-buffer))))))
   :hook
   (dashboard-mode . centaur-tabs-local-mode)
   (term-mode . centaur-tabs-local-mode)
@@ -137,11 +139,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :diminish
   :hook (after-init . global-colorful-mode)
   :init (setq colorful-use-prefix t)
-  :config
-  (dolist
-    (mode
-      '(html-mode php-mode emacs-lisp-mode help-mode helpful-mode))
-    (add-to-list 'global-colorful-modes mode)))
+  :custom
+  (global-colorful-modes '(html-mode php-mode emacs-lisp-mode help-mode helpful-mode)))
 
 
 ;; ─── Dashboard ──────────────────────────────────────────────────────────────
@@ -214,8 +213,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :defer t
   :diminish
   :hook (after-init . global-page-break-lines-mode)
-  :config
-  (dolist (mode '(dashboard-mode emacs-news-mode))
-    (add-to-list 'page-break-lines-modes mode)))
+  :custom
+  (page-break-lines-modes '(dashboard-mode emacs-news-mode)))
 
 (provide 'extras-ui)
+;;; extras-ui.el ends here

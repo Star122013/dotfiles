@@ -1,6 +1,6 @@
-;;; base.el  -*- lexical-binding: t; -*- 
-;;; Emacs Bedrock
-;;;
+;;; extras-base.el --- Base enhancements -*- lexical-binding: t; -*-
+
+;;; Commentary:
 ;;; Extra config: Base enhancements
 
 ;;; Usage: Append or require this file from init.el to enable various UI/UX
@@ -22,6 +22,10 @@
 ;;;  - Power-ups: Embark and Consult
 ;;;  - Minibuffer and completion
 ;;;  - Misc. editing enhancements
+
+;;; Code:
+
+(declare-function consult--customize-put "consult")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -61,16 +65,8 @@
          ("M-s l" . consult-line)            ; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi)      ; needed by consult-line to detect isearch
          )
-  :config
-  ;; Narrowing lets you restrict results to certain groups of candidates
-  (setq consult-narrow-key "<")
-  (consult-customize
-   consult-ripgrep consult-git-grep consult-grep consult-man
-   consult-bookmark consult-recent-file consult-xref
-   consult-source-bookmark consult-source-file-register
-   consult-source-recent-file consult-source-project-recent-file
-   :preview-key '(:debounce 0.4 any))) ;; Option 1: Delay preview
-   ;; :preview-key "M-."              ;; Option 2: Manual preview
+  :custom
+  (consult-narrow-key "<"))
 
 (use-package embark-consult
   :ensure t)
@@ -125,81 +121,41 @@
 ;; Marginalia: annotations for minibuffer
 (use-package marginalia
   :ensure t
-  :config
-  (marginalia-mode))
+  :commands marginalia-mode
+  :init (marginalia-mode))
 
-;; Corfu: Popup completion-at-point
-(use-package corfu
+;; Popup completion-at-point
+(use-package
+  corfu
   :ensure t
-  :init
-  (global-corfu-mode)
-  :custom
-  (corfu-min-width 25)
-  (corfu-max-width 60)
-  (corfu-count 10)
-  (corfu-scroll-margin 2)
-  (corfu-left-margin-width 0.8)
-  (corfu-right-margin-width 0.8)
-  ;; Neovim-like styling.  Keep real border at 0; Corfu can otherwise clip the
-  ;; last candidate line on some frames/terminals.  The popup still looks
-  ;; "floating" because corfu-default differs from the editor background.
-  (corfu-border-width 0)
-  ;; Slightly different completion styles for more natural feel
-  (corfu-quit-at-boundary 'separator)
-  (corfu-quit-no-match 'separator)
+  :init (global-corfu-mode)
+  :custom (corfu-auto t) (corfu-auto-delay 0) (corfu-cycle t)
+  ;; (corfu-separator ?_) ;; Set to orderless separator, if not using space
+  (corfu-auto-prefix 0)
+  (corfu-preselect 'prompt)
+  (corfu-auto-trigger ".") ;; Custom trigger characters
+  (corfu-quit-no-match 'separator) ;; or t
   :bind
-  (:map corfu-map
-        ("SPC" . corfu-insert-separator)
-        ("C-n" . corfu-next)
-        ("C-p" . corfu-previous))
-  :custom-face
-  ;; Popup background: slightly lighter than editor bg (like nvim-cmp floating window)
-  (corfu-default ((t (:background "#23272e" :foreground "#bbc2cf" :extend t))))
-  ;; Selected candidate: distinct blue highlight bar (like nvim-cmp's selection)
-  (corfu-current ((t (:background "#2e4a6e" :foreground "#ffffff" :extend t))))
-  ;; Border face kept for future use, but actual border width is 0 to avoid clipping.
-  (corfu-border ((t (:background "#1c1f24" :inherit nil))))
-  ;; Scrollbar: right-side indicator, subtle
-  (corfu-bar ((t (:background "#3f444a"))))
-  ;; Annotations: muted text for extra info
-  (corfu-annotations ((t (:foreground "#5B6268" :slant italic))))
-  ;; Deprecated candidates: muted with strikethrough
-  (corfu-deprecated ((t (:foreground "#5B6268" :strike-through t)))))
+  (:map
+   corfu-map
+   ("TAB" . corfu-next)
+   ([tab] . corfu-next)
+   ("S-TAB" . corfu-previous)
+   ("SPC" . corfu-insert-separator)
+   ([backtab] . corfu-previous)))
+;;  ;; ("TAB" . corfu-next)           ; Tab to select next
+;;  ;; ("<backtab>" . corfu-previous) ; Shift-Tab to select previous
+;; ("C-n" . corfu-next) ("C-p" . corfu-previous)))
 
 ;; Part of corfu
-(use-package corfu-popupinfo
+(use-package
+  corfu-popupinfo
   :after corfu
-  :ensure nil
   :hook (corfu-mode . corfu-popupinfo-mode)
   :custom
-  (corfu-popupinfo-delay '(0.25 . 0.1))
+  (corfu-popupinfo-delay '(0.1 . 0.1))
   (corfu-popupinfo-hide nil)
-  (corfu-popupinfo-width 60)
-  (corfu-popupinfo-max-height 25)
-  :config
-  (corfu-popupinfo-mode)
-  ;; Style the info popup to match the completion popup (nvim-cmp doc window look)
-  (set-face-attribute 'corfu-popupinfo nil
-                      :background "#1e2228"
-                      :foreground "#bbc2cf"
-                      :inherit nil
-                      :height 0.9))
-
-;; Corfu on TTY: Emacs 31+ supports child frames natively, so corfu-terminal is not needed.
-;; For Emacs < 31, uncomment the following:
-;; (use-package corfu-terminal
-;;   :if (not (display-graphic-p))
-;;   :ensure t
-;;   :config
-;;   (corfu-terminal-mode))
-
-;; Fancy completion-at-point functions; there's too much in the cape package to
-;; configure here; dive in when you're comfortable!
-(use-package cape
-  :ensure t
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  :config (corfu-popupinfo-mode))
 
 ;; Pretty icons for corfu
 (use-package kind-icon
@@ -207,15 +163,25 @@
   :ensure t
   :after corfu
   :config
-  ;; Neat, compact icons like nvim-cmp.  Keep SVG icons below line height to
-  ;; avoid Corfu clipping the last candidate.
-  (setq kind-icon-default-face 'corfu-default)
-  (setq kind-icon-blend-background nil)
-  (setq kind-icon-blend-frac 0.08)
-  (setq kind-icon-margin t)
-  (setq kind-icon-default-style
-        '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 0.85 :scale 0.85 :background nil))
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; Fancy completion-at-point functions; there's too much in the cape package to
+;; configure here; dive in when you're comfortable!
+(use-package
+  cape
+  :ensure t
+  :defer t
+  :init
+  (add-to-list
+   'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
+;; Pretty icons for corfu
+(use-package
+  nerd-icons-corfu
+  :ensure t
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package eshell
   :init
@@ -230,34 +196,19 @@
   :ensure t
   :custom
   (eat-term-name "xterm")
-  :config
-  (eat-eshell-mode)                     ; use Eat to handle term codes in program output
-  (eat-eshell-visual-command-mode))     ; commands like less will be handled by Eat
-
+  :commands (eat-eshell-mode eat-eshell-visual-command-mode)
+  :init
+  (eat-eshell-mode)
+  (eat-eshell-visual-command-mode))
 
 ;; Orderless: powerful completion style
 (use-package orderless
   :ensure t
-  :config
+  :init
   (setq completion-styles '(orderless)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;a
-;;;
-;;;   Misc. editing enhancements
-;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Modify grep results en masse — Emacs 31 has built-in Grep Edit mode.
-;; Type `e' in *grep* buffer to edit, `C-c C-c' to commit changes.
-;; (use-package wgrep
-;;   :ensure t
-;;   :config
-;;   (setq wgrep-auto-save-buffer t))
-;; benchmark
-(use-package benchmark-init
-  :ensure t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
 (provide 'extras-base)
+;; Local Variables:
+;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
+;; End:
+;;; extras-base.el ends here

@@ -68,8 +68,6 @@ in
 
         # Wayland
         XDG_SESSION_TYPE = "wayland";
-        XDG_CURRENT_DESKTOP = "Sway";
-        XDG_SESSION_DESKTOP = "Sway";
 
         # Sway 1.12: suppress unsupported GPU warning (NVIDIA proprietary etc.)
         SWAY_UNSUPPORTED_GPU = "1";
@@ -96,7 +94,6 @@ in
         # Other
         EDITOR = "hx";
         CLUTTER_BACKEND = "wayland";
-        DISPLAY = ":0";
       };
 
       # Put npm global packages in a user-writable directory.

@@ -16,7 +16,7 @@
       deployment = {
         targetHost = "10.10.10.1";
         targetUser = "root";
-        buildOnTarget = true;
+        buildOnTarget = false;
       };
       imports = [ ../../hosts/router ];
     };

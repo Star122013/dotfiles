@@ -1,7 +1,7 @@
 global {
     tproxy_port: 12345
     tproxy_port_protect: true
-    log_level: warning
+    log_level: error
     disable_waiting_network: true
 
     wan_interface: eno1
@@ -77,6 +77,7 @@ routing {
     domain(geosite:category-porn) -> block
 
     # ── 直连：中国服务 ──
+    domain(suffix: hdslb.com) -> direct
     domain(geosite:cn) -> direct
     domain(geosite:bilibili) -> direct
     domain(geosite:bilibili2) -> direct

@@ -1,5 +1,11 @@
 ;;; lang-config.el --- Per-language configuration -*- lexical-binding: t; -*-
 
+;;; Commentary:
+;;; Per-language configuration — tree-sitter, Eglot LSP, and major-mode setup.
+;;; Each language section configures the mode hook and LSP server if applicable.
+
+;;; Code:
+
 ;; ── Tree-sitter core ──────────────────────────────────────────────────────
 
 (use-package treesit
@@ -24,8 +30,9 @@
 
 ;; ── Elixir ────────────────────────────────────────────────────────────────
 
-(add-hook 'elixir-mode-hook #'eglot-ensure)
-(add-hook 'elixir-ts-mode-hook #'eglot-ensure)
+(use-package eglot
+  :hook ((elixir-mode . eglot-ensure)
+         (elixir-ts-mode . eglot-ensure)))
 
 ;; ── Emacs Lisp ────────────────────────────────────────────────────────────
 
@@ -33,15 +40,16 @@
   :ensure t
   :commands (elisp-autofmt-mode elisp-autofmt-buffer)
   :hook (emacs-lisp-mode . elisp-autofmt-mode)
-  :config
-  (setq elisp-autofmt-style 'fixed))
+  :custom
+  (elisp-autofmt-style 'fixed))
 
 ;; ── Haskell ───────────────────────────────────────────────────────────────
 
-(with-eval-after-load 'eglot
-  (add-to-list
-   'eglot-server-programs
-   '(haskell-mode . ("haskell-language-server-wrapper" "--lsp"))))
+(use-package eglot
+  :hook ((haskell-mode . eglot-ensure))
+  :custom
+  (eglot-server-programs '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
+  :config (defvar eglot-server-programs))
 
 ;; ── JavaScript ────────────────────────────────────────────────────────────
 
@@ -69,37 +77,24 @@
 
 (use-package nix-mode
   :ensure t
-  :mode "\\.nix\\'")
-
-;; Emacs 31's (treesit-enabled-modes t) auto-remaps nix-mode → nix-ts-mode.
-;; nix-ts-mode is built-in, no need to install separately.
-;; Since TS modes don't inherit hooks (Emacs 30+), hook both variants.
-(add-hook 'nix-mode-hook #'eglot-ensure)
-(add-hook 'nix-ts-mode-hook #'eglot-ensure)
-
-(with-eval-after-load 'eglot
-  (add-to-list
-   'eglot-server-programs
-   '(nix-mode . ("nixd" "--inlay-hints=false")))
-  (setq-default eglot-workspace-configuration
-                '(:nixd
-                  (:options
-                   (:nixos
-                    (:expr "{}")
-                    :home-manager
-                    (:expr
-                     "(builtins.getFlake (builtins.toString /var/home/cyrene/.config/home-manager)).homeConfigurations.cyrene.options")))
-                  :formatting (:command ["nixfmt"]))))
+  :mode "\\.nix\\'"
+  :hook ((nix-mode . eglot-ensure)
+         (nix-ts-mode . eglot-ensure))
+  :custom
+  (eglot-server-programs '(nix-mode . ("nixd")))
+  :config (defvar eglot-server-programs))
 
 ;; ── Python ────────────────────────────────────────────────────────────────
 
-(add-hook 'python-mode-hook #'eglot-ensure)
-(add-hook 'python-ts-mode-hook #'eglot-ensure)
+(use-package eglot
+  :hook ((python-mode . eglot-ensure)
+         (python-ts-mode . eglot-ensure)))
 
 ;; ── Ruby ──────────────────────────────────────────────────────────────────
 
-(add-hook 'ruby-mode-hook #'eglot-ensure)
-(add-hook 'ruby-ts-mode-hook #'eglot-ensure)
+(use-package eglot
+  :hook ((ruby-mode . eglot-ensure)
+         (ruby-ts-mode . eglot-ensure)))
 
 ;; ── Rust ──────────────────────────────────────────────────────────────────
 
@@ -125,15 +120,14 @@
   :ensure t
   :mode ("\\.zig\\'" "\\.zon\\'")
   :hook ((zig-mode . eglot-ensure)
-         (zig-ts-mode . eglot-ensure)))
+         (zig-ts-mode . eglot-ensure))
+  :custom
+  (eglot-server-programs '((zig-ts-mode . ("zls")) (zig-mode . ("zls"))))
+  :config (defvar eglot-server-programs))
 
 (use-package zig-ts-mode
   :vc (:url "https://codeberg.org/meow_king/zig-ts-mode" :rev :newest)
   :after zig-mode)
-
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(zig-ts-mode . ("zls")))
-  (add-to-list 'eglot-server-programs '(zig-mode . ("zls"))))
 
 (provide 'lang-config)
 ;;; lang-config.el ends here

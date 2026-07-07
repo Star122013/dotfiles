@@ -12,8 +12,8 @@ let
   # dnsmasq-china-list: 中国域名列表，用于 AGH 分流
   # 格式转换：server=/domain/upstream → [/domain/]upstream
   chinaListSrc = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf";
-    hash = "sha256-vtOhXaB5/zdKnPdDMN2ArhGg68P8ODr5ULtE44CXsW4=";
+    url = "https://cdn.jsdelivr.net/gh/felixonmars/dnsmasq-china-list@master/accelerated-domains.china.conf";
+    hash = "sha256-P1g7dMTDChCRBcws9pRJEQEBAuheISIe5n6pViETY6I=";
   };
 
   # 中国域名走 dnspod（优先）+ alidns（备用）

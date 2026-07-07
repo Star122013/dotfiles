@@ -63,6 +63,7 @@ let
           base16Scheme = "gruvbox-material-dark-soft";
           fonts = {
             monospace = "PragmataPro";
+            monospaceFallback = "LXGW WenKai Mono";
             serif = "LXGW WenKai Screen";
             sansSerif = "LXGW WenKai Screen";
           };

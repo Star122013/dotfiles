@@ -1,4 +1,5 @@
-;;; init.el -*- lexical-binding: t; -*-
+;;; init.el ---  -*- lexical-binding: t; -*-
+;;; Commentary:
 ;;;  ________                                                _______                 __                            __
 ;;; /        |                                              /       \               /  |                          /  |
 ;;; $$$$$$$$/ _____  ____   ______   _______  _______       $$$$$$$  | ______   ____$$ | ______   ______   _______$$ |   __
@@ -23,6 +24,7 @@
 ;;;  - Built-in customization framework
 
 ;;; Guardrail
+;;; Code:
 (when (< emacs-major-version 31)
   (error "This config requires Emacs 31 and newer; you have version %s" emacs-major-version))
 
@@ -77,7 +79,7 @@
 ;; Don't litter file system with *~ backup files; put them all inside
 ;; ~/.emacs.d/backup or wherever
 (defun bedrock--backup-file-name (fpath)
-  "Return a new file path of a given file path.
+  "Return a new file path of a given file path(FPATH).
 If the new path's directories does not exist, create them."
   (let* ((backupRootDir (concat user-emacs-directory "emacs-backup/"))
          (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
@@ -228,7 +230,7 @@ If the new path's directories does not exist, create them."
   ;; for treemacs users
   (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'doom-nord t)
+  (load-theme 'doom-ayu-mirage t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -284,7 +286,11 @@ If the new path's directories does not exist, create them."
  '(package-selected-packages nil)
  '(package-vc-selected-packages
    '((tramp-rpc :url "https://github.com/ArthurHeymans/emacs-tramp-rpc"
-		:lisp-dir "lisp"))))
+		:lisp-dir "lisp")))
+ '(safe-local-variable-values
+   '((eval progn (pp-buffer) (indent-buffer))
+     (flycheck-emacs-lisp-package-initialize . t)
+     (flycheck-emacs-lisp-init-load-path . t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

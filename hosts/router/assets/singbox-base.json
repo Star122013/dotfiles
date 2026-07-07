@@ -6,7 +6,7 @@
   },
   "ntp": {
     "enabled": true,
-    "server": "time.apple.com",
+    "server": "ntp.aliyun.com",
     "server_port": 123,
     "interval": "30m"
   },
@@ -34,6 +34,8 @@
       "tag": "🚀 节点选择",
       "interrupt_exist_connections": true,
       "outbounds": [
+        "🚀 Google",
+        "🚀 Cloudflare",
         "🇭🇰 香港",
         "🇯🇵 日本",
         "🇸🇬 新加坡"
@@ -48,14 +50,6 @@
         "香港A03 | IEPL",
         "香港A04 | IEPL",
         "香港A05 | IEPL"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "🇹🇼 台湾",
-      "interrupt_exist_connections": true,
-      "outbounds": [
-        "block"
       ]
     },
     {
@@ -83,6 +77,58 @@
         "日本A10 | IEPL",
         "日本A11 | IEPL"
       ]
+    },
+    {
+      "type": "urltest",
+      "tag": "🚀 Google",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "香港A02 | IEPL",
+        "香港A03 | IEPL",
+        "香港A04 | IEPL",
+        "香港A05 | IEPL",
+        "新加坡A01 | IEPL | x2",
+        "新加坡A02 | IEPL | x2",
+        "新加坡A03 | IEPL | x2",
+        "日本A01 | IEPL",
+        "日本A02 | IEPL",
+        "日本A03 | IEPL",
+        "日本A04 | IEPL",
+        "日本A07 | IEPL",
+        "日本A08 | IEPL",
+        "日本A09 | IEPL",
+        "日本A10 | IEPL",
+        "日本A11 | IEPL"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    {
+      "type": "urltest",
+      "tag": "🚀 Cloudflare",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "香港A02 | IEPL",
+        "香港A03 | IEPL",
+        "香港A04 | IEPL",
+        "香港A05 | IEPL",
+        "新加坡A01 | IEPL | x2",
+        "新加坡A02 | IEPL | x2",
+        "新加坡A03 | IEPL | x2",
+        "日本A01 | IEPL",
+        "日本A02 | IEPL",
+        "日本A03 | IEPL",
+        "日本A04 | IEPL",
+        "日本A07 | IEPL",
+        "日本A08 | IEPL",
+        "日本A09 | IEPL",
+        "日本A10 | IEPL",
+        "日本A11 | IEPL"
+      ],
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
     },
     {
       "type": "selector",
@@ -128,11 +174,18 @@
       },
       {
         "domain_suffix": [
+          "gstatic.com"
+        ],
+        "action": "route",
+        "outbound": "🚀 Google"
+      },
+      {
+        "domain_suffix": [
           "github.com",
           "githubusercontent.com"
         ],
         "action": "route",
-        "outbound": "🇭🇰 香港"
+        "outbound": "🚀 Cloudflare"
       },
       {
         "rule_set": [
@@ -150,18 +203,29 @@
       },
       {
         "rule_set": [
-          "Github"
+          "google",
+          "youtube",
+          "google-deepmind",
+          "google-gemini",
+          "googlefcm",
+          "android"
         ],
         "action": "route",
-        "outbound": "🚀 节点选择"
+        "outbound": "🚀 Google"
       },
       {
         "rule_set": [
-          "Gemini",
           "Openai"
         ],
         "action": "route",
-        "outbound": "🇭🇰 香港"
+        "outbound": "🚀 Google"
+      },
+      {
+        "rule_set": [
+          "Github"
+        ],
+        "action": "route",
+        "outbound": "🚀 Cloudflare"
       },
       {
         "rule_set": [
@@ -176,88 +240,130 @@
         "type": "remote",
         "tag": "volcengine",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-volcengine.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-volcengine.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "bilibili",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bilibili.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "bilibili2",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bilibili2.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili2.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "bilibili-cdn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bilibili-cdn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili-cdn.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "tencent",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-tencent.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-tencent.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "aliyun",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-aliyun.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-aliyun.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "tencent-games",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-tencent-games.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-tencent-games.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "category-education-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-category-education-cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-education-cn.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "CN",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "Github",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-github.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-github.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
-        "tag": "Gemini",
+        "tag": "google-gemini",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-google-gemini.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google-gemini.srs",
         "download_detour": "🇭🇰 香港"
       },
       {
         "type": "remote",
         "tag": "Openai",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-openai.srs",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-openai.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "google",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "youtube",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-youtube.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "google-scholar",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google-scholar.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "google-deepmind",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google-deepmind.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "googlefcm",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-googlefcm.srs",
+        "download_detour": "🇭🇰 香港"
+      },
+      {
+        "type": "remote",
+        "tag": "android",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-android.srs",
         "download_detour": "🇭🇰 香港"
       }
     ],
-    "final": "🚀 节点选择",
+    "final": "🚀 Cloudflare",
     "auto_detect_interface": true
   },
   "services": [],

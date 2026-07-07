@@ -72,7 +72,10 @@ in
       "flakes"
       "pipe-operators"
     ];
-    extra-substituters = [ "https://mirror.sjtu.edu.cn/nix-channels/store" ];
+    substituters = [
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://cache.nixos.org"
+    ];
   };
   nixpkgs.config.allowUnfree = true;
 }

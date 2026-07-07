@@ -62,7 +62,7 @@ window-rule {
     match title="^File Operation Progress$"
     match title="^Confirm to replace files$"
     match title="^KDE Connect URL handler$"
-    
+
     // File Pickers & Common Dialogs
     match title="^(Open File)(.*)$"
     match title="^(Select a File)(.*)$"
@@ -71,13 +71,13 @@ window-rule {
     match title="^(Save As)(.*)$"
     match title="^(Library)(.*)$"
     match title="^(File Upload)(.*)$"
-    
+
     // Integrations
     match title="^(hyprland-share-picker)$"
     match title="^(.*)-Google$"
     match title="^(.*)System Update$"
     match title="(.*) - Google (.*) - (.*)"
-    
+
     // App Specific Floating
     match title="^satty$"
     match app-id="^xdm-app$"
@@ -86,27 +86,27 @@ window-rule {
     match app-id="^org.pulseaudio.pavucontrol$"
     match app-id="^net.davidotek.pupgui2$"
     match app-id="^com.github.th_ch.youtube_music$"
-    
+
     match app-id="firefox$" title="^Picture-in-Picture$"
-    
+
     open-floating true
 }
 
 // Floating with specific geometry
 window-rule {
-    match app-id="^QQ$" 
+    match app-id="^QQ$"
     match title="^图片查看器$"
     match title="^群聊的聊天记录$"
-    
+
     open-floating true
-    default-column-width { proportion 0.5; }
-    default-window-height { fixed 800; }
+    default-column-width { proportion 0.75; }
+    default-window-height { fixed 1000; }
     open-maximized false
 }
 
 window-rule {
     match app-id="^com.ayugram.desktop$" title="^Media viewer$"
-    
+
     open-floating true
     default-column-width { proportion 0.5; }
     default-window-height { fixed 500; }
@@ -133,7 +133,7 @@ window-rule {
     match app-id="Spotify"
     match app-id="Element"
     match app-id="vivaldi-stable"
-    
+
     open-maximized true
 }
 
@@ -159,13 +159,13 @@ window-rule {
     match app-id="com.mitchellh.ghostty$"
     match app-id="neovide$"
     match app-id="emacs$"
-    
+
     draw-border-with-background false
     open-floating false
     open-maximized false
     default-column-width { proportion 1.0; }
     open-on-workspace "code"
-    opacity 1.0    
+    opacity 1.0
     background-effect {
         blur true
         xray false
@@ -185,7 +185,7 @@ window-rule {
     match app-id="^vesktop$"
     match app-id="^org.telegram.desktop$"
     match app-id="^com.ayugram.desktop$"
-    
+
     default-column-width { proportion 0.5; }
     open-on-workspace "chat"
 }

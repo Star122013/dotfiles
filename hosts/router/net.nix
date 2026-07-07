@@ -6,6 +6,6 @@ rec {
   lanInterface = "enp0s20f0u1";
   wanInterface = "eno1";
   username = "cyrene";
-  sshAuthorizedKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICK7ke3/eL32SUjyJO4s08dNsNRFYj5Lm5gCGCVnoAsm";
+  sshAuthorizedKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINT+WzW9LGGDbBqxxJVAnJjIN5JYbLtLxtGY9PmrS0fU";
   lanDevice = "sys-subsystem-net-devices-${lanInterface}.device";
 }

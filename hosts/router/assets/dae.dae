@@ -79,6 +79,7 @@ routing {
     # ── 直连：中国服务 ──
     domain(suffix: hdslb.com) -> direct
     domain(geosite:cn) -> direct
+    domain(geosite:fedora) -> direct
     domain(geosite:bilibili) -> direct
     domain(geosite:bilibili2) -> direct
     domain(geosite:bilibili-cdn) -> direct

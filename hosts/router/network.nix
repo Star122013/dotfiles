@@ -1,5 +1,6 @@
-# Networking: networkd (WAN/LAN + NAT), DNS hijack (AdGuard Home).
+# Networking: networkd (WAN/LAN + NAT), nftables WAN firewall.
 # Transparent proxy is handled by dae via eBPF; no nftables TProxy here.
+# DNS is handled by dae via eBPF interception; no nftables DNS redirect needed.
 _:
 
 let
@@ -12,7 +13,8 @@ in
     useDHCP = false;
     resolvconf.useLocalResolver = false;
     firewall.enable = false;
-    nameservers = [ "127.0.0.1" ];
+    # 本机进程 DNS 指向 alidns，dae 的 eBPF 会拦截处理（除 must_direct 进程外）
+    nameservers = [ "223.5.5.5" ];
   };
 
   services.resolved.enable = false;
@@ -71,22 +73,6 @@ in
             ct state { established, related } accept
             iifname ${net.lanInterface} oifname ${net.wanInterface} accept
             iifname ${net.wanInterface} drop
-          }
-        '';
-      };
-
-      # DNS 劫持：LAN 上任何发往非 AGH 的 DNS 查询 → 重定向到 AGH
-      # 防止客户端手动改 DNS 绕过广告过滤和分流。
-      dns-nat = {
-        enable = true;
-        name = "dns-nat";
-        family = "inet";
-        content = ''
-          chain prerouting {
-            type nat hook prerouting priority -100; policy accept;
-
-            iifname ${net.lanInterface} udp dport 53 ip daddr != ${net.lanIp} redirect to 53
-            iifname ${net.lanInterface} tcp dport 53 ip daddr != ${net.lanIp} redirect to 53
           }
         '';
       };

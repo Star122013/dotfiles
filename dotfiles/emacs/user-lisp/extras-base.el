@@ -124,17 +124,30 @@
   :commands marginalia-mode
   :init (marginalia-mode))
 
+
 ;; Popup completion-at-point
 (use-package
   corfu
   :ensure t
   :init (global-corfu-mode)
-  :custom (corfu-auto t) (corfu-auto-delay 0) (corfu-cycle t)
+  :custom (corfu-auto-delay 0.2) (corfu-cycle t)
   ;; (corfu-separator ?_) ;; Set to orderless separator, if not using space
   (corfu-auto-prefix 0)
   (corfu-preselect 'prompt)
   (corfu-auto-trigger ".") ;; Custom trigger characters
   (corfu-quit-no-match 'separator) ;; or t
+  :config
+  ;; Adapt corfu faces to the current theme
+  (defun my/corfu-setup-faces ()
+    "Set corfu faces to match the current theme."
+    (face-spec-set 'corfu-default
+      (list (list t (list :inherit 'default
+                          :background (face-attribute 'default :background)
+                          :foreground (face-attribute 'default :foreground)))))
+    (face-spec-set 'corfu-current
+      (list (list t (list :inherit 'highlight :extend t)))))
+  (my/corfu-setup-faces)
+  (add-hook 'after-load-theme-hook #'my/corfu-setup-faces)
   :bind
   (:map
    corfu-map
@@ -158,12 +171,16 @@
   :config (corfu-popupinfo-mode))
 
 ;; Pretty icons for corfu
-(use-package kind-icon
-  :if (display-graphic-p)
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; (use-package svg-lib :ensure t)
+;; (use-package kind-icon
+;;   :if (display-graphic-p)
+;;   :ensure t
+;;   :after corfu
+;;   :custom
+;;   (kind-icon-blend-background t)
+;;   (kind-icon-default-face 'corfu-default)
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;; Fancy completion-at-point functions; there's too much in the cape package to
 ;; configure here; dive in when you're comfortable!
@@ -210,5 +227,6 @@
 (provide 'extras-base)
 ;; Local Variables:
 ;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
+;; no-byte-compile: t
 ;; End:
 ;;; extras-base.el ends here

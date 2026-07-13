@@ -13,6 +13,7 @@ binds {
     Mod+E               { spawn "nautilus"; }
     // Mod+Space           { spawn "vicinae"; }
     Mod+F               { fullscreen-window; }
+    Mod+M               { maximize-column; }
     Mod+T               { toggle-window-floating; }
     Mod+Left            { focus-column-left; }
     Mod+Right           { focus-column-right; }
@@ -47,4 +48,7 @@ binds {
     Mod+K               { focus-window-up; }
     Mod+Shift+J         { move-window-down; }
     Mod+Shift+K         { move-window-up; }
+
+    // Quick terminal (scratchpad)
+    Mod+Grave           { spawn "ghostty" "+toggle-quick-terminal"; }
 }

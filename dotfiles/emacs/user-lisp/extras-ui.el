@@ -217,4 +217,7 @@
   (page-break-lines-modes '(dashboard-mode emacs-news-mode)))
 
 (provide 'extras-ui)
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
 ;;; extras-ui.el ends here

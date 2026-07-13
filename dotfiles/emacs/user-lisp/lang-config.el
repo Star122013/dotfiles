@@ -130,4 +130,7 @@
   :after zig-mode)
 
 (provide 'lang-config)
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
 ;;; lang-config.el ends here

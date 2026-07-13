@@ -17,7 +17,6 @@ in
       devenv
       nodejs-slim_26.npm
       nodejs-slim_26
-      gcc
       tree-sitter
       zig
       uv

@@ -30,11 +30,11 @@ in
         description = "sing-box";
         after = [
           "network-online.target"
-          "adguardhome.service"
+          "kea-dhcp4.service"
         ];
         wants = [
           "network-online.target"
-          "adguardhome.service"
+          "kea-dhcp4.service"
         ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {

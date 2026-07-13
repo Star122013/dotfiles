@@ -42,6 +42,7 @@ let
           mpv.enable = true; # auto-enables yt-dlp (NAND: set yt-dlp.enable=false to skip)
           direnv.enable = true;
           bash.enable = true;
+          fish.enable = true;
           starship.enable = true;
           nh.enable = true;
           # dotfile-only modules (out-of-store symlinks)
@@ -60,7 +61,7 @@ let
         # e.g. `desktop.fonts.enable = false;` — a NAND override).
         desktop = {
           enable = true;
-          base16Scheme = "gruvbox-material-dark-soft";
+          base16Scheme = "catppuccin-frappe";
           fonts = {
             monospace = "PragmataPro";
             monospaceFallback = "LXGW WenKai Mono";

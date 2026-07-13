@@ -4,6 +4,18 @@
     "level": "warn",
     "timestamp": true
   },
+  "dns": {
+    "servers": [
+      {
+        "type": "https",
+        "tag": "dns-resolver",
+        "server": "223.5.5.5",
+        "server_port": 443,
+        "path": "/dns-query"
+      }
+    ],
+    "strategy": "prefer_ipv4"
+  },
   "ntp": {
     "enabled": true,
     "server": "ntp.aliyun.com",
@@ -148,6 +160,7 @@
     }
   ],
   "route": {
+    "default_domain_resolver": "dns-resolver",
     "default_mark": 1234,
     "rules": [
       {

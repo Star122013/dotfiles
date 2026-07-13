@@ -27,15 +27,18 @@ layout {
         proportion 1.0
     }
     default-column-width {
-        proportion 0.75
+        proportion 1.0
     }
     struts {
       left 5
       right 5
-        // left 625
       top 5
       bottom 5
     }
+    border {
+        width 0
+    }
+
     tab-indicator {
         off
         width 5

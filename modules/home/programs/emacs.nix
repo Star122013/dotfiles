@@ -24,6 +24,8 @@ in
         config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/early-init.el";
       "emacs/extras".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/extras";
       "emacs/assets".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/assets";
+      "emacs/user-lisp/extras-dirvish.el".source =
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/user-lisp/extras-dirvish.el";
       "emacs/user-lisp/extras-base.el".source =
         config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/user-lisp/extras-base.el";
       "emacs/user-lisp/extras-dev.el".source =
@@ -32,6 +34,8 @@ in
         config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/user-lisp/extras-org.el";
       "emacs/user-lisp/extras-ui.el".source =
         config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/user-lisp/extras-ui.el";
+      "emacs/user-lisp/extras-workspace.el".source =
+        config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/user-lisp/extras-workspace.el";
       "emacs/user-lisp/lang-config.el".source =
         config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/emacs/user-lisp/lang-config.el";
 

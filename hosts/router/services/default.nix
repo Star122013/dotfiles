@@ -3,7 +3,7 @@
 
 {
   imports = [
-    ./adguardhome.nix
+    ./kea.nix
     ./sing-box.nix
     ./dae.nix
     ./sub-store.nix

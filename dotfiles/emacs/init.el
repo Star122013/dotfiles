@@ -172,7 +172,7 @@ If the new path's directories does not exist, create them."
 ;; (setopt tab-width 4)
 
 ;; Misc. UI tweaks
-(blink-cursor-mode -1)                                ; Steady cursor
+(blink-cursor-mode -1)                                  ; Steady cursor
 (pixel-scroll-precision-mode 1)                         ; Smooth scrolling
 
 ;; Use common keystrokes by default
@@ -214,33 +214,40 @@ If the new path's directories does not exist, create them."
 (use-package ansi-color
   :hook (compilation-filter . ansi-color-compilation-filter))
 
-;; (use-package emacs			
+;; (use-package emacs
 ;;   :config
 ;;   (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
 ;; (use-package tokyonight-themes
 ;;   :vc (:url "https://github.com/xuchengpeng/tokyonight-themes")
 ;;   :config
 ;;   (load-theme 'tokyonight-moon :no-confirm))
-(use-package doom-themes
+;; (use-package doom-themes
+;;   :ensure t
+;;   :custom
+;;   ;; Global settings (defaults)
+;;   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+;;   (doom-themes-enable-italic t) ; if nil, italics are universally disabled
+;;   ;; for treemacs users
+;;   (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
+;;   :config
+;;   (load-theme 'doom-ayu-mirage t)
+
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+;;   ;; Enable custom neotree theme (nerd-icons must be installed!)
+;;   (doom-themes-neotree-config)
+;;   ;; or for treemacs users
+;;   (doom-themes-treemacs-config)
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config))
+(use-package batppuccin
   :ensure t
-  :custom
-  ;; Global settings (defaults)
-  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
-  (doom-themes-enable-italic t) ; if nil, italics are universally disabled
-  ;; for treemacs users
-  (doom-themes-treemacs-theme "doom-nord-light") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'doom-ayu-mirage t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (nerd-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
+  (load-theme 'batppuccin-frappe t))
+;; (use-package base16-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'base16-rose-pine-dawn t))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;;   Optional extras
@@ -256,6 +263,9 @@ If the new path's directories does not exist, create them."
 ;; Development tools (eglot, magit, per-language config)
 (require 'extras-dev)
 
+;; Workspace management (tab-bar-mode + tabspaces)
+(require 'extras-workspace)
+
 ;; UI enhancements (modeline, tabs, dashboard)
 (require 'extras-ui)
 
@@ -265,6 +275,9 @@ If the new path's directories does not exist, create them."
 ;; Org-mode configuration
 ;; WARNING: customize variables inside user-lisp/extras-org.el before use!
 (require 'extras-org)
+
+;; Dired beautification and enhancement (dirvish)
+(require 'extras-dirvish)
 
 ;; Email configuration (needs `mu` program installed)
 ;(require 'extras-email)

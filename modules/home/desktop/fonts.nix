@@ -39,6 +39,9 @@ in
         desktop.fonts.monospace
         desktop.fonts.monospaceFallback
       ];
+      defaultFonts.emoji = [
+        desktop.fonts.emoji
+      ];
     };
 
     # Reject the COLRv1 variant of Noto Color Emoji shipped by Fedora 43+

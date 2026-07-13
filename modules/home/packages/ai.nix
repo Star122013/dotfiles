@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       pi-coding-agent
-      llama-cpp
+      llama-cpp-vulkan
     ];
   };
 }

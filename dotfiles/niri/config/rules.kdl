@@ -6,9 +6,11 @@ workspace "chat"
 // -----------------------------------------------------------------------------
 // Global Aesthetics (Apply to ALL windows)
 // -----------------------------------------------------------------------------
+// 全局：所有窗口默认最大化，无圆角
 window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
+    open-maximized true
     // background-effect {
     //     blur true
     //     xray false
@@ -38,8 +40,6 @@ layer-rule {
     xray false
   }
 }
-
-
 
 
 // -----------------------------------------------------------------------------
@@ -120,22 +120,9 @@ window-rule {
 }
 
 // -----------------------------------------------------------------------------
-// Window States (Maximized / Fullscreen)
+// Window States (Fullscreen)
 // -----------------------------------------------------------------------------
-window-rule {
-    match app-id="org.telegram.desktop$"
-    match app-id="zen$"
-    match app-id="thunar$"
-    match app-id="dolphin$"
-    match app-id="obsidian$"
-    match app-id="com.github.th_ch.youtube_music"
-    match app-id="Postman"
-    match app-id="Spotify"
-    match app-id="Element"
-    match app-id="vivaldi-stable"
-
-    open-maximized true
-}
+// 最大化已由全局规则统一处理，此处仅保留需要全屏的应用
 
 window-rule {
     match app-id="mpv$"
@@ -162,16 +149,13 @@ window-rule {
 
     draw-border-with-background false
     open-floating false
-    open-maximized false
     default-column-width { proportion 1.0; }
     open-on-workspace "code"
-    opacity 1.0
+    opacity 0.9
     background-effect {
         blur true
         xray false
     }
-    max-width 2540
-    max-height 1378
 }
 
 window-rule {

@@ -3,7 +3,7 @@
 ---------------------
 
 -- Set programs that you use
-local terminal = "ghostty"
+local terminal = "ghostty +new-window"
 local fileManager = "dolphin"
 local menu = "vicinae toggle"
 

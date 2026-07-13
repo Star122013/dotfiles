@@ -16,8 +16,9 @@ in
     programs.ghostty = {
       enable = true;
       package = inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
       settings = {
-        command = "/usr/bin/bash";
+        command = "${lib.getExe pkgs.fish}";
         shell-integration-features = [
           "no-cursor"
           "ssh-terminfo"
@@ -34,8 +35,8 @@ in
         gtk-titlebar-style = "native";
 
         # Behavior
-        # quit-after-last-window-closed = true;
-        # quit-after-last-window-closed-delay = "5m";
+        quit-after-last-window-closed = true;
+        quit-after-last-window-closed-delay = "5m";
         confirm-close-surface = false;
         copy-on-select = "clipboard";
         keybind = [
@@ -47,6 +48,12 @@ in
           "ctrl+shift+backslash=new_split:right"
           "ctrl+shift+-=new_split:down"
         ];
+
+        # Quick terminal (scratchpad) — centered, 70% size, overlay layer
+        quick-terminal-position = "center";
+        quick-terminal-size = "50%,70%";
+        quick-terminal-screen = "mouse";
+        gtk-quick-terminal-layer = "overlay";
       };
     };
   };

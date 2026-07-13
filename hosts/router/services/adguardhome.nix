@@ -13,10 +13,10 @@ let
   # 格式转换：server=/domain/upstream → [/domain/]upstream
   chinaListSrc = pkgs.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/felixonmars/dnsmasq-china-list@master/accelerated-domains.china.conf";
-    hash = "sha256-P1g7dMTDChCRBcws9pRJEQEBAuheISIe5n6pViETY6I=";
+    hash = "sha256-O9wJPMnpQyPzvsI6XL9D1/316WRSP91aIQfojX6WMF4=";
   };
 
-  # 中国域名走 dnspod（优先）+ alidns（备用）
+  # 中国域名走 UDP 直连（AliDNS + DNSPod，低延迟）
   chinaUpstreamFile = pkgs.runCommand "china-upstream.txt" { } ''
     awk -F/ '{printf "[/%s/]https://sm2.doh.pub/dns-query https://dns.alidns.com/dns-query\n", $2}' \
       < ${chinaListSrc} > $out
@@ -74,7 +74,6 @@ in
         # 中国域名分流文件：中国域名 → dnspod（优先）+ alidns（备用）直连
         upstream_dns_file = "${chinaUpstreamFile}";
 
-        # bootstrap_dns 只用国内 DNS，确保启动时能解析 DoH 域名
         bootstrap_dns = [
           "223.5.5.5"
           "1.1.1.1"

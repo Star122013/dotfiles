@@ -14,6 +14,10 @@ in
     programs.starship = {
       enable = true;
       enableBashIntegration = true;
+      enableFishIntegration = true;
+      presets = [
+        "jetpack"
+      ];
     };
   };
 }

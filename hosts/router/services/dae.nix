@@ -14,12 +14,12 @@ in
   systemd.services.dae = {
     after = [
       "network-online.target"
-      "adguardhome.service"
+      "kea-dhcp4.service"
       "sing-box.service"
     ];
     wants = [
       "network-online.target"
-      "adguardhome.service"
+      "kea-dhcp4.service"
       "sing-box.service"
     ];
     requires = [ "sing-box.service" ];

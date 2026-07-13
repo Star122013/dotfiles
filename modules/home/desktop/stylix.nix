@@ -38,6 +38,10 @@ in
         fontconfig.enable = true;
         gtk.enable = true;
         helix.enable = true;
+        firefox = {
+          enable = true;
+          profileNames = [ "default-release" ];
+        };
       };
     };
 

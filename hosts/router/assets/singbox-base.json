@@ -99,9 +99,6 @@
         "香港A03 | IEPL",
         "香港A04 | IEPL",
         "香港A05 | IEPL",
-        "新加坡A01 | IEPL | x2",
-        "新加坡A02 | IEPL | x2",
-        "新加坡A03 | IEPL | x2",
         "日本A01 | IEPL",
         "日本A02 | IEPL",
         "日本A03 | IEPL",
@@ -113,7 +110,7 @@
         "日本A11 | IEPL"
       ],
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "3m",
+      "interval": "1m",
       "tolerance": 50
     },
     {
@@ -125,9 +122,6 @@
         "香港A03 | IEPL",
         "香港A04 | IEPL",
         "香港A05 | IEPL",
-        "新加坡A01 | IEPL | x2",
-        "新加坡A02 | IEPL | x2",
-        "新加坡A03 | IEPL | x2",
         "日本A01 | IEPL",
         "日本A02 | IEPL",
         "日本A03 | IEPL",
@@ -139,7 +133,7 @@
         "日本A11 | IEPL"
       ],
       "url": "https://cp.cloudflare.com/generate_204",
-      "interval": "3m",
+      "interval": "1m",
       "tolerance": 50
     },
     {
@@ -178,9 +172,16 @@
       },
       {
         "domain_suffix": [
-          "edu.cn",
           "bilibili.com",
+          "bilibili.tv",
           "bilicdn.com"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "edu.cn"
         ],
         "action": "route",
         "outbound": "🎯 Direct"
@@ -204,7 +205,13 @@
         "rule_set": [
           "bilibili",
           "bilibili2",
-          "bilibili-cdn",
+          "bilibili-cdn"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": [
           "tencent",
           "aliyun",
           "tencent-games",

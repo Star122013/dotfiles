@@ -4,7 +4,7 @@
 
 -- Set programs that you use
 local terminal = "ghostty +new-window"
-local fileManager = "dolphin"
+local fileManager = "nautilus"
 local menu = "vicinae toggle"
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
@@ -13,6 +13,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
+hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("ghostty +toggle-quick-terminal"))
 hl.bind(
 	mainMod .. " + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
@@ -21,6 +22,8 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
 -- Move focus with mainMod + arrow keys
@@ -28,6 +31,10 @@ hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+
+-- Swap windows left/right (works on any layout)
+hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.swap({ direction = "l" }))
+hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.swap({ direction = "r" }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
@@ -80,3 +87,26 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tru
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | satty --filename -'))
+
+local ws_layouts = {}
+
+-- Cycle layout of current workspace
+hl.bind(mainMod .. " + F4", function()
+	local ws = hl.get_active_workspace()
+	local layouts = { "master", "scrolling", "dwindle" }
+	ws_layouts[ws.id] = ((ws_layouts[ws.id] or 0) % #layouts) + 1
+	hl.workspace_rule({ workspace = ws.id, layout = layouts[ws_layouts[ws.id]] })
+	hl.notification.create({
+		text = "Workspace " .. ws.id .. " → " .. layouts[ws_layouts[ws.id]],
+		timeout = 1500,
+		icon = "ok",
+	})
+end)
+
+-- Master layout: swap current window with master window
+hl.bind(mainMod .. " + T", function()
+	local ws = hl.get_active_workspace()
+	if ws.layout == "master" then
+		hl.dispatch(hl.dsp.layout("swapwithmaster"))
+	end
+end)

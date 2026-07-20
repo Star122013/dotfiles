@@ -53,7 +53,7 @@ in
         quick-terminal-position = "center";
         quick-terminal-size = "50%,70%";
         quick-terminal-screen = "mouse";
-        gtk-quick-terminal-layer = "overlay";
+        gtk-quick-terminal-layer = "top";
       };
     };
   };

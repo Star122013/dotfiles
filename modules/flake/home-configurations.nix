@@ -61,7 +61,11 @@ let
         # e.g. `desktop.fonts.enable = false;` — a NAND override).
         desktop = {
           enable = true;
-          base16Scheme = "catppuccin-frappe";
+          base16Scheme = "rose-pine-moon";
+          # base16Scheme = builtins.fetchurl {
+          #   url = "https://raw.githubusercontent.com/Sequoia-Theme/base16/main/sequoia-moonlight-dark.yaml";
+          #   sha256 = "sha256-vHp1J/yRTGp1sr3TOD0TEPMKett6/Tr9Az6boUvABZI=";
+          # };
           fonts = {
             monospace = "PragmataPro";
             monospaceFallback = "LXGW WenKai Mono";

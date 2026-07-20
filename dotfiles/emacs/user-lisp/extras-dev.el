@@ -92,25 +92,19 @@
   :config
   (fset #'jsonrpc--log-event #'ignore)) ; massive perf boost---don't log every event
 
-;; Flycheck diagnostics backend.
-(use-package
-  flycheck
-  :ensure t
-  :hook (prog-mode . flycheck-mode)
+;; Flymake diagnostics backend (Eglot registers itself as a backend automatically).
+(use-package flymake
+  :hook (prog-mode . flymake-mode)
+  :bind (("C-c n" . flymake-goto-next-error)
+         ("C-c p" . flymake-goto-prev-error)
+         ("C-c d" . flymake-show-buffer-diagnostics)
+         ("C-c D" . flymake-show-project-diagnostics))
   :custom
-  (flycheck-temp-prefix ".flycheck")
-  (flycheck-check-syntax-automatically '(save idle-change new-line mode-enabled))
-  (flycheck-emacs-lisp-load-path 'inherit)
-  (flycheck-indication-mode 'right-fringe))
+  (flymake-indication-mode 'right-fringe)
+  (flymake-check-start-timeout 1)
+  (flymake-no-changes-timeout 0.5))
 
-;; Bridge Eglot diagnostics into Flycheck.
-(use-package flycheck-eglot
-  :ensure t
-  :after (flycheck eglot)
-  :config
-  (global-flycheck-eglot-mode 1))
-
-;; A beautiful inline overlay for Flycheck
+;; A beautiful inline overlay for Flycheck / Flymake
 (use-package flyover
   :ensure t
   :hook ((flycheck-mode . flyover-mode)

@@ -12,26 +12,86 @@
 
 ;;; Code:
 
-(use-package
-  doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode)
+(use-package lambda-line
+  :vc (:url "https://codeberg.org/Lambda-Emacs/lambda-line" :rev :newest)
   :custom
-  (doom-modeline-height 25)
-  (doom-modeline-icon t)
-  (doom-modeline-bar-width 4)
-  (doom-modeline-project-name t)
-  (doom-modeline-workspace-name t)
-  (doom-modeline-buffer-file-name-style 'file-name)
-  (doom-modeline-position-column-line-format '("%l:%c"))
-  (doom-modeline-minor-modes t)
-  (doom-modeline-indent-info t)
-  (doom-modeline-vcs-icon t)
-  (doom-modeline-vcs-max-length 15)
-  (doom-modeline-check 'auto)
-  (doom-modeline-lsp t)
-  (doom-modeline-time t)
-  (doom-modeline-time-analogue-clock t))
+  (lambda-line-abbrev t)
+  (lambda-line-position 'bottom)
+  (lambda-line-hspace " ")
+  (lambda-line-prefix t)
+  (lambda-line-icon-time t)
+  (lambda-line-time-format "  %H:%M ")
+  (lambda-line-position-format "%l:%c")
+  (lambda-line-prefix-padding nil)
+  (lambda-line-status-invert nil)
+  ;; 前缀图标用纯 Unicode 字符（lambda-line 会覆盖 face 属性，
+  ;; 所以 nerd-icons 的字体族会被冲掉，改用通用符号）
+  (lambda-line-gui-ro-symbol  " ◌")  ;; 只读：虚线圈
+  (lambda-line-gui-mod-symbol " ●")  ;; 修改：实心圆
+  (lambda-line-gui-rw-symbol  " ○")  ;; 读写：空心圆
+  ;; VC 图标在 primary 段，lambda-line 用 add-face-text-property 追加，
+  ;; 不会覆盖 nerd-icons 字体，所以可以用 nerd-icons
+  (lambda-line-vc-symbol (concat " " (nerd-icons-octicon "nf-oct-git_branch")))
+  (lambda-line-space-top +.25)
+  (lambda-line-space-bottom -.25)
+  (lambda-line-symbol-position 0.1)
+  :custom-face
+  (lambda-line-visual-bell
+   ((t (:background ,(doom-color 'red)))))
+  :config
+  ;; 自动下载并安装 ClockFace 字体（用于最右侧的模拟时钟图标）
+  (defun aiser/install-clockface-fonts ()
+    "Download ClockFace fonts if not already installed."
+    (let* ((font-dir (expand-file-name "fonts/" (or (getenv "XDG_DATA_HOME") "~/.local/share")))
+           (fonts-list '("ClockFace-Regular.ttf"
+                         "ClockFaceRect-Regular.ttf"
+                         "ClockFaceSolid-Regular.ttf"
+                         "ClockFaceRectSolid-Regular.ttf"))
+           (needed (seq-filter (lambda (f) (not (file-exists-p (expand-file-name f font-dir))))
+                               fonts-list)))
+      (when needed
+        (message "lambda-line: 下载 ClockFace 字体...")
+        (make-directory font-dir t)
+        (dolist (font needed)
+          (url-copy-file (format "https://ocodo.github.io/ClockFace-font/%s" font)
+                         (expand-file-name font font-dir) t))
+        (call-process "fc-cache" nil nil nil "-f")
+        (message "lambda-line: ClockFace 字体安装完成"))))
+  ;; 只在字体被下载后才跑 fc-cache，平时不拖慢启动
+  (when (display-graphic-p)
+    (make-directory (expand-file-name "fonts/" (or (getenv "XDG_DATA_HOME") "~/.local/share")) t)
+    (aiser/install-clockface-fonts))
+  ;; 设置 ClockFace 字体映射到 PUA #xF0000..#xF008F 范围
+  (lambda-line-clockface-update-fontset "ClockFaceRect")
+  (lambda-line-mode)
+  (customize-set-variable 'flymake-mode-line-counter-format '("" flymake-mode-line-error-counter flymake-mode-line-warning-counter flymake-mode-line-note-counter ""))
+  (customize-set-variable 'flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
+  ;; (lambda-line-visual-bell-config)
+  ;; set divider line in footer
+  (when (eq lambda-line-position 'top)
+    (setq-default mode-line-format (list "%_"))
+    (setq mode-line-format (list "%_"))))
+
+;; (use-package
+;;   doom-modeline
+;;   :ensure t
+;;   :hook (after-init . doom-modeline-mode)
+;;   :custom
+;;   (doom-modeline-height 25)
+;;   (doom-modeline-icon t)
+;;   (doom-modeline-bar-width 4)
+;;   (doom-modeline-project-name t)
+;;   (doom-modeline-workspace-name t)
+;;   (doom-modeline-buffer-file-name-style 'file-name)
+;;   (doom-modeline-position-column-line-format '("%l:%c"))
+;;   (doom-modeline-minor-modes t)
+;;   (doom-modeline-indent-info t)
+;;   (doom-modeline-vcs-icon t)
+;;   (doom-modeline-vcs-max-length 15)
+;;   (doom-modeline-check 'auto)
+;;   (doom-modeline-lsp t)
+;;   (doom-modeline-time t)
+;;   (doom-modeline-time-analogue-clock t))
 
 (use-package minions :ensure t :commands minions-mode :init (minions-mode 1))
 

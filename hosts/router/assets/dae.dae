@@ -35,7 +35,7 @@ dns {
   routing {
     request {
       # 广告拦截：匹配广告域名直接拒绝
-      qname(geosite:category-ads-all) -> reject
+      # qname(geosite:category-ads-all) -> reject
       # 中国域名走 alidns 直连
       qname(geosite:cn) -> alidns
       # 其余域名走 alidns 直连（支持 ECS，海外 CDN 也能拿到较近节点）
@@ -94,6 +94,9 @@ routing {
 
     # ── 直连：中国服务 ──
     domain(suffix: hdslb.com) -> direct
+    domain(suffix: mmstat.com) -> direct
+    domain(suffix: qianwenai.com) -> direct
+    domain(suffix: hypergryph.com) -> direct
     domain(geosite:cn) -> direct
     domain(geosite:bilibili) -> direct
     domain(geosite:bilibili2) -> direct
@@ -117,6 +120,8 @@ routing {
     domain(geosite:category-social-media-cn) -> direct
     domain(geosite:category-scholar-cn) -> direct
     domain(geosite:category-dev-cn) -> direct
+    domain(geosite:category-ai-cn) -> direct
+    domain(geosite:category-ntp-cn) -> direct
 
     # ── 按 IP 直连 ──
     dip(224.0.0.0/3, 'ff00::/8') -> direct

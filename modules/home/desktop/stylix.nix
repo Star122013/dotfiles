@@ -9,7 +9,14 @@
 let
   desktop = config.my.desktop;
   cfg = config.my.desktop.stylix;
-  base16SchemePath = "${pkgs.base16-schemes}/share/themes/${desktop.base16Scheme}.yaml";
+
+  # Resolve the base16 scheme:
+  # - If it's a path (store path from fetchurl or local), use it directly.
+  # - Otherwise, look it up in pkgs.base16-schemes.
+  base16SchemePath =
+    if builtins.isPath desktop.base16Scheme || lib.hasPrefix "/" desktop.base16Scheme
+    then desktop.base16Scheme
+    else "${pkgs.base16-schemes}/share/themes/${desktop.base16Scheme}.yaml";
 in
 {
   imports = [ inputs.stylix.homeModules.stylix ];

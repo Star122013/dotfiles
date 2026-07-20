@@ -52,6 +52,7 @@ hl.window_rule({
 	name = "float app",
 	match = {
 		class = "(QQ|com.gabm.satty)",
+		title = "(群聊的聊天记录|图片查看器|satty)",
 	},
 	float = true,
 	size = { "monitor_w * 0.5", "monitor_h * 0.5" },
@@ -63,4 +64,28 @@ hl.window_rule({
 		class = "com.mitchellh.ghostty",
 	},
 	opacity = "0.9 0.8",
+})
+
+-- Bind apps to specific workspaces
+-- Browsers → workspace 1 (web)
+hl.window_rule({
+	name = "browser to web",
+	match = { class = "(firefox|chromium|brave|zen)" },
+	workspace = "1",
+})
+
+-- Code/terminal/emacs → workspace 2 (code)
+hl.window_rule({
+	name = "dev to code",
+	match = {
+		class = "(code-oss|Code|Cursor|jetbrains-idea|jetbrains-webstorm|com.mitchellh.ghostty|kitty|alacritty|foot|emacs|Emacs)",
+	},
+	workspace = "2",
+})
+
+-- Chat → workspace 3 (main)
+hl.window_rule({
+	name = "chat to main",
+	match = { class = "QQ" },
+	workspace = "3",
 })

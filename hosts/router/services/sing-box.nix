@@ -66,7 +66,7 @@ in
         path = [ pkgs.curl ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${pkgs.curl}/bin/curl -s -f -o /etc/singbox/node.json 'http://10.10.10.1:3001/qwerhyy123/download/collection/singbox?target=sing-box'";
+          ExecStart = "${pkgs.curl}/bin/curl -s -f -m 30 -o /etc/singbox/node.json 'http://127.0.0.1:3001/qwerhyy123/download/collection/singbox?target=sing-box'";
           ExecStartPost = "${pkgs.systemd}/bin/systemctl try-restart sing-box.service";
         };
       };

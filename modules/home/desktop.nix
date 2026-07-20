@@ -64,9 +64,13 @@ in
     };
 
     base16Scheme = lib.mkOption {
-      type = lib.types.str;
+      type = lib.types.either lib.types.str lib.types.path;
       default = "onedark";
-      description = "Base16 color scheme name (without .yaml suffix), resolved via pkgs.base16-schemes.";
+      description = ''
+        Base16 color scheme. Can be:
+        - A string name (without .yaml suffix), resolved via pkgs.base16-schemes.
+        - A path or derivation (e.g. pkgs.fetchurl ...) pointing to a .yaml file.
+      '';
     };
   };
 

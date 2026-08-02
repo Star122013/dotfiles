@@ -17,6 +17,9 @@ vim.opt.fillchars:append { eob = ' ' }
 vim.opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 vim.o.cmdheight = 1
 vim.o.winborder = 'none'
+-- Treesitter highlighting for filetypes with installed parsers.
+-- Parser list is maintained in lua/plugins/core.lua; pcall so missing
+-- parsers/queries (e.g. awk has no highlight queries) don't error.
 -- stylua: ignore start
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
@@ -25,6 +28,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "cmake", "ninja", "asm", "glsl", "zig", "nix", "nu", "kdl", "awk", "latex",
     "typst", "qmljs", "luadoc", "astro", "llvm", "vimdoc",
   },
-  callback = function() vim.treesitter.start() end,
+  callback = function() pcall(vim.treesitter.start) end,
 })
 -- stylua: ignore end

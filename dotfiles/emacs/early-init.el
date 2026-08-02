@@ -50,6 +50,12 @@
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
 (push '(font . "PragmataPro-16") default-frame-alist)
 
+;; CJK / Chinese font – LXGW WenKai Mono (霞鹜文楷等宽)
+(add-hook 'window-setup-hook
+          (lambda ()
+            (dolist (charset '(han kana cjk-misc bopomofo))
+              (set-fontset-font t charset (font-spec :family "LXGW WenKai Mono")))))
+
 ;; Add user-lisp/ to load-path so (require 'extras-base) etc. work.
 ;; Emacs 31 does this automatically; we do it explicitly for 29/30 compatibility.
 (let ((dir (expand-file-name "user-lisp/" user-emacs-directory)))

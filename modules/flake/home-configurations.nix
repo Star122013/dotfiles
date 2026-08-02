@@ -71,6 +71,7 @@ let
             monospaceFallback = "LXGW WenKai Mono";
             serif = "LXGW WenKai Screen";
             sansSerif = "LXGW WenKai Screen";
+            terminalSize = 14;
           };
         };
       };

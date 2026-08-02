@@ -20,7 +20,6 @@ in
         inputs.noctalia.packages.${system}.default
         inputs.hyprland-guiutils.packages.${system}.default
         inputs.vicinae.packages.${system}.default
-        inputs.bluebuild.packages.${system}.default
         inputs.colmena.packages.${system}.colmena
       ]
       ++ [

@@ -22,12 +22,12 @@ in
       config = {
         vo = "gpu-next,gpu";
         hwdec = "auto";
-        ytdl-format = "bestvideo+bestaudio";
-        cache-default = 4000000;
         sub-auto = "fuzzy";
         slang = "zh,chi,eng,en";
         alang = "jpn,eng,en";
         osd-font = "JetBrains Mono";
+        sub-font-size = "40";
+        sub-scale = "0.8";
       };
 
       bindings = {
@@ -55,6 +55,8 @@ in
           profile-cond = "string.find(path or '', 'youtube') ~= nil";
           cache = "yes";
           cache-secs = 60;
+          ytdl-format = "bestvideo+bestaudio";
+          hwdec = "auto";
           demuxer-max-bytes = "200M";
           demuxer-max-back-bytes = "100M";
         };

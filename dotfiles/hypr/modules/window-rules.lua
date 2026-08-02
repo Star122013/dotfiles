@@ -52,7 +52,7 @@ hl.window_rule({
 	name = "float app",
 	match = {
 		class = "(QQ|com.gabm.satty)",
-		title = "(群聊的聊天记录|图片查看器|satty)",
+		title = "(.*聊天记录$|图片查看器|satty)",
 	},
 	float = true,
 	size = { "monitor_w * 0.5", "monitor_h * 0.5" },

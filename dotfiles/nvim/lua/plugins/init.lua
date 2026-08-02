@@ -16,7 +16,7 @@ vim.pack.add({
 	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.10.2" },
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/esmuellert/codediff.nvim",
-	"https://github.com/romus204/tree-sitter-manager.nvim",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 })
 
 -- Phase 0: Themes — must be loaded before UI renders

@@ -111,8 +111,13 @@ vim.schedule(function() vim.opt.clipboard = "unnamedplus" end)
 ```
 
 ### Treesitter
-- Use `vim.treesitter.start()` in FileType autocmd to enable Treesitter highlighting
+- Parsers are managed by `nvim-treesitter` (**main** branch API): `setup()` + explicit `install { ... }` list in `lua/plugins/core.lua`
+- `main` has NO `auto_install` — add new parsers to the `install` list (and run `:TSInstall <lang>` ad-hoc)
+- Keep the parser list in sync with the FileType autocmd in `lua/options.lua`
+- Use `pcall(vim.treesitter.start)` in a FileType autocmd to enable Treesitter highlighting
 - Use `vim.treesitter.stop()` to disable
+- After updating the plugin run `:TSUpdate` to sync parsers/queries to the locked revisions
+- Requires `tree-sitter-cli` (>= 0.26.1, not npm), `curl`, `tar`, and a C compiler in PATH
 
 ### LSP
 - Enable LSP servers with `vim.lsp.enable("server_name")`

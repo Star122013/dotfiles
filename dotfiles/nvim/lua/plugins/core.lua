@@ -34,6 +34,18 @@ require('mini.pairs').setup()
 require('mini.splitjoin').setup()
 require('mini.surround').setup()
 
-require('tree-sitter-manager').setup {
-  auto_install = true, -- auto-install when a new filetype is encountered
+-- nvim-treesitter (main branch API): manages parsers + queries.
+-- NOTE: `main` has no `auto_install`; parsers are listed explicitly instead.
+-- Keep this list in sync with the FileType highlight autocmd in options.lua.
+require('nvim-treesitter').setup {
+  install_dir = vim.fn.stdpath 'data' .. '/site',
 }
+-- stylua: ignore start
+require('nvim-treesitter').install {
+  'astro', 'asm', 'awk', 'bash', 'c', 'cmake', 'cpp', 'css', 'diff', 'fish',
+  'gitattributes', 'gitcommit', 'gitignore', 'glsl', 'go', 'html', 'json',
+  'kdl', 'latex', 'llvm', 'lua', 'luadoc', 'markdown', 'markdown_inline',
+  'ninja', 'nix', 'nu', 'python', 'qmljs', 'query', 'rust', 'toml', 'typst',
+  'vim', 'vimdoc', 'yaml', 'zig',
+}
+-- stylua: ignore end

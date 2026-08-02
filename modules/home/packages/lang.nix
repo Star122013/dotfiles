@@ -23,6 +23,7 @@ in
       cargo
 
       # Nix / editor LSPs
+      zls
       nixd
       nil
       nixfmt
@@ -31,6 +32,8 @@ in
       typescript-language-server
       vscode-langservers-extracted
       markdown-oxide
+      typst
+      tinymist
     ];
   };
 }
